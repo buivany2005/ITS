@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Thanh toán đơn hàng - XeRental</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .radio-dot {
+        --radio-dot-svg: url("data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27%23137fec%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%273%27/%3e%3c/svg%3e");
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white font-display"
+  >
+    <div
+      class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden"
+    >
+      <div class="layout-container flex h-full grow flex-col">
+        <!-- TopNavBar -->
+        <header
+          class="flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#f0f2f4] dark:border-b-[#2c3e50] bg-white dark:bg-background-dark px-10 py-3 sticky top-0 z-50"
+        >
+          <div class="flex items-center gap-4 text-[#111418] dark:text-white">
+            <div class="size-6 text-primary">
+              <svg
+                fill="none"
+                viewbox="0 0 48 48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6 6H42L36 24L42 42H6L12 24L6 6Z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </div>
+            <h2
+              class="text-[#111418] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]"
+            >
+              XeRental
+            </h2>
+          </div>
+          <div class="flex flex-1 justify-end gap-8">
+            <nav class="flex items-center gap-9">
+              <a
+                class="text-[#111418] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors"
+                href="#"
+                >Trang chủ</a
+              >
+              <a
+                class="text-[#111418] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors"
+                href="#"
+                >Khám phá</a
+              >
+              <a
+                class="text-[#111418] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors"
+                href="#"
+                >Đơn hàng của tôi</a
+              >
+            </nav>
+            <div class="flex gap-2">
+              <button
+                class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-gray-800 text-[#111418] dark:text-white"
+              >
+                <span class="material-symbols-outlined text-[20px]"
+                  >notifications</span
+                >
+              </button>
+              <button
+                class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-gray-800 text-[#111418] dark:text-white"
+              >
+                <span class="material-symbols-outlined text-[20px]"
+                  >account_circle</span
+                >
+              </button>
+            </div>
+          </div>
+        </header>
+        <main class="flex flex-1 justify-center py-8">
+          <div
+            class="layout-content-container flex flex-col max-w-[1200px] flex-1 px-4"
+          >
+            <!-- Breadcrumbs -->
+            <div class="flex flex-wrap items-center gap-2 mb-4">
+              <a
+                class="text-[#617589] dark:text-gray-400 text-sm font-medium hover:text-primary"
+                href="#"
+                >Trang chủ</a
+              >
+              <span
+                class="text-[#617589] dark:text-gray-600 material-symbols-outlined text-sm"
+                >chevron_right</span
+              >
+              <a
+                class="text-[#617589] dark:text-gray-400 text-sm font-medium hover:text-primary"
+                href="#"
+                >Đặt xe</a
+              >
+              <span
+                class="text-[#617589] dark:text-gray-600 material-symbols-outlined text-sm"
+                >chevron_right</span
+              >
+              <span class="text-[#111418] dark:text-white text-sm font-bold"
+                >Thanh toán</span
+              >
+            </div>
+            <!-- Page Heading -->
+            <div class="mb-8">
+              <h1
+                class="text-[#111418] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]"
+              >
+                Thanh toán đơn hàng
+              </h1>
+              <p class="text-[#617589] dark:text-gray-400 mt-2">
+                Vui lòng chọn phương thức thanh toán để hoàn tất đơn đặt xe của
+                bạn.
+              </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+              <!-- Left Section: Payment Methods -->
+              <div class="lg:col-span-2 flex flex-col gap-6">
+                <div
+                  class="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-[#dbe0e6] dark:border-gray-800"
+                >
+                  <h3 class="text-lg font-bold mb-6 flex items-center gap-2">
+                    <span class="material-symbols-outlined text-primary"
+                      >payments</span
+                    >
+                    Phương thức thanh toán
+                  </h3>
+                  <div class="flex flex-col gap-4 radio-dot">
+                    <label
+                      class="group flex items-center gap-4 rounded-xl border-2 border-solid border-[#dbe0e6] dark:border-gray-800 p-4 cursor-pointer hover:border-primary/50 transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5"
+                    >
+                      <input
+                        checked=""
+                        class="h-5 w-5 border-2 border-[#dbe0e6] bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0"
+                        name="payment_method"
+                        type="radio"
+                      />
+                      <div class="flex flex-1 items-center justify-between">
+                        <div class="flex grow flex-col">
+                          <p
+                            class="text-[#111418] dark:text-white text-base font-bold"
+                          >
+                            Thẻ tín dụng/Ghi nợ
+                          </p>
+                          <p class="text-[#617589] dark:text-gray-400 text-sm">
+                            Hỗ trợ Visa, Mastercard, JCB
+                          </p>
+                        </div>
+                        <div class="flex gap-2">
+                          <div
+                            class="h-8 w-12 bg-background-light dark:bg-gray-800 rounded flex items-center justify-center"
+                          >
+                            <span
+                              class="material-symbols-outlined text-gray-500"
+                              >credit_card</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+                    </label>
+                    <label
+                      class="group flex items-center gap-4 rounded-xl border-2 border-solid border-[#dbe0e6] dark:border-gray-800 p-4 cursor-pointer hover:border-primary/50 transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5"
+                    >
+                      <input
+                        class="h-5 w-5 border-2 border-[#dbe0e6] bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0"
+                        name="payment_method"
+                        type="radio"
+                      />
+                      <div class="flex flex-1 items-center justify-between">
+                        <div class="flex grow flex-col">
+                          <p
+                            class="text-[#111418] dark:text-white text-base font-bold"
+                          >
+                            Ví điện tử (Momo, ZaloPay)
+                          </p>
+                          <p class="text-[#617589] dark:text-gray-400 text-sm">
+                            Thanh toán nhanh qua ứng dụng di động
+                          </p>
+                        </div>
+                        <span class="material-symbols-outlined text-gray-400"
+                          >account_balance_wallet</span
+                        >
+                      </div>
+                    </label>
+                    <label
+                      class="group flex items-center gap-4 rounded-xl border-2 border-solid border-[#dbe0e6] dark:border-gray-800 p-4 cursor-pointer hover:border-primary/50 transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5"
+                    >
+                      <input
+                        class="h-5 w-5 border-2 border-[#dbe0e6] bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0"
+                        name="payment_method"
+                        type="radio"
+                      />
+                      <div class="flex flex-1 items-center justify-between">
+                        <div class="flex grow flex-col">
+                          <p
+                            class="text-[#111418] dark:text-white text-base font-bold"
+                          >
+                            Chuyển khoản ngân hàng
+                          </p>
+                          <p class="text-[#617589] dark:text-gray-400 text-sm">
+                            Nhận thông tin tài khoản sau khi xác nhận
+                          </p>
+                        </div>
+                        <span class="material-symbols-outlined text-gray-400"
+                          >account_balance</span
+                        >
+                      </div>
+                    </label>
+                    <label
+                      class="group flex items-center gap-4 rounded-xl border-2 border-solid border-[#dbe0e6] dark:border-gray-800 p-4 cursor-pointer hover:border-primary/50 transition-all has-[:checked]:border-primary has-[:checked]:bg-primary/5"
+                    >
+                      <input
+                        class="h-5 w-5 border-2 border-[#dbe0e6] bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0"
+                        name="payment_method"
+                        type="radio"
+                      />
+                      <div class="flex flex-1 items-center justify-between">
+                        <div class="flex grow flex-col">
+                          <p
+                            class="text-[#111418] dark:text-white text-base font-bold"
+                          >
+                            Thanh toán tiền mặt khi nhận xe
+                          </p>
+                          <p class="text-[#617589] dark:text-gray-400 text-sm">
+                            Trả tiền trực tiếp cho chủ xe khi bàn giao
+                          </p>
+                        </div>
+                        <span class="material-symbols-outlined text-gray-400"
+                          >handshake</span
+                        >
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <!-- Trust Badges -->
+                <div
+                  class="flex flex-col items-center gap-4 p-6 border-t border-dashed border-[#dbe0e6] dark:border-gray-800"
+                >
+                  <div
+                    class="flex items-center gap-2 text-[#617589] dark:text-gray-400 text-sm font-medium"
+                  >
+                    <span class="material-symbols-outlined text-green-500"
+                      >verified_user</span
+                    >
+                    Giao dịch an toàn và bảo mật 100%
+                  </div>
+                  <div
+                    class="flex gap-6 opacity-60 grayscale hover:grayscale-0 transition-all"
+                  >
+                    <div
+                      class="flex items-center gap-1 font-bold italic text-gray-400"
+                    >
+                      PCI-DSS
+                    </div>
+                    <div
+                      class="flex items-center gap-1 font-bold italic text-gray-400"
+                    >
+                      SSL
+                    </div>
+                    <div
+                      class="flex items-center gap-1 font-bold italic text-gray-400"
+                    >
+                      Verified by VISA
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Right Section: Order Summary (Sticky) -->
+              <div class="lg:sticky lg:top-24 space-y-6">
+                <div
+                  class="bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-sm border border-[#dbe0e6] dark:border-gray-800"
+                >
+                  <div
+                    class="w-full h-48 bg-center bg-no-repeat bg-cover"
+                    data-alt="Yamaha Exciter 155 VVA motorbike in blue"
+                    style="
+                      background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAcoGxylL_RmCCNB_YANxeGCz6gKLRq2B8adjIfW27-JWe2xca4ksNk4dne6w80XCE5i_ALKpKxqc3vzzhie6hlNEXkEUftGceOFNa_dkDhargV3-S8h0FcTVrFGiVSuDqMjhjqXHaVXHmUHt7LwXgs8iQVhGhoxwH5MQKLCUEAgPbiB7caIYBRZmRIkBmj5pIp32P3dIWQTxKZp4BtdNmjz6n33o3ykfszCrVOvm6BRQZoP_yc_BOQAyN-fkvZgRUhPAtoVodEouf2');
+                    "
+                  ></div>
+                  <div class="p-5">
+                    <div class="flex items-center justify-between mb-2">
+                      <span
+                        class="text-primary text-xs font-bold uppercase tracking-wider"
+                        >Yamaha Exciter 155 VVA</span
+                      >
+                      <div class="flex items-center text-orange-500">
+                        <span class="material-symbols-outlined text-sm fill-1"
+                          >star</span
+                        >
+                        <span class="text-xs font-bold ml-1">4.9</span>
+                      </div>
+                    </div>
+                    <h4
+                      class="text-[#111418] dark:text-white text-lg font-bold mb-4 leading-tight"
+                    >
+                      Tóm tắt đơn hàng
+                    </h4>
+                    <div class="space-y-3 mb-6">
+                      <div class="flex items-start gap-3">
+                        <span
+                          class="material-symbols-outlined text-[#617589] text-xl"
+                          >calendar_month</span
+                        >
+                        <div>
+                          <p
+                            class="text-xs text-[#617589] dark:text-gray-400 uppercase font-bold"
+                          >
+                            Thời gian thuê
+                          </p>
+                          <p class="text-sm dark:text-white">
+                            15/10/2023 - 18/10/2023 (3 ngày)
+                          </p>
+                        </div>
+                      </div>
+                      <div class="flex items-start gap-3">
+                        <span
+                          class="material-symbols-outlined text-[#617589] text-xl"
+                          >location_on</span
+                        >
+                        <div>
+                          <p
+                            class="text-xs text-[#617589] dark:text-gray-400 uppercase font-bold"
+                          >
+                            Địa điểm
+                          </p>
+                          <p class="text-sm dark:text-white">
+                            Quận 1, TP. Hồ Chí Minh
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="border-[#dbe0e6] dark:border-gray-800 mb-4" />
+                    <div class="space-y-2 mb-6">
+                      <div class="flex justify-between text-sm">
+                        <span class="text-[#617589] dark:text-gray-400"
+                          >Giá thuê (3 ngày)</span
+                        >
+                        <span class="font-medium dark:text-white"
+                          >450.000đ</span
+                        >
+                      </div>
+                      <div class="flex justify-between text-sm">
+                        <span class="text-[#617589] dark:text-gray-400"
+                          >Phí dịch vụ</span
+                        >
+                        <span class="font-medium dark:text-white">25.000đ</span>
+                      </div>
+                      <div class="flex justify-between text-sm">
+                        <span class="text-[#617589] dark:text-gray-400"
+                          >Bảo hiểm xe</span
+                        >
+                        <span class="font-medium dark:text-white">50.000đ</span>
+                      </div>
+                    </div>
+                    <div
+                      class="flex justify-between items-center bg-primary/5 p-4 rounded-lg mb-6"
+                    >
+                      <span class="text-[#111418] dark:text-white font-bold"
+                        >Tổng cộng</span
+                      >
+                      <span class="text-primary text-2xl font-black"
+                        >525.000đ</span
+                      >
+                    </div>
+                    <button
+                      class="w-full flex items-center justify-center gap-2 rounded-xl h-14 bg-primary text-white text-base font-bold leading-normal hover:bg-primary/90 transition-all shadow-lg shadow-primary/20"
+                    >
+                      Xác nhận thanh toán
+                      <span class="material-symbols-outlined"
+                        >arrow_forward</span
+                      >
+                    </button>
+                    <button
+                      class="w-full mt-3 flex items-center justify-center rounded-lg h-10 text-[#617589] dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors"
+                    >
+                      Thay đổi phương tiện
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4 rounded-xl flex gap-3"
+                >
+                  <span class="material-symbols-outlined text-green-600"
+                    >info</span
+                  >
+                  <p
+                    class="text-xs text-green-800 dark:text-green-400 leading-relaxed"
+                  >
+                    Hoàn tiền 100% nếu chủ xe không bàn giao xe hoặc xe không
+                    đúng như mô tả. An tâm tuyệt đối cùng XeRental.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer
+          class="bg-white dark:bg-background-dark border-t border-[#f0f2f4] dark:border-gray-800 py-10 px-4"
+        >
+          <div
+            class="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6"
+          >
+            <div
+              class="flex items-center gap-4 text-[#111418] dark:text-white opacity-50"
+            >
+              <div class="size-5">
+                <svg
+                  fill="none"
+                  viewbox="0 0 48 48"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 6H42L36 24L42 42H6L12 24L6 6Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </div>
+              <h2 class="text-base font-bold">XeRental</h2>
+            </div>
+            <p class="text-[#617589] dark:text-gray-500 text-sm">
+              © 2023 XeRental Vietnam. Mọi quyền được bảo lưu.
+            </p>
+            <div class="flex gap-4">
+              <a
+                class="text-[#617589] dark:text-gray-500 hover:text-primary"
+                href="#"
+                ><span class="material-symbols-outlined"
+                  >social_leaderboard</span
+                ></a
+              >
+              <a
+                class="text-[#617589] dark:text-gray-500 hover:text-primary"
+                href="#"
+                ><span class="material-symbols-outlined">language</span></a
+              >
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

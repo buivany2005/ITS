@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Chi tiết phương tiện | MotoRent VN</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-gray-100 min-h-screen"
+  >
+    <!-- Top Navigation Bar -->
+    <header
+      class="sticky top-0 z-50 w-full bg-white dark:bg-gray-900 border-b border-solid border-[#f0f2f4] dark:border-gray-800"
+    >
+      <div
+        class="max-w-[1280px] mx-auto flex items-center justify-between px-6 py-3"
+      >
+        <div class="flex items-center gap-8">
+          <div class="flex items-center gap-2 text-primary">
+            <div class="size-8">
+              <svg
+                fill="currentColor"
+                viewbox="0 0 48 48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+            <h2
+              class="text-[#111418] dark:text-white text-xl font-extrabold tracking-tight"
+            >
+              MotoRent VN
+            </h2>
+          </div>
+          <nav class="hidden md:flex items-center gap-6">
+            <a
+              class="text-[#111418] dark:text-gray-300 text-sm font-semibold hover:text-primary transition-colors"
+              href="#"
+              >Tìm xe</a
+            >
+            <a
+              class="text-[#111418] dark:text-gray-300 text-sm font-semibold hover:text-primary transition-colors"
+              href="#"
+              >Khuyến mãi</a
+            >
+            <a
+              class="text-[#111418] dark:text-gray-300 text-sm font-semibold hover:text-primary transition-colors"
+              href="#"
+              >Hướng dẫn</a
+            >
+            <a
+              class="text-[#111418] dark:text-gray-300 text-sm font-semibold hover:text-primary transition-colors"
+              href="#"
+              >Liên hệ</a
+            >
+          </nav>
+        </div>
+        <div class="flex items-center gap-4">
+          <label
+            class="hidden lg:flex items-center bg-[#f0f2f4] dark:bg-gray-800 rounded-lg px-3 py-2 w-64"
+          >
+            <span class="material-symbols-outlined text-gray-500 text-xl"
+              >search</span
+            >
+            <input
+              class="bg-transparent border-none focus:ring-0 text-sm w-full ml-2"
+              placeholder="Tìm kiếm xe..."
+              type="text"
+            />
+          </label>
+          <button
+            class="bg-[#f0f2f4] dark:bg-gray-800 text-[#111418] dark:text-white px-4 py-2 rounded-lg text-sm font-bold"
+          >
+            Đăng nhập
+          </button>
+          <button
+            class="bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold shadow-sm shadow-primary/20"
+          >
+            Đăng ký
+          </button>
+        </div>
+      </div>
+    </header>
+    <main class="max-w-[1280px] mx-auto px-6 py-6">
+      <!-- Breadcrumbs -->
+      <nav class="flex flex-wrap gap-2 mb-6">
+        <a
+          class="text-[#617589] dark:text-gray-400 text-sm font-medium hover:text-primary"
+          href="#"
+          >Trang chủ</a
+        >
+        <span class="text-[#617589] text-sm">/</span>
+        <a
+          class="text-[#617589] dark:text-gray-400 text-sm font-medium hover:text-primary"
+          href="#"
+          >Cho thuê xe tự lái</a
+        >
+        <span class="text-[#617589] text-sm">/</span>
+        <span class="text-primary text-sm font-semibold">Chi tiết xe</span>
+      </nav>
+      <!-- Page Heading Component -->
+      <div class="flex flex-wrap justify-between items-end gap-4 mb-8">
+        <div class="flex flex-col gap-2">
+          <div class="flex items-center gap-3">
+            <h1
+              class="text-[#111418] dark:text-white text-4xl font-black tracking-tight leading-tight"
+            >
+              Honda City RS 2023
+            </h1>
+            <span
+              class="bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider"
+              >Còn xe</span
+            >
+          </div>
+          <p
+            class="text-[#617589] dark:text-gray-400 text-base font-medium flex items-center gap-1"
+          >
+            <span class="material-symbols-outlined text-red-500 text-lg"
+              >location_on</span
+            >
+            Quận 1, TP. Hồ Chí Minh
+          </p>
+        </div>
+        <div class="flex gap-2">
+          <button
+            class="p-2 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
+          >
+            <span
+              class="material-symbols-outlined text-gray-600 dark:text-gray-300"
+              >share</span
+            >
+          </button>
+          <button
+            class="p-2 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800"
+          >
+            <span
+              class="material-symbols-outlined text-gray-600 dark:text-gray-300 text-red-500"
+              >favorite</span
+            >
+          </button>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Left Side: Gallery & Content -->
+        <div class="lg:col-span-8 space-y-8">
+          <!-- Gallery Component -->
+          <div class="space-y-4">
+            <div
+              class="w-full aspect-[16/9] bg-center bg-no-repeat bg-cover rounded-xl shadow-md"
+              data-alt="Main view of white Honda City RS 2023 parked in city"
+              style="
+                background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC8-WvONWM6fZVCVeITBxyLmNzlvv-TEeQAVEOSx9_wvoOiRPnUtaFS0cPNINGOAofoYJAn1a10NFnopR-HzrNo2Gp7D7G-Kr5EdP7hZkr3ntfnBgCkMWVCYMXAnMDrefHr259hMqQL-RGGaqs8iijKiwKvZK9S9bV-EmJJHFr3igYZoaNM0LzTFTyiEhhEYuO5JNfZgV42llryvSb0UuvBboShCOnihKvxlJdvgnhzuStJAtyKz2oXTI-ecRSdC0DIzCJ_pmaB3fdh');
+              "
+            ></div>
+            <div class="grid grid-cols-4 gap-4">
+              <div
+                class="aspect-square rounded-lg bg-cover bg-center cursor-pointer hover:ring-2 hover:ring-primary transition-all shadow-sm"
+                data-alt="Interior dashboard of Honda City RS 2023"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA0oNahUQgDZbSdz6hUZbT3bfgDg0gZ-0qjRs76-KBkT2e6tHZUAReC-eDv6LMMeyfDNqYkrF2VoMjd2kfG1VsmDHMkXA31atpdV_Z_mvWAPvCDKZgiGHYhDbqSY11Fqcpa9byKT1RmsvfmfNw5jMopbxrkWld_Z_N64I5vIPn0W3DDUlVjFUawcYN9RMJStGD_rezxUpTKc_yGrPqiQtxOU1zwbXtfVqyqTihnQ0JI7S_onAsJbzX98s_ht42ylQjsgvwsPBCDnwvN');
+                "
+              ></div>
+              <div
+                class="aspect-square rounded-lg bg-cover bg-center cursor-pointer hover:ring-2 hover:ring-primary transition-all shadow-sm"
+                data-alt="Rear view of car showing tail lights"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAK7YIkO_-rCdHFsPXBJtWznRPVlqu3PToMs_vb4FyIhqwrca1Gom7cW2oPR7qRw8ydzb48N8FUBH75puhovohNyuHFEVSgZFaCCZ5MTm9egQzfPhOv5_4X9BOjmj0EXLNJwXZsxthauAYiuSP8ccRNkW9yOhmQYfhc7zS57vQPETtimoVbpXUXU1iJl2jeuNSt3PfmkneqBN9WB65R0C7RdTcJDxxdXklSA71gHdVxp0TID0EXHVdiKo9Ygkowh5-ZnjNjcsccv51S');
+                "
+              ></div>
+              <div
+                class="aspect-square rounded-lg bg-cover bg-center cursor-pointer hover:ring-2 hover:ring-primary transition-all shadow-sm"
+                data-alt="Leather seats close up detail"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAANX_etCxOgGrPXrO8itSmZCwRq6OyLqchAiqcPHoUebE7bXByB2UcMiC84cX56G78l_KfBuXbMrsdyAUHd_SblhyM1NYiNz7yjgGHkDMnkh1T7gwmAhJtbfRJJRUZJxWCgM7HxLEp86U5HhksM-rOO73RHAIaSO_KKLwJ8p2OnuNlcGY2MB2HJaZhz7BsT2-cg7TL0ljf_up1Y_P_AarJUN9zpXO7MqV5WIk_SidqAUlNaEk9RkVmRUcZAGngJH5zKwdGz-FBt0Cf');
+                "
+              ></div>
+              <div
+                class="relative aspect-square rounded-lg bg-cover bg-center cursor-pointer overflow-hidden group shadow-sm"
+                data-alt="Alloy wheel and tire close up"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCP1hoLbzikoaVp0PYRH5qvXkMMSsRUZk4qr1KL9Xqha3FCR3vpp1x2eEImChPmc5AGzzphTJU1Fw4ax8RPiitBTZcpXwMgorNMEhItjl_2fsVxVJg2dcKptMduWW88IMtUkCnAgoS25gRtxleEJ03hQmt3vXBw2pUHyyM_0zd1ZDRRW-5i797tku2_weu3OOETaiU-PUrH5r1u0PcWMrq7hgJXqPFp91lgQDudhbQiF0zE6zuac9cZyCxqluRHcTN8-SWJrp6Y-kdb');
+                "
+              >
+                <div
+                  class="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-bold group-hover:bg-black/60 transition-all"
+                >
+                  +12 ảnh
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Specifications Grid -->
+          <div
+            class="bg-white dark:bg-gray-900 rounded-xl p-6 shadow-sm border border-gray-100 dark:border-gray-800"
+          >
+            <h3 class="text-xl font-bold mb-6">Thông số kỹ thuật</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+              <div
+                class="flex flex-col items-center gap-2 p-4 bg-background-light dark:bg-gray-800 rounded-xl"
+              >
+                <span class="material-symbols-outlined text-primary text-3xl"
+                  >ev_station</span
+                >
+                <span
+                  class="text-xs text-[#617589] dark:text-gray-400 font-medium uppercase"
+                  >Nhiên liệu</span
+                >
+                <span class="text-sm font-bold">Xăng</span>
+              </div>
+              <div
+                class="flex flex-col items-center gap-2 p-4 bg-background-light dark:bg-gray-800 rounded-xl"
+              >
+                <span class="material-symbols-outlined text-primary text-3xl"
+                  >settings_input_component</span
+                >
+                <span
+                  class="text-xs text-[#617589] dark:text-gray-400 font-medium uppercase"
+                  >Hộp số</span
+                >
+                <span class="text-sm font-bold">Tự động</span>
+              </div>
+              <div
+                class="flex flex-col items-center gap-2 p-4 bg-background-light dark:bg-gray-800 rounded-xl"
+              >
+                <span class="material-symbols-outlined text-primary text-3xl"
+                  >airline_seat_recline_extra</span
+                >
+                <span
+                  class="text-xs text-[#617589] dark:text-gray-400 font-medium uppercase"
+                  >Số ghế</span
+                >
+                <span class="text-sm font-bold">5 Chỗ</span>
+              </div>
+              <div
+                class="flex flex-col items-center gap-2 p-4 bg-background-light dark:bg-gray-800 rounded-xl"
+              >
+                <span class="material-symbols-outlined text-primary text-3xl"
+                  >speed</span
+                >
+                <span
+                  class="text-xs text-[#617589] dark:text-gray-400 font-medium uppercase"
+                  >Động cơ</span
+                >
+                <span class="text-sm font-bold">1.5L i-VTEC</span>
+              </div>
+            </div>
+          </div>
+          <!-- Tabs Section -->
+          <div
+            class="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden"
+          >
+            <div class="flex border-b border-gray-100 dark:border-gray-800">
+              <button
+                class="px-6 py-4 text-sm font-bold text-primary border-b-2 border-primary"
+              >
+                Điều kiện thuê
+              </button>
+              <button
+                class="px-6 py-4 text-sm font-bold text-[#617589] dark:text-gray-400 hover:text-primary transition-colors"
+              >
+                Bảo hiểm
+              </button>
+              <button
+                class="px-6 py-4 text-sm font-bold text-[#617589] dark:text-gray-400 hover:text-primary transition-colors"
+              >
+                Quy định
+              </button>
+            </div>
+            <div class="p-6">
+              <div class="space-y-4">
+                <div class="flex gap-4">
+                  <span class="material-symbols-outlined text-primary"
+                    >id_card</span
+                  >
+                  <div>
+                    <p class="font-bold">Giấy tờ thuê xe</p>
+                    <p class="text-sm text-[#617589] dark:text-gray-400">
+                      Yêu cầu CCCD gắn chip (đối chiếu) và Bằng lái xe hạng B1
+                      trở lên.
+                    </p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <span class="material-symbols-outlined text-primary"
+                    >account_balance_wallet</span
+                  >
+                  <div>
+                    <p class="font-bold">Tài sản thế chấp</p>
+                    <p class="text-sm text-[#617589] dark:text-gray-400">
+                      15 triệu đồng (tiền mặt/chuyển khoản) hoặc Xe máy có giá
+                      trị tương đương (kèm cavet gốc).
+                    </p>
+                  </div>
+                </div>
+                <div class="flex gap-4">
+                  <span class="material-symbols-outlined text-primary"
+                    >priority_high</span
+                  >
+                  <div>
+                    <p class="font-bold">Lưu ý</p>
+                    <p class="text-sm text-[#617589] dark:text-gray-400">
+                      Khách hàng phải trên 21 tuổi và có kinh nghiệm lái xe tối
+                      thiểu 1 năm.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Right Side: Booking Box (Sticky) -->
+        <div class="lg:col-span-4">
+          <div class="sticky top-24 space-y-4">
+            <div
+              class="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-gray-800"
+            >
+              <div class="flex items-baseline gap-2 mb-6">
+                <span
+                  class="text-3xl font-extrabold text-[#111418] dark:text-white"
+                  >850.000đ</span
+                >
+                <span class="text-[#617589] dark:text-gray-400 font-medium"
+                  >/ ngày</span
+                >
+              </div>
+              <div class="space-y-4 mb-6">
+                <div class="flex flex-col gap-2">
+                  <label
+                    class="text-sm font-bold text-[#111418] dark:text-gray-300"
+                    >Ngày bắt đầu</label
+                  >
+                  <div
+                    class="flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-3 bg-white dark:bg-gray-800"
+                  >
+                    <span
+                      class="material-symbols-outlined text-gray-400 text-xl"
+                      >calendar_today</span
+                    >
+                    <input
+                      class="border-none focus:ring-0 text-sm bg-transparent w-full"
+                      type="text"
+                      value="20/10/2023 09:00"
+                    />
+                  </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                  <label
+                    class="text-sm font-bold text-[#111418] dark:text-gray-300"
+                    >Ngày kết thúc</label
+                  >
+                  <div
+                    class="flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-3 bg-white dark:bg-gray-800"
+                  >
+                    <span
+                      class="material-symbols-outlined text-gray-400 text-xl"
+                      >calendar_month</span
+                    >
+                    <input
+                      class="border-none focus:ring-0 text-sm bg-transparent w-full"
+                      type="text"
+                      value="22/10/2023 09:00"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="space-y-3 mb-6 border-t border-gray-100 dark:border-gray-800 pt-6"
+              >
+                <div class="flex justify-between text-sm">
+                  <span class="text-[#617589] dark:text-gray-400"
+                    >Đơn giá thuê</span
+                  >
+                  <span class="font-semibold">850.000đ / ngày</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-[#617589] dark:text-gray-400"
+                    >Thời gian thuê</span
+                  >
+                  <span class="font-semibold">2 ngày</span>
+                </div>
+                <div class="flex justify-between text-sm">
+                  <span class="text-[#617589] dark:text-gray-400"
+                    >Phí dịch vụ (5%)</span
+                  >
+                  <span class="font-semibold">85.000đ</span>
+                </div>
+                <div
+                  class="flex justify-between text-lg font-extrabold pt-2 border-t border-dashed border-gray-200 dark:border-gray-700"
+                >
+                  <span>Tổng cộng</span>
+                  <span class="text-primary">1.785.000đ</span>
+                </div>
+              </div>
+              <button
+                class="w-full bg-primary text-white py-4 rounded-xl font-bold text-lg hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 active:scale-[0.98]"
+              >
+                Đặt thuê ngay
+              </button>
+              <p
+                class="text-center text-xs text-[#617589] dark:text-gray-500 mt-4"
+              >
+                Bạn sẽ chưa bị trừ tiền cho đến khi chủ xe xác nhận
+              </p>
+            </div>
+            <!-- Host Info -->
+            <div
+              class="bg-white dark:bg-gray-900 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-800 flex items-center gap-4"
+            >
+              <div
+                class="size-12 rounded-full bg-gray-200 bg-cover bg-center"
+                data-alt="Portrait of car owner"
+                style="
+                  background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCgFrYt3_1qaNUFb36SDidM7m_j3EZ0PmTWFr2KCe5ijK7AhrXnkbFWGj2qljkWHOpdgKU-cxeHDSNvOABIaCtXUmeAR0GgmPruJMz11ETYR3zPZ_9DU9kTXMntuJ-LHRh36p33Zsre_MvGlTNCf4hsuusFyfzxlVPeK3TQBxt7pcxEaOWr36iVQ6AbM__0bdKp_BmO2_SLA3wpMg-kgviNVzJBk2FvRSq84cdi_V1b4RU-d0CKbc4WgmM3Yi3KxhJ9kgoScsq-Qed9');
+                "
+              ></div>
+              <div>
+                <p class="font-bold text-sm">Chủ xe: Nguyễn Văn A</p>
+                <div class="flex items-center gap-1 text-yellow-500">
+                  <span class="material-symbols-outlined text-sm fill-1"
+                    >star</span
+                  >
+                  <span
+                    class="text-xs font-bold text-gray-700 dark:text-gray-300"
+                    >4.9 (128 chuyến)</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- Map Component Placeholder -->
+    <section class="max-w-[1280px] mx-auto px-6 py-12">
+      <h3 class="text-xl font-bold mb-6">Vị trí xe</h3>
+      <div
+        class="w-full h-80 rounded-2xl bg-gray-200 overflow-hidden relative border border-gray-100 dark:border-gray-800"
+      >
+        <div
+          class="absolute inset-0 bg-cover bg-center"
+          data-alt="Map of Ho Chi Minh City District 1 area"
+          data-location="Ho Chi Minh City"
+          style="
+            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBzy9RB2Rd0BUrKGEDblg14S9JmIBECOhEtLZfFWQP3sa1eEEi3au9OlCcrDu7NhfgLXqRFqtCSEhrUGb2BSQfB-2QTNXZj-d-DepJEMDxtk0k-dZF2c-pQ1g_meHk50YdtSZdhlcG-3uiTKcns_vyD0f1r7dH0nbQjCxqxBu6FlMSBDu-1scIRgej1z8H2sQqwHZFiCnYFro9gzmBQrARGMy-I4xwLjEmYIElBRLM7gHr00wQ1Tsmn7Dcc6cAe2s6MOTOowlqZUHS2');
+          "
+        ></div>
+        <div
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
+          <span
+            class="material-symbols-outlined text-primary text-5xl drop-shadow-lg"
+            >location_on</span
+          >
+        </div>
+      </div>
+    </section>
+    <!-- Footer -->
+    <footer
+      class="bg-white dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 py-12 mt-12"
+    >
+      <div
+        class="max-w-[1280px] mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8"
+      >
+        <div class="space-y-4">
+          <div class="flex items-center gap-2 text-primary">
+            <div class="size-6">
+              <svg
+                fill="currentColor"
+                viewbox="0 0 48 48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+            <span class="font-extrabold text-lg text-[#111418] dark:text-white"
+              >MotoRent VN</span
+            >
+          </div>
+          <p class="text-sm text-[#617589] dark:text-gray-400">
+            Nền tảng thuê xe tự lái hàng đầu Việt Nam.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">Dịch vụ</h4>
+          <ul class="text-sm space-y-2 text-[#617589] dark:text-gray-400">
+            <li><a class="hover:text-primary" href="#">Thuê xe máy</a></li>
+            <li><a class="hover:text-primary" href="#">Thuê ô tô</a></li>
+            <li><a class="hover:text-primary" href="#">Thuê xe đạp</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">Hỗ trợ</h4>
+          <ul class="text-sm space-y-2 text-[#617589] dark:text-gray-400">
+            <li>
+              <a class="hover:text-primary" href="#">Hướng dẫn thuê xe</a>
+            </li>
+            <li>
+              <a class="hover:text-primary" href="#">Chính sách bảo mật</a>
+            </li>
+            <li>
+              <a class="hover:text-primary" href="#">Giải quyết khiếu nại</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">Kết nối</h4>
+          <div class="flex gap-4">
+            <div
+              class="size-8 rounded-full bg-[#f0f2f4] dark:bg-gray-800 flex items-center justify-center cursor-pointer hover:bg-primary hover:text-white transition-all"
+            >
+              <span class="material-symbols-outlined text-sm"
+                >social_leaderboard</span
+              >
+            </div>
+            <div
+              class="size-8 rounded-full bg-[#f0f2f4] dark:bg-gray-800 flex items-center justify-center cursor-pointer hover:bg-primary hover:text-white transition-all"
+            >
+              <span class="material-symbols-outlined text-sm"
+                >alternate_email</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

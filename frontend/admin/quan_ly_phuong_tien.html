@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Quản lý phương tiện</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-white transition-colors duration-200"
+  >
+    <div class="flex min-h-screen">
+      <!-- Sidebar Navigation -->
+      <aside
+        class="w-72 bg-white dark:bg-[#1a242f] border-r border-[#dbe0e6] dark:border-gray-700 flex flex-col fixed h-full"
+      >
+        <div class="p-6 flex flex-col h-full">
+          <!-- Brand/Logo Area -->
+          <div class="flex items-center gap-3 mb-10">
+            <div class="bg-primary rounded-lg p-2 text-white">
+              <span class="material-symbols-outlined text-2xl"
+                >directions_car</span
+              >
+            </div>
+            <div class="flex flex-col">
+              <h1
+                class="text-[#111418] dark:text-white text-lg font-bold leading-tight"
+              >
+                Admin Panel
+              </h1>
+              <p class="text-[#617589] dark:text-gray-400 text-xs font-normal">
+                Quản lý thuê xe Việt Nam
+              </p>
+            </div>
+          </div>
+          <!-- Nav Links -->
+          <nav class="flex flex-col gap-2 flex-1">
+            <a
+              class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all"
+              href="#"
+            >
+              <span class="material-symbols-outlined">directions_bike</span>
+              <span class="text-sm">Quản lý phương tiện</span>
+            </a>
+            <a
+              class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#617589] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+              href="#"
+            >
+              <span class="material-symbols-outlined">receipt_long</span>
+              <span class="text-sm font-medium">Quản lý đơn hàng</span>
+            </a>
+            <a
+              class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#617589] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+              href="#"
+            >
+              <span class="material-symbols-outlined">leaderboard</span>
+              <span class="text-sm font-medium">Thống kê</span>
+            </a>
+          </nav>
+          <!-- Bottom Links -->
+          <div
+            class="flex flex-col gap-1 border-t border-gray-100 dark:border-gray-800 pt-4"
+          >
+            <a
+              class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#617589] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+              href="#"
+            >
+              <span class="material-symbols-outlined">settings</span>
+              <span class="text-sm font-medium">Cài đặt</span>
+            </a>
+            <a
+              class="flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all"
+              href="#"
+            >
+              <span class="material-symbols-outlined">logout</span>
+              <span class="text-sm font-medium">Đăng xuất</span>
+            </a>
+          </div>
+        </div>
+      </aside>
+      <!-- Main Content Area -->
+      <main class="flex-1 ml-72">
+        <div class="p-8 max-w-[1200px] mx-auto">
+          <!-- Page Header -->
+          <header
+            class="flex flex-wrap justify-between items-center gap-4 mb-8"
+          >
+            <div>
+              <h2
+                class="text-[#111418] dark:text-white text-3xl font-extrabold tracking-tight"
+              >
+                Quản lý phương tiện
+              </h2>
+              <p class="text-[#617589] dark:text-gray-400 mt-1">
+                Danh sách đội xe hiện có trong hệ thống
+              </p>
+            </div>
+            <div class="flex items-center gap-3">
+              <button
+                id="btn-toggle-sidebar"
+                class="lg:hidden flex items-center gap-2 px-3 py-2 rounded-lg bg-white dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700"
+              >
+                <span class="material-symbols-outlined">menu</span>
+              </button>
+              <button
+                id="btn-add-vehicle"
+                class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-sm"
+              >
+                <span class="material-symbols-outlined">add</span>
+                <span>Thêm phương tiện mới</span>
+              </button>
+            </div>
+          </header>
+          <!-- Filters & Search Bar -->
+          <div
+            class="bg-white dark:bg-[#1a242f] p-4 rounded-2xl shadow-sm border border-[#dbe0e6] dark:border-gray-700 mb-6"
+          >
+            <div class="flex flex-col md:flex-row gap-4">
+              <div class="flex-1 relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#617589]"
+                  >search</span
+                >
+                <input
+                  id="vehicle-search"
+                  class="w-full pl-12 pr-4 py-3 bg-background-light dark:bg-background-dark border-none rounded-xl focus:ring-2 focus:ring-primary text-sm"
+                  placeholder="Tìm kiếm xe theo tên hoặc biển số..."
+                  type="text"
+                />
+              </div>
+              <div class="flex gap-2 flex-wrap">
+                <button
+                  data-category="all"
+                  class="category-btn flex items-center gap-2 px-4 py-3 bg-background-light dark:bg-background-dark rounded-xl text-sm font-medium text-[#111418] dark:text-white border border-transparent hover:border-gray-200"
+                >
+                  <span>Tất cả</span>
+                  <span class="material-symbols-outlined text-lg"
+                    >expand_more</span
+                  >
+                </button>
+                <button
+                  data-category="motorbike"
+                  class="category-btn flex items-center gap-2 px-4 py-3 bg-background-light dark:bg-background-dark rounded-xl text-sm font-medium text-[#111418] dark:text-white border border-transparent hover:border-gray-200"
+                >
+                  <span>Xe máy</span>
+                  <span class="material-symbols-outlined text-lg"
+                    >expand_more</span
+                  >
+                </button>
+                <button
+                  data-category="status"
+                  class="category-btn flex items-center gap-2 px-4 py-3 bg-background-light dark:bg-background-dark rounded-xl text-sm font-medium text-[#111418] dark:text-white border border-transparent hover:border-gray-200"
+                >
+                  <span>Trạng thái</span>
+                  <span class="material-symbols-outlined text-lg"
+                    >filter_list</span
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Table Container -->
+          <div
+            class="bg-white dark:bg-[#1a242f] rounded-2xl shadow-sm border border-[#dbe0e6] dark:border-gray-700 overflow-hidden"
+          >
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="bg-gray-50 dark:bg-gray-800/50 border-b border-[#dbe0e6] dark:border-gray-700"
+                  >
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Hình ảnh
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Tên xe
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Loại
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Trạng thái
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Giá thuê
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider text-right"
+                    >
+                      Hành động
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="vehicles-table-body"
+                  class="divide-y divide-gray-100 dark:divide-gray-800"
+                >
+                  <!-- Row 1 -->
+                  <tr
+                    class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors"
+                    data-vehicle-id="V-1001"
+                  >
+                    <td class="px-6 py-4">
+                      <div
+                        class="w-12 h-12 rounded-lg bg-cover bg-center shadow-sm"
+                        data-alt="Black modern motorbike Honda Vision"
+                        style="
+                          background-image: url('../../img/oto/xe_may/Vision.png');
+                        "
+                      ></div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <p
+                        class="text-sm font-bold text-[#111418] dark:text-white"
+                      >
+                        Honda Vision 2023
+                      </p>
+                      <p class="text-xs text-[#617589] dark:text-gray-400">
+                        BS: 29-G1 123.45
+                      </p>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm text-[#617589] dark:text-gray-400"
+                    >
+                      Xe máy
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                      >
+                        Sẵn sàng
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white"
+                    >
+                      150.000đ/ngày
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <div class="flex justify-end gap-2">
+                        <button
+                          data-id="V-1001"
+                          class="btn-edit p-2 text-[#617589] hover:text-primary transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >edit_note</span
+                          >
+                        </button>
+                        <button
+                          data-id="V-1001"
+                          class="btn-delete p-2 text-[#617589] hover:text-red-500 transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >delete</span
+                          >
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Row 2 -->
+                  <tr
+                    class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors"
+                    data-vehicle-id="V-2001"
+                  >
+                    <td class="px-6 py-4">
+                      <div
+                        class="w-12 h-12 rounded-lg bg-cover bg-center shadow-sm"
+                        data-alt="Blue electric SUV VinFast VF8"
+                        style="
+                          background-image: url('../../img/oto/Toyota_Granvia_2021.png');
+                        "
+                      ></div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <p
+                        class="text-sm font-bold text-[#111418] dark:text-white"
+                      >
+                        VinFast VF8 Plus
+                      </p>
+                      <p class="text-xs text-[#617589] dark:text-gray-400">
+                        BS: 30-H2 567.89
+                      </p>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm text-[#617589] dark:text-gray-400"
+                    >
+                      Ô tô
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary"
+                      >
+                        Đang thuê
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white"
+                    >
+                      1.200.000đ/ngày
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <div class="flex justify-end gap-2">
+                        <button
+                          data-id="V-2001"
+                          class="btn-edit p-2 text-[#617589] hover:text-primary transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >edit_note</span
+                          >
+                        </button>
+                        <button
+                          data-id="V-2001"
+                          class="btn-delete p-2 text-[#617589] hover:text-red-500 transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >delete</span
+                          >
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Row 3 -->
+                  <tr
+                    class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors"
+                    data-vehicle-id="V-3001"
+                  >
+                    <td class="px-6 py-4">
+                      <div
+                        class="w-12 h-12 rounded-lg bg-cover bg-center shadow-sm"
+                        data-alt="Silver road bicycle Giant Escape"
+                        style="
+                          background-image: url('../../img/oto/xe_dap/Road_Fascino.png');
+                        "
+                      ></div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <p
+                        class="text-sm font-bold text-[#111418] dark:text-white"
+                      >
+                        Giant Escape 2
+                      </p>
+                      <p class="text-xs text-[#617589] dark:text-gray-400">
+                        ID: BICY-0023
+                      </p>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm text-[#617589] dark:text-gray-400"
+                    >
+                      Xe đạp
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                      >
+                        Bảo trì
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white"
+                    >
+                      50.000đ/ngày
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <div class="flex justify-end gap-2">
+                        <button
+                          data-id="V-3001"
+                          class="btn-edit p-2 text-[#617589] hover:text-primary transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >edit_note</span
+                          >
+                        </button>
+                        <button
+                          data-id="V-3001"
+                          class="btn-delete p-2 text-[#617589] hover:text-red-500 transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >delete</span
+                          >
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Row 4 -->
+                  <tr
+                    class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors"
+                    data-vehicle-id="V-4001"
+                  >
+                    <td class="px-6 py-4">
+                      <div
+                        class="w-12 h-12 rounded-lg bg-cover bg-center shadow-sm"
+                        data-alt="Classic red motorbike Honda Super Cub"
+                        style="
+                          background-image: url('../../img/oto/xe_may/Wave.png');
+                        "
+                      ></div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <p
+                        class="text-sm font-bold text-[#111418] dark:text-white"
+                      >
+                        Honda Super Cub C125
+                      </p>
+                      <p class="text-xs text-[#617589] dark:text-gray-400">
+                        BS: 29-B1 999.99
+                      </p>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm text-[#617589] dark:text-gray-400"
+                    >
+                      Xe máy
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                      >
+                        Sẵn sàng
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white"
+                    >
+                      250.000đ/ngày
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <div class="flex justify-end gap-2">
+                        <button
+                          data-id="V-4001"
+                          class="btn-edit p-2 text-[#617589] hover:text-primary transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >edit_note</span
+                          >
+                        </button>
+                        <button
+                          data-id="V-4001"
+                          class="btn-delete p-2 text-[#617589] hover:text-red-500 transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >delete</span
+                          >
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Pagination Footer -->
+            <div
+              class="px-6 py-4 flex items-center justify-between border-t border-[#dbe0e6] dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50"
+            >
+              <p class="text-sm text-[#617589] dark:text-gray-400">
+                Hiển thị 1 - 4 trong tổng số 24 xe
+              </p>
+              <div class="flex gap-2">
+                <button
+                  class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm font-medium hover:bg-gray-50 transition-colors"
+                >
+                  Trước
+                </button>
+                <button
+                  class="px-3 py-1.5 rounded-lg bg-primary text-white text-sm font-medium"
+                >
+                  1
+                </button>
+                <button
+                  class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm font-medium hover:bg-gray-50 transition-colors"
+                >
+                  2
+                </button>
+                <button
+                  class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm font-medium hover:bg-gray-50 transition-colors"
+                >
+                  3
+                </button>
+                <button
+                  class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm font-medium hover:bg-gray-50 transition-colors"
+                >
+                  Tiếp
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="../js/admin-vehicles.js"></script>
+  </body>
+</html>

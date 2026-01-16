@@ -1,0 +1,68 @@
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:14-alpine
+    container_name: vehiclerental-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: vehiclerental
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - vehiclerental-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d vehiclerental"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # Spring Boot Backend
+  backend:
+    build:
+      context: ..
+      dockerfile: backend/Dockerfile
+    container_name: vehiclerental-backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/vehiclerental
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: pass
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      SERVER_PORT: 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - vehiclerental-network
+    restart: unless-stopped
+
+  # Nginx Frontend
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: vehiclerental-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - vehiclerental-network
+    restart: unless-stopped
+
+networks:
+  vehiclerental-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
