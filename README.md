@@ -1,3 +1,4 @@
+
 # 🚗 Vehicle Rental System - Hệ thống cho thuê phương tiện
 
 Hệ thống quản lý và cho thuê phương tiện (ô tô, xe máy, xe đạp) với giao diện web hiện đại.
@@ -557,7 +558,7 @@ Nếu gặp vấn đề:
 
 Copyright © 2026 Vehicle Rental Team
 
-## � API Endpoints
+##   API Endpoints
 
 ### Authentication
 
@@ -614,3 +615,6 @@ GET /api/vehicles?vehicleType=XEDAP
 ---
 
 **Happy Coding! 🚀**
+
+
+>>>>>>> 3776608a53f88892848515fe64db51e317ffc1bd
