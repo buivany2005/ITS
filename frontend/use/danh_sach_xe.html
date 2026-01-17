@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html class="light" lang="vi">
   <head>
@@ -43,7 +43,11 @@
     </script>
     <style>
       .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
       }
       body {
         font-family: "Plus Jakarta Sans", sans-serif;
@@ -450,18 +454,5 @@
   </body>
   <script src="../js/api.js"></script>
   <script src="../js/danh-sach-xe.js"></script>
-  <script>
-    (function () {
-      const btnLogin = document.getElementById("btn-login");
-      const btnRegister = document.getElementById("btn-register");
-      if (btnLogin)
-        btnLogin.addEventListener("click", () => {
-          window.location.href = "../login/login.html";
-        });
-      if (btnRegister)
-        btnRegister.addEventListener("click", () => {
-          window.location.href = "../login/login.html#register";
-        });
-    })();
-  </script>
+  <script src="../js/auth-check.js"></script>
 </html>

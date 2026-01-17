@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html class="light" lang="vi">
   <head>
@@ -46,7 +46,11 @@
         font-family: "Plus Jakarta Sans", sans-serif;
       }
       .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
       }
     </style>
   </head>
@@ -112,7 +116,7 @@
           class="absolute inset-0 bg-cover bg-center"
           data-alt="Scenic winding road through lush Vietnamese mountains"
           style="
-            background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBecWNmOaNt3yT3fO-eQTZxj9lc9ia9dEPqVU412RcXecIi6JCs4U3KphwP6LkZwsks0oUZzyGSI4fCIR52QELbN4bZyrWYrUXJObs_O-eQKxoYbNIom0yQFINBMQwqXhleoJwsWT0PgYrpUSpluarzsbSdNBgFQhhCv9pmkK2rTdZZ-VeRp24C8tHCM-q6_G8vy3FFISGs0x7ge0kTH3XXoer3EpHrNFWxrtEJJjgM1DsaqAYd0iu66KD4zu1vznBvATeerzSKGO42');
+            background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBecWNmOaNt3yT3fO-eQTZxj9lc9ia9dEPqVU412RcXecIi6JCs4U3KphwP6LkZwsks0oUZzyGSI4fCIR52QELbN4bZyrWYrUXJObs_O-eQKxoYbNIom0yQFINBMQwqXhleoJwsWT0PgYrpUSpluarzsbSdNBgFQhhCv9pmkK2rTdZZ-VeRp24C8tHCM-q6_G8vy3FFISGs0x7ge0kTH3XXoer3EpHrNFWxrtEJJjgM1DsaqAYd0iu66KD4zu1vznBvATeerzSKGO42&quot;);
           "
         ></div>
         <div
@@ -467,19 +471,21 @@
         btnLogin.addEventListener("click", async (e) => {
           e.preventDefault();
           clearError(loginError);
-          const username = (loginUsername?.value || "").trim();
+          const email = (loginUsername?.value || "").trim();
           const password = (loginPassword?.value || "").trim();
-          if (!username || !password) {
+          if (!email || !password) {
             showError(loginError, "Vui lòng nhập đầy đủ thông tin.");
             return;
           }
           btnLogin.disabled = true;
           btnLogin.classList.add("opacity-70");
           try {
-            const res = await (window.api?.login?.({ username, password }) ||
+            const res = await (window.api?.login?.({ email, password }) ||
               Promise.reject(new Error("API không sẵn sàng")));
-            // TODO: lưu token nếu API trả về
-            // localStorage.setItem('token', res.token);
+            // Lưu thông tin user vào localStorage
+            if (res) {
+              localStorage.setItem("user", JSON.stringify(res));
+            }
             window.location.href = "../home/index.html";
           } catch (err) {
             showError(loginError, (err && err.message) || "Đăng nhập thất bại");
@@ -513,8 +519,12 @@
           btnRegister.disabled = true;
           btnRegister.classList.add("opacity-70");
           try {
-            await (window.api?.register?.({ fullName, email, password: pw1 }) ||
-              Promise.reject(new Error("API không sẵn sàng")));
+            await (window.api?.register?.({
+              fullName,
+              email,
+              password: pw1,
+              confirmPassword: pw2,
+            }) || Promise.reject(new Error("API không sẵn sàng")));
             alert("Đăng ký thành công! Vui lòng đăng nhập.");
             setActiveTab("login");
             if (loginUsername) loginUsername.value = email;

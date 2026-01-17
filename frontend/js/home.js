@@ -5,15 +5,68 @@
   const newsletterBtn = document.getElementById("btn-newsletter");
   const newsletterEmail = document.getElementById("newsletter-email");
 
-  if (loginBtn)
-    loginBtn.addEventListener("click", () => {
-      window.location.href = "../login/login.html";
-    });
+  // Kiểm tra trạng thái đăng nhập
+  function checkLoginStatus() {
+    const userStr = localStorage.getItem("user");
+    if (userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        if (user && user.fullName) {
+          // Đã đăng nhập - ẩn nút đăng nhập/đăng ký, hiển thị thông tin user
+          if (loginBtn) {
+            loginBtn.textContent = user.fullName;
+            loginBtn.classList.remove("bg-[#f0f2f4]", "text-[#111418]");
+            loginBtn.classList.add("bg-primary", "text-white");
+            // Đổi sự kiện click thành dropdown menu
+            loginBtn.removeEventListener("click", goToLogin);
+            loginBtn.addEventListener("click", showUserMenu);
+          }
+          if (registerBtn) {
+            registerBtn.textContent = "Đăng xuất";
+            registerBtn.classList.remove("bg-primary");
+            registerBtn.classList.add("bg-red-500", "hover:bg-red-600");
+            registerBtn.removeEventListener("click", goToRegister);
+            registerBtn.addEventListener("click", logout);
+          }
+        }
+      } catch (e) {
+        console.error("Error parsing user data:", e);
+      }
+    }
+  }
 
-  if (registerBtn)
-    registerBtn.addEventListener("click", () => {
-      window.location.href = "../login/login.html#signup";
-    });
+  function goToLogin() {
+    window.location.href = "../login/login.html";
+  }
+
+  function goToRegister() {
+    window.location.href = "../login/login.html#signup";
+  }
+
+  function showUserMenu() {
+    const userStr = localStorage.getItem("user");
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      // Có thể thêm dropdown menu ở đây, tạm thời chuyển đến trang quản lý
+      if (user.role === "ADMIN") {
+        window.location.href = "../admin/quan_ly_phuong_tien.html";
+      } else {
+        window.location.href = "../use/quan_ly_xe.html";
+      }
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem("user");
+    alert("Đăng xuất thành công!");
+    window.location.reload();
+  }
+
+  if (loginBtn) loginBtn.addEventListener("click", goToLogin);
+  if (registerBtn) registerBtn.addEventListener("click", goToRegister);
+
+  // Kiểm tra đăng nhập khi trang load
+  checkLoginStatus();
 
   if (searchBtn) {
     searchBtn.addEventListener("click", async () => {
