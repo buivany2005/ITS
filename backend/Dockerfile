@@ -8,8 +8,8 @@ WORKDIR /app
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# Copy source code and build
-COPY backend/src ./src
+# Copy source code matching pom.xml sourceDirectory structure
+COPY backend/src ./backend/src
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run
