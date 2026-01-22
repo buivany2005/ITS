@@ -14,33 +14,38 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
 public class AuthController {
     
     @Autowired
     private UserRepository userRepository;
     
+    /**
+     * Login endpoint
+     */
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         try {
-            // Tìm user theo email
+            System.out.println("🔐 Login attempt: " + request.getEmail());
+            
             Optional<User> userOpt = userRepository.findByEmail(request.getEmail());
             
             if (userOpt.isEmpty()) {
+                System.out.println("❌ User not found: " + request.getEmail());
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorResponse("Email không tồn tại"));
             }
             
             User user = userOpt.get();
             
-            // Kiểm tra password (chưa mã hóa - development only)
             if (!user.getPassword().equals(request.getPassword())) {
+                System.out.println("❌ Wrong password for: " + request.getEmail());
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(new ErrorResponse("Mật khẩu không đúng"));
             }
             
-            // Đăng nhập thành công
+            System.out.println("✅ Login successful: " + user.getFullName());
             LoginResponse response = new LoginResponse(
                 user.getId(),
                 user.getEmail(),
@@ -52,19 +57,21 @@ public class AuthController {
             return ResponseEntity.ok(response);
             
         } catch (Exception e) {
+            System.out.println("❌ Login error: " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse("Lỗi server: " + e.getMessage()));
         }
     }
     
-    @GetMapping("/check")
-    public ResponseEntity<?> checkAuth() {
-        return ResponseEntity.ok(new MessageResponse("API auth hoạt động"));
-    }
-    
+    /**
+     * Register endpoint
+     */
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
         try {
+            System.out.println("📝 Register attempt: " + request.getEmail());
+            
             // Validate input
             if (request.getFullName() == null || request.getFullName().trim().isEmpty()) {
                 return ResponseEntity.badRequest()
@@ -88,6 +95,7 @@ public class AuthController {
             
             // Check if email already exists
             if (userRepository.existsByEmail(request.getEmail())) {
+                System.out.println("❌ Email already exists: " + request.getEmail());
                 return ResponseEntity.badRequest()
                     .body(new ErrorResponse("Email đã được đăng ký"));
             }
@@ -96,12 +104,13 @@ public class AuthController {
             User newUser = new User();
             newUser.setFullName(request.getFullName());
             newUser.setEmail(request.getEmail());
-            newUser.setPassword(request.getPassword()); // Note: plain text - should be hashed in production
+            newUser.setPassword(request.getPassword());
             newUser.setPhone(request.getPhone());
             newUser.setAddress(request.getAddress());
-            newUser.setRole(UserRole.USER); // Default role for new users
+            newUser.setRole(UserRole.USER);
             
             User savedUser = userRepository.save(newUser);
+            System.out.println("✅ User registered: " + savedUser.getFullName());
             
             // Return success response
             LoginResponse response = new LoginResponse(
@@ -115,12 +124,35 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
             
         } catch (Exception e) {
+            System.out.println("❌ Register error: " + e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse("Lỗi server: " + e.getMessage()));
         }
     }
     
-    // Inner classes for responses
+    /**
+     * Check auth endpoint
+     */
+    @GetMapping("/check")
+    public ResponseEntity<?> checkAuth() {
+        System.out.println("✅ Auth check endpoint hit");
+        return ResponseEntity.ok(new MessageResponse("API auth hoạt động"));
+    }
+    
+    /**
+     * Logout endpoint
+     */
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout() {
+        System.out.println("🚪 Logout endpoint hit");
+        return ResponseEntity.ok(new MessageResponse("Đăng xuất thành công"));
+    }
+    
+    // ===================================================================
+    // INNER CLASSES
+    // ===================================================================
+    
     static class ErrorResponse {
         private String error;
         
@@ -130,6 +162,10 @@ public class AuthController {
         
         public String getError() {
             return error;
+        }
+        
+        public void setError(String error) {
+            this.error = error;
         }
     }
     
@@ -142,6 +178,10 @@ public class AuthController {
         
         public String getMessage() {
             return message;
+        }
+        
+        public void setMessage(String message) {
+            this.message = message;
         }
     }
 }

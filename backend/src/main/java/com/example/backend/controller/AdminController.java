@@ -16,14 +16,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.ByteArrayOutputStream;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 @CrossOrigin(origins = "*")
 public class AdminController {
     
@@ -36,11 +35,6 @@ public class AdminController {
     @Autowired
     private UserService userService;
     
-    // ==================== VEHICLE MANAGEMENT ====================
-    
-    /**
-     * Create new vehicle
-     */
     @PostMapping("/vehicles")
     public ResponseEntity<?> createVehicle(@RequestBody VehicleRequest request) {
         try {
@@ -68,9 +62,6 @@ public class AdminController {
         }
     }
     
-    /**
-     * Update vehicle
-     */
     @PutMapping("/vehicles/{id}")
     public ResponseEntity<?> updateVehicle(
             @PathVariable Long id, 
@@ -102,9 +93,6 @@ public class AdminController {
         }
     }
     
-    /**
-     * Delete vehicle
-     */
     @DeleteMapping("/vehicles/{id}")
     public ResponseEntity<?> deleteVehicle(@PathVariable Long id) {
         try {
@@ -116,9 +104,6 @@ public class AdminController {
         }
     }
     
-    /**
-     * Update vehicle status
-     */
     @PatchMapping("/vehicles/{id}/status")
     public ResponseEntity<?> updateVehicleStatus(
             @PathVariable Long id,
@@ -133,20 +118,12 @@ public class AdminController {
         }
     }
     
-    /**
-     * Get vehicle statistics
-     */
     @GetMapping("/vehicles/stats")
     public ResponseEntity<?> getVehicleStats() {
         VehicleService.VehicleStats stats = vehicleService.getVehicleStats();
         return ResponseEntity.ok(stats);
     }
     
-    // ==================== ORDER MANAGEMENT ====================
-    
-    /**
-     * Get all orders
-     */
     @GetMapping("/orders")
     public ResponseEntity<?> getAllOrders(@RequestParam(required = false) String status) {
         try {
@@ -164,9 +141,6 @@ public class AdminController {
         }
     }
     
-    /**
-     * Update order status
-     */
     @PatchMapping("/orders/{id}/status")
     public ResponseEntity<?> updateOrderStatus(
             @PathVariable Long id,
@@ -181,15 +155,11 @@ public class AdminController {
         }
     }
     
-    /**
-     * Export orders to Excel/CSV
-     */
     @GetMapping("/orders/export")
     public ResponseEntity<?> exportOrders() {
         try {
             List<OrderResponse> orders = orderService.getAllOrders();
             
-            // Generate CSV content
             StringBuilder csv = new StringBuilder();
             csv.append("ID,Khách hàng,Phương tiện,Loại xe,Từ ngày,Đến ngày,Số ngày,Giá/ngày,Tổng tiền,Trạng thái,Ngày tạo\n");
             
@@ -232,20 +202,12 @@ public class AdminController {
         return value;
     }
     
-    /**
-     * Get order statistics
-     */
     @GetMapping("/orders/stats")
     public ResponseEntity<?> getOrderStats() {
         OrderService.OrderStats stats = orderService.getOrderStats();
         return ResponseEntity.ok(stats);
     }
     
-    // ==================== USER MANAGEMENT ====================
-    
-    /**
-     * Get all users
-     */
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers() {
         try {
@@ -256,9 +218,6 @@ public class AdminController {
         }
     }
     
-    /**
-     * Update user role
-     */
     @PatchMapping("/users/{id}/role")
     public ResponseEntity<?> updateUserRole(
             @PathVariable Long id,
@@ -273,9 +232,6 @@ public class AdminController {
         }
     }
     
-    /**
-     * Delete user
-     */
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
@@ -287,11 +243,6 @@ public class AdminController {
         }
     }
     
-    // ==================== DASHBOARD ====================
-    
-    /**
-     * Get dashboard statistics
-     */
     @GetMapping("/dashboard")
     public ResponseEntity<?> getDashboardStats() {
         try {
@@ -310,8 +261,6 @@ public class AdminController {
                 .body(Map.of("error", e.getMessage()));
         }
     }
-    
-    // ==================== INNER CLASSES ====================
     
     static class VehicleRequest {
         public String name;

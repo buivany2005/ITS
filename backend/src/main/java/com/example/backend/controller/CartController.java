@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/cart")
+@RequestMapping("/api/cart")  // ✅ FIXED: Thêm /api prefix
 @CrossOrigin(origins = "*")
 public class CartController {
     
