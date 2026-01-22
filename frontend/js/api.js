@@ -4,24 +4,52 @@ window.api = (function () {
 
   // Auto-detect API base URL based on environment
   const getBaseUrl = () => {
-    // If running on localhost with a port, assume it's backend on 8081
-    if (
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1"
-    ) {
-      // If frontend is on 8000, 5500, or similar dev server, use localhost:8081
-      if (window.location.port && window.location.port !== "8080") {
-        return "http://localhost:8081";
-      }
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+
+    // If running via Nginx on port 80 (port will be empty string), use relative path
+    if (!port || port === "80" || port === "8080") {
+      return "";
     }
-    // If running via Nginx on port 80, use relative path
+
+    // If frontend is on dev server (5500, 8000, etc.), use localhost:8081 for backend
+    if (hostname === "localhost" || hostname === "127.0.0.1") {
+      return "http://localhost:8081";
+    }
+
+    // Default: use relative path
     return "";
   };
 
   const baseUrl = getBaseUrl();
+  console.log("API Base URL:", baseUrl || "(relative path)");
 
   async function request(path, opts) {
     const url = baseUrl + path;
+    console.log("Fetching:", url);
+
+    // Thêm token vào Authorization header nếu có
+    const user = localStorage.getItem("user");
+    if (user) {
+      try {
+        const userData = JSON.parse(user);
+        opts = opts || {};
+        opts.headers = opts.headers || {};
+
+        // Attach JWT if present (future-proof)
+        if (userData.token) {
+          opts.headers["Authorization"] = "Bearer " + userData.token;
+        }
+
+        // Always attach user id for backend to identify the requester
+        if (userData.userId) {
+          opts.headers["X-User-Id"] = userData.userId;
+        }
+      } catch (e) {
+        console.log("Could not parse user data for token");
+      }
+    }
+
     const res = await fetch(url, opts);
     if (!res.ok) {
       const text = await res.text();
@@ -88,10 +116,10 @@ window.api = (function () {
       });
     },
     getUserOrders: async () => {
-      return request("/api/user/orders", { method: "GET" });
+      return request("/api/orders/my-orders", { method: "GET" });
     },
     cancelOrder: async (orderId) => {
-      return request(`/api/user/orders/${orderId}/cancel`, { method: "POST" });
+      return request(`/api/orders/${orderId}/cancel`, { method: "POST" });
     },
 
     // Newsletter

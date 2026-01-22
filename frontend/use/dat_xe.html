@@ -218,7 +218,8 @@
                             Xe máy • Đời 2023
                           </p>
                           <button
-                            class="text-xs text-red-500 font-bold mt-2 flex items-center gap-1 hover:underline"
+                            class="btn-delete text-xs text-red-500 font-bold mt-2 flex items-center gap-1 hover:underline"
+                            data-id="1"
                           >
                             <span class="material-symbols-outlined text-sm"
                               >delete</span
@@ -233,21 +234,25 @@
                     >
                       <div class="space-y-1">
                         <p
-                          class="font-medium text-[#111418] dark:text-gray-200"
+                          class="item-dates font-medium text-[#111418] dark:text-gray-200"
                         >
-                          15/10/2023 - 17/10/2023
+                          Chưa chọn ngày
                         </p>
-                        <p class="text-xs">Tổng cộng: 2 ngày</p>
+                        <p class="item-days text-xs">Tổng cộng: 0 ngày</p>
                       </div>
                     </td>
                     <td class="px-6 py-6 text-sm">
-                      <p class="font-medium text-gray-900 dark:text-gray-100">
+                      <p
+                        class="item-price font-medium text-gray-900 dark:text-gray-100"
+                      >
                         200.000đ
                       </p>
                       <p class="text-xs text-gray-500">/ ngày</p>
                     </td>
                     <td class="px-6 py-6 text-right">
-                      <p class="font-bold text-primary text-lg">400.000đ</p>
+                      <p class="item-total font-bold text-primary text-lg">
+                        0đ
+                      </p>
                     </td>
                   </tr>
                   <!-- Item 2 -->
@@ -271,7 +276,8 @@
                             Ô tô • Tự động
                           </p>
                           <button
-                            class="text-xs text-red-500 font-bold mt-2 flex items-center gap-1 hover:underline"
+                            class="btn-delete text-xs text-red-500 font-bold mt-2 flex items-center gap-1 hover:underline"
+                            data-id="2"
                           >
                             <span class="material-symbols-outlined text-sm"
                               >delete</span
@@ -286,21 +292,25 @@
                     >
                       <div class="space-y-1">
                         <p
-                          class="font-medium text-[#111418] dark:text-gray-200"
+                          class="item-dates font-medium text-[#111418] dark:text-gray-200"
                         >
-                          15/10/2023 - 16/10/2023
+                          Chưa chọn ngày
                         </p>
-                        <p class="text-xs">Tổng cộng: 1 ngày</p>
+                        <p class="item-days text-xs">Tổng cộng: 0 ngày</p>
                       </div>
                     </td>
                     <td class="px-6 py-6 text-sm">
-                      <p class="font-medium text-gray-900 dark:text-gray-100">
+                      <p
+                        class="item-price font-medium text-gray-900 dark:text-gray-100"
+                      >
                         1.200.000đ
                       </p>
                       <p class="text-xs text-gray-500">/ ngày</p>
                     </td>
                     <td class="px-6 py-6 text-right">
-                      <p class="font-bold text-primary text-lg">1.200.000đ</p>
+                      <p class="item-total font-bold text-primary text-lg">
+                        0đ
+                      </p>
                     </td>
                   </tr>
                 </tbody>
@@ -337,21 +347,21 @@
             <div class="space-y-4 mb-6">
               <div class="flex justify-between items-center">
                 <span class="text-gray-600 dark:text-gray-400"
-                  >Tạm tính (2 xe)</span
+                  >Tạm tính (<span id="summary-count">0</span> xe)</span
                 >
-                <span class="font-medium">1.600.000đ</span>
+                <span id="summary-subtotal" class="font-medium">0đ</span>
               </div>
               <div class="flex justify-between items-center">
                 <span class="text-gray-600 dark:text-gray-400"
                   >Phí bảo hiểm cơ bản</span
                 >
-                <span class="font-medium">150.000đ</span>
+                <span id="summary-insurance" class="font-medium">0đ</span>
               </div>
               <div class="flex justify-between items-center">
                 <span class="text-gray-600 dark:text-gray-400"
                   >Thuế (VAT 10%)</span
                 >
-                <span class="font-medium">175.000đ</span>
+                <span id="summary-tax" class="font-medium">0đ</span>
               </div>
             </div>
             <div
@@ -368,19 +378,23 @@
                     Đã bao gồm tất cả các loại phí
                   </p>
                 </div>
-                <span class="text-3xl font-extrabold text-primary"
-                  >1.925.000đ</span
+                <span
+                  id="summary-total"
+                  class="text-3xl font-extrabold text-primary"
+                  >0đ</span
                 >
               </div>
             </div>
             <div class="space-y-4">
               <button
+                id="btn-checkout"
                 class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
               >
                 Tiến hành đặt thuê
                 <span class="material-symbols-outlined">arrow_forward</span>
               </button>
               <button
+                id="btn-continue"
                 class="w-full bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-[#111418] dark:text-white font-bold py-4 rounded-xl transition-all"
               >
                 Tiếp tục chọn xe

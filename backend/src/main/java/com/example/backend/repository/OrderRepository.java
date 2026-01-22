@@ -24,11 +24,17 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     
     // Check if vehicle is available for date range
     @Query("SELECT COUNT(o) FROM Order o WHERE o.vehicle.id = :vehicleId " +
-           "AND o.status NOT IN ('CANCELLED', 'COMPLETED') " +
+           "AND o.status != com.example.backend.entity.Order$OrderStatus.CANCELLED " +
+           "AND o.status != com.example.backend.entity.Order$OrderStatus.COMPLETED " +
            "AND ((o.dateFrom <= :dateTo AND o.dateTo >= :dateFrom))")
     long countConflictingOrders(@Param("vehicleId") Long vehicleId, 
                                 @Param("dateFrom") LocalDate dateFrom, 
                                 @Param("dateTo") LocalDate dateTo);
+    
+    // Check if vehicle is available (returns true if available, false if booked)
+    default boolean isVehicleAvailable(Long vehicleId, LocalDate dateFrom, LocalDate dateTo) {
+        return countConflictingOrders(vehicleId, dateFrom, dateTo) == 0;
+    }
     
     // Find orders by date range
     @Query("SELECT o FROM Order o WHERE o.createdAt >= :startDate ORDER BY o.createdAt DESC")

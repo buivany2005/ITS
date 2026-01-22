@@ -86,26 +86,15 @@
         <div class="hidden md:flex items-center gap-9">
           <a
             class="text-[#111418] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors"
-            href="#"
+            href="../home/index.html"
             >Trang chủ</a
           >
           <a
             class="text-[#111418] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors"
-            href="#"
-            >Dịch vụ</a
-          >
-          <a
-            class="text-[#111418] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors"
-            href="#"
-            >Về chúng tôi</a
+            href="../use/danh_sach_xe.html"
+            >Danh sách xe</a
           >
         </div>
-        <button
-          id="btn-home"
-          class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-all"
-        >
-          <span class="truncate">Trang chủ</span>
-        </button>
       </div>
     </header>
     <!-- Main Content: Split Screen Layout -->
@@ -427,7 +416,7 @@
       if (btnHome)
         btnHome.addEventListener(
           "click",
-          () => (window.location.href = "../home/index.html")
+          () => (window.location.href = "../home/index.html"),
         );
       if (tabLogin)
         tabLogin.addEventListener("click", () => setActiveTab("login"));
@@ -448,7 +437,7 @@
         btnForgot.addEventListener("click", async () => {
           const email = prompt(
             "Nhập email để đặt lại mật khẩu:",
-            loginUsername?.value || ""
+            loginUsername?.value || "",
           );
           if (email && email.includes("@")) {
             alert("Nếu email tồn tại, hướng dẫn đặt lại mật khẩu sẽ được gửi.");
@@ -484,9 +473,19 @@
               Promise.reject(new Error("API không sẵn sàng")));
             // Lưu thông tin user vào localStorage
             if (res) {
+              console.log("Login successful, saving user:", res);
               localStorage.setItem("user", JSON.stringify(res));
+              console.log(
+                "User saved to localStorage:",
+                localStorage.getItem("user"),
+              );
             }
-            window.location.href = "../home/index.html";
+            // Chuyển hướng dựa theo role
+            if (res && res.role === "ADMIN") {
+              window.location.href = "../admin/quan_ly_xe.html";
+            } else {
+              window.location.href = "../home/index.html";
+            }
           } catch (err) {
             showError(loginError, (err && err.message) || "Đăng nhập thất bại");
           } finally {
@@ -539,11 +538,11 @@
 
       if (btnGoogle)
         btnGoogle.addEventListener("click", () =>
-          alert("Đăng nhập Google chưa được hỗ trợ.")
+          alert("Đăng nhập Google chưa được hỗ trợ."),
         );
       if (btnFacebook)
         btnFacebook.addEventListener("click", () =>
-          alert("Đăng nhập Facebook chưa được hỗ trợ.")
+          alert("Đăng nhập Facebook chưa được hỗ trợ."),
         );
 
       // default active tab based on URL hash

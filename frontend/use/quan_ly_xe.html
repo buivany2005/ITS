@@ -66,7 +66,10 @@
         class="max-w-[1440px] mx-auto flex items-center justify-between gap-4"
       >
         <div class="flex items-center gap-8">
-          <div class="flex items-center gap-2 text-primary">
+          <a
+            href="../home/index.html"
+            class="flex items-center gap-2 text-primary"
+          >
             <span class="material-symbols-outlined text-3xl font-bold"
               >directions_car</span
             >
@@ -75,16 +78,16 @@
             >
               XeNhanh
             </h2>
-          </div>
+          </a>
           <nav class="hidden md:flex items-center gap-6">
             <a
               class="text-sm font-semibold text-[#111418] dark:text-white hover:text-primary transition-colors"
-              href="#"
+              href="../home/index.html"
               >Trang chủ</a
             >
             <a
               class="text-sm font-semibold text-[#111418] dark:text-white hover:text-primary transition-colors"
-              href="#"
+              href="./danh_sach_xe.html"
               >Khám phá</a
             >
             <a
@@ -122,12 +125,16 @@
             <div class="h-8 w-px bg-gray-200 dark:bg-slate-700 mx-1"></div>
             <div class="flex items-center gap-3 pl-1">
               <div
-                class="w-9 h-9 rounded-full bg-cover bg-center border-2 border-primary/20"
-                data-alt="User profile avatar"
-                style="
-                  background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuA7hnKBHuMs8xhvl3_4DYqBNJQ5itTQ5fSLEQo75RV8fY3YPEJoqwkg8yceFV2QdK6IKyoEfMTA32HuOq2ubq5ZC2_58Bnn5yjjxWq04ZsubTU3C9kTs28Vg3xmDg9ZQNnGLKBu6SmIe8n0eZ6KlagvTZqA33I124VCKo1qnN2cTghnMIN_HsKVlm8IHIhgzQqwKq6rIuz95XpManyDgw0RlklYqftN4UUfeYHb10bk1GOtMfGAfBbPvOh85pJG1O8cWZ4b4KjLf8XG&quot;);
-                "
+                id="user-avatar"
+                class="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white font-bold text-sm cursor-pointer bg-cover bg-center"
+                onclick="document.getElementById('avatar-upload').click()"
               ></div>
+              <input
+                type="file"
+                id="avatar-upload"
+                accept="image/*"
+                class="hidden"
+              />
             </div>
           </div>
         </div>
@@ -144,14 +151,14 @@
         >
           <div class="flex items-center gap-4">
             <div
-              class="w-14 h-14 rounded-full bg-cover bg-center border-2 border-primary"
+              id="user-avatar-sidebar"
+              class="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white font-bold border-2 border-primary cursor-pointer bg-cover bg-center"
               data-alt="Customer avatar profile"
-              style="
-                background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDxj9uiJgtDKAVc7TpFeu6dxBKv_Bsj8USVRkj6cRzjhrHYQNyeQ8fQFY-Zd3BBYhvwyBEOGoTqhS9SfldfJCHFSAlvOtTb_wvcze99TO2FG6FKCpwD9OCeBD3YOZF5__6sqLuXHnV1Wzm45CMvYFk1BQ8pNLBoHnyNm0XiABE3jAqIjeSwccXCavMTvWQR1SW6dc4eSdGRGf9K-6mLPU-zLjkOacHkXlqxxLQeXJI3VOojVVHDrLTC4IRNoLPj5xxDZ97bhubkCcs9&quot;);
-              "
+              onclick="document.getElementById('avatar-upload').click()"
             ></div>
             <div>
               <h3
+                id="user-name"
                 class="font-bold text-[#111418] dark:text-white leading-none mb-1"
               >
                 Nguyễn Văn A
@@ -167,42 +174,35 @@
           <nav class="flex flex-col gap-2">
             <a
               class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-background-light dark:hover:bg-slate-800 transition-all font-medium"
-              href="#"
+              href="./thong_tin_ca_nhan.html"
             >
               <span class="material-symbols-outlined">person</span>
               Thông tin cá nhân
             </a>
             <a
               class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary text-white shadow-md shadow-primary/30 transition-all font-semibold"
-              href="#"
+              href="./quan_ly_xe.html"
             >
               <span class="material-symbols-outlined">assignment</span>
               Đơn thuê của tôi
             </a>
             <a
               class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-background-light dark:hover:bg-slate-800 transition-all font-medium"
-              href="#"
+              href="./thong_bao.html"
             >
               <span class="material-symbols-outlined">notifications</span>
               Thông báo
             </a>
-            <a
-              class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-background-light dark:hover:bg-slate-800 transition-all font-medium"
-              href="#"
-            >
-              <span class="material-symbols-outlined">favorite</span>
-              Yêu thích
-            </a>
             <div
               class="pt-4 mt-4 border-t border-gray-100 dark:border-slate-800"
             >
-              <a
-                class="flex items-center gap-3 px-4 py-3 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all font-medium"
-                href="#"
+              <button
+                id="btn-logout"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all font-medium w-full text-left"
               >
                 <span class="material-symbols-outlined">logout</span>
                 Đăng xuất
-              </a>
+              </button>
             </div>
           </nav>
         </div>
@@ -223,24 +223,40 @@
         <!-- Tabs/Chips -->
         <div class="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
           <button
+            data-filter="all"
             class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-primary px-5 text-white text-sm font-bold"
           >
-            Tất cả (12)
+            Tất cả <span class="count">(12)</span>
           </button>
           <button
-            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-white dark:bg-slate-900 border border-[#dbe0e6] dark:border-slate-800 px-5 text-[#111418] dark:text-white text-sm font-medium hover:bg-gray-50 transition-colors"
+            data-filter="PENDING"
+            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 px-5 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 transition-colors"
           >
-            Đang xử lý
+            Đang xử lý <span class="count">(0)</span>
           </button>
           <button
-            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-white dark:bg-slate-900 border border-[#dbe0e6] dark:border-slate-800 px-5 text-[#111418] dark:text-white text-sm font-medium hover:bg-gray-50 transition-colors"
+            data-filter="CONFIRMED"
+            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 px-5 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 transition-colors"
           >
-            Đã xác nhận
+            Đã xác nhận <span class="count">(0)</span>
           </button>
           <button
-            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-white dark:bg-slate-900 border border-[#dbe0e6] dark:border-slate-800 px-5 text-[#111418] dark:text-white text-sm font-medium hover:bg-gray-50 transition-colors"
+            data-filter="IN_PROGRESS"
+            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 px-5 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 transition-colors"
           >
-            Đã trả xe
+            Đang thuê <span class="count">(0)</span>
+          </button>
+          <button
+            data-filter="COMPLETED"
+            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 px-5 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 transition-colors"
+          >
+            Đã trả xe <span class="count">(0)</span>
+          </button>
+          <button
+            data-filter="CANCELLED"
+            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 px-5 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 transition-colors"
+          >
+            Đã hủy <span class="count">(0)</span>
           </button>
         </div>
         <!-- Table Section -->
@@ -280,194 +296,22 @@
                   </th>
                 </tr>
               </thead>
+
               <tbody class="divide-y divide-[#dbe0e6] dark:divide-slate-800">
-                <!-- Row 1: Processing -->
-                <tr
-                  class="hover:bg-gray-50/50 dark:hover:bg-slate-800/30 transition-colors"
-                >
-                  <td class="px-6 py-5 whitespace-nowrap">
-                    <span class="font-bold text-gray-900 dark:text-white"
-                      >#ORD-10293</span
-                    >
-                    <div class="text-[10px] text-gray-400">
-                      12/10/2023 09:45
-                    </div>
-                  </td>
-                  <td class="px-6 py-5">
-                    <div class="flex items-center gap-3">
-                      <div
-                        class="p-2 bg-orange-50 dark:bg-orange-900/20 rounded-lg text-orange-600"
-                      >
-                        <span class="material-symbols-outlined"
-                          >two_wheeler</span
-                        >
-                      </div>
-                      <div>
-                        <p class="font-bold text-[#111418] dark:text-white">
-                          Honda SH 150i (2023)
-                        </p>
-                        <p class="text-xs text-gray-500">Xe máy</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-5">
-                    <span
-                      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400"
-                    >
-                      <span
-                        class="w-1.5 h-1.5 rounded-full bg-amber-500"
-                      ></span>
-                      Đang xử lý
-                    </span>
-                  </td>
-                  <td class="px-6 py-5 font-bold text-primary">850.000đ</td>
-                  <td class="px-6 py-5">
-                    <div class="flex items-center gap-4">
-                      <button
-                        class="text-sm font-bold text-primary hover:underline underline-offset-4"
-                      >
-                        Xem chi tiết
-                      </button>
-                      <button
-                        class="text-sm font-bold text-red-500 hover:text-red-600"
-                      >
-                        Hủy đơn
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-                <!-- Row 2: Confirmed -->
-                <tr
-                  class="hover:bg-gray-50/50 dark:hover:bg-slate-800/30 transition-colors"
-                >
-                  <td class="px-6 py-5 whitespace-nowrap">
-                    <span class="font-bold text-gray-900 dark:text-white"
-                      >#ORD-10255</span
-                    >
-                    <div class="text-[10px] text-gray-400">
-                      08/10/2023 14:20
-                    </div>
-                  </td>
-                  <td class="px-6 py-5">
-                    <div class="flex items-center gap-3">
-                      <div
-                        class="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600"
-                      >
-                        <span class="material-symbols-outlined"
-                          >directions_car</span
-                        >
-                      </div>
-                      <div>
-                        <p class="font-bold text-[#111418] dark:text-white">
-                          VinFast VF8
-                        </p>
-                        <p class="text-xs text-gray-500">Ô tô điện</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-5">
-                    <span
-                      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
-                    >
-                      <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                      Đã xác nhận
-                    </span>
-                  </td>
-                  <td class="px-6 py-5 font-bold text-primary">2.500.000đ</td>
-                  <td class="px-6 py-5">
-                    <button
-                      class="text-sm font-bold text-primary hover:underline underline-offset-4"
-                    >
-                      Xem chi tiết
-                    </button>
-                  </td>
-                </tr>
-                <!-- Row 3: Returned -->
-                <tr
-                  class="hover:bg-gray-50/50 dark:hover:bg-slate-800/30 transition-colors"
-                >
-                  <td class="px-6 py-5 whitespace-nowrap">
-                    <span class="font-bold text-gray-900 dark:text-white"
-                      >#ORD-10112</span
-                    >
-                    <div class="text-[10px] text-gray-400">
-                      01/10/2023 08:00
-                    </div>
-                  </td>
-                  <td class="px-6 py-5">
-                    <div class="flex items-center gap-3">
-                      <div
-                        class="p-2 bg-green-50 dark:bg-green-900/20 rounded-lg text-green-600"
-                      >
-                        <span class="material-symbols-outlined"
-                          >pedal_bike</span
-                        >
-                      </div>
-                      <div>
-                        <p class="font-bold text-[#111418] dark:text-white">
-                          Xe đạp Giant ATX
-                        </p>
-                        <p class="text-xs text-gray-500">Xe đạp địa hình</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-5">
-                    <span
-                      class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                    >
-                      <span
-                        class="w-1.5 h-1.5 rounded-full bg-green-500"
-                      ></span>
-                      Đã trả xe
-                    </span>
-                  </td>
-                  <td class="px-6 py-5 font-bold text-primary">150.000đ</td>
-                  <td class="px-6 py-5">
-                    <button
-                      class="text-sm font-bold text-primary hover:underline underline-offset-4"
-                    >
-                      Xem chi tiết
-                    </button>
-                  </td>
-                </tr>
+                <!-- Rows will be populated by JavaScript -->
               </tbody>
             </table>
           </div>
           <!-- Pagination footer -->
           <div
+            id="pagination-container"
             class="px-6 py-4 bg-gray-50 dark:bg-slate-800/50 flex items-center justify-between border-t border-[#dbe0e6] dark:border-slate-800"
           >
-            <p class="text-sm text-gray-500">Hiển thị 1 - 3 của 12 đơn hàng</p>
-            <div class="flex items-center gap-2">
-              <button
-                class="w-8 h-8 flex items-center justify-center rounded-lg border border-[#dbe0e6] dark:border-slate-700 bg-white dark:bg-slate-900 text-gray-400 disabled:opacity-50"
-              >
-                <span class="material-symbols-outlined text-sm"
-                  >chevron_left</span
-                >
-              </button>
-              <button
-                class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-white text-sm font-bold"
-              >
-                1
-              </button>
-              <button
-                class="w-8 h-8 flex items-center justify-center rounded-lg border border-[#dbe0e6] dark:border-slate-700 bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 text-sm font-bold"
-              >
-                2
-              </button>
-              <button
-                class="w-8 h-8 flex items-center justify-center rounded-lg border border-[#dbe0e6] dark:border-slate-700 bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300 text-sm font-bold"
-              >
-                3
-              </button>
-              <button
-                class="w-8 h-8 flex items-center justify-center rounded-lg border border-[#dbe0e6] dark:border-slate-700 bg-white dark:bg-slate-900 text-gray-700 dark:text-gray-300"
-              >
-                <span class="material-symbols-outlined text-sm"
-                  >chevron_right</span
-                >
-              </button>
+            <p id="pagination-info" class="text-sm text-gray-500">
+              Hiển thị 1 - 5 của 12 đơn hàng
+            </p>
+            <div id="pagination-buttons" class="flex items-center gap-2">
+              <!-- Pagination buttons will be generated by JavaScript -->
             </div>
           </div>
         </div>
@@ -496,6 +340,187 @@
         </div>
       </section>
     </main>
+
+    <!-- Order Detail Modal -->
+    <div
+      id="order-detail-modal"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+      >
+        <!-- Modal Header -->
+        <div
+          class="sticky top-0 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between"
+        >
+          <h2
+            class="text-2xl font-bold text-[#111418] dark:text-white"
+            id="modal-title"
+          >
+            Chi tiết đơn hàng
+          </h2>
+          <button
+            onclick="closeOrderDetail()"
+            class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <span class="material-symbols-outlined text-gray-500">close</span>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 space-y-6">
+          <!-- Order Info -->
+          <div
+            class="bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-xl p-6 border border-primary/20"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                  Mã đơn hàng
+                </p>
+                <h3
+                  class="text-2xl font-bold text-primary"
+                  id="detail-order-id"
+                >
+                  #ORD-001
+                </h3>
+              </div>
+              <div>
+                <span
+                  id="detail-status-badge"
+                  class="px-4 py-2 rounded-full text-sm font-bold bg-yellow-100 text-yellow-700"
+                  >Đang xử lý</span
+                >
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                  Ngày tạo
+                </p>
+                <p class="font-semibold" id="detail-created-date">22/01/2026</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                  Tổng tiền
+                </p>
+                <p
+                  class="text-xl font-bold text-primary"
+                  id="detail-total-price"
+                >
+                  150.000đ
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicle Info -->
+          <div
+            class="border border-gray-200 dark:border-slate-800 rounded-xl p-6"
+          >
+            <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary"
+                >directions_car</span
+              >
+              Thông tin xe
+            </h4>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Tên xe:</span>
+                <span class="font-semibold" id="detail-vehicle-name"
+                  >Honda Vision 2023</span
+                >
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Loại xe:</span>
+                <span class="font-semibold" id="detail-vehicle-type"
+                  >XEMAY</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Rental Period -->
+          <div
+            class="border border-gray-200 dark:border-slate-800 rounded-xl p-6"
+          >
+            <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary"
+                >calendar_month</span
+              >
+              Thời gian thuê
+            </h4>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400"
+                  >Ngày bắt đầu:</span
+                >
+                <span class="font-semibold" id="detail-date-from"
+                  >22/01/2026</span
+                >
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400"
+                  >Ngày kết thúc:</span
+                >
+                <span class="font-semibold" id="detail-date-to"
+                  >23/01/2026</span
+                >
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Số ngày:</span>
+                <span class="font-semibold text-primary" id="detail-total-days"
+                  >1 ngày</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Price Breakdown -->
+          <div
+            class="border border-gray-200 dark:border-slate-800 rounded-xl p-6"
+          >
+            <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary"
+                >payments</span
+              >
+              Chi tiết giá
+            </h4>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Giá thuê:</span>
+                <span class="font-semibold" id="detail-base-price"
+                  >150.000đ</span
+                >
+              </div>
+              <div
+                class="border-t border-gray-200 dark:border-slate-800 pt-3 mt-3"
+              >
+                <div class="flex justify-between text-lg">
+                  <span class="font-bold">Tổng cộng:</span>
+                  <span class="font-bold text-primary" id="detail-final-price"
+                    >150.000đ</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div
+          class="border-t border-gray-200 dark:border-slate-800 px-6 py-4 flex gap-3 justify-end"
+        >
+          <button
+            onclick="closeOrderDetail()"
+            class="px-6 py-3 rounded-lg border border-gray-300 dark:border-slate-700 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-slate-800 transition-all"
+          >
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Simple Footer -->
     <footer
       class="mt-12 border-t border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-8 text-center"
@@ -524,4 +549,49 @@
   <script src="../js/api.js"></script>
   <script src="../js/quan-ly-xe.js"></script>
   <script src="../js/auth-check.js"></script>
+  <script>
+    // Avatar management
+    function updateAvatarDisplay() {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      const avatarImage = localStorage.getItem("userAvatar");
+
+      const avatarElements = [
+        document.getElementById("user-avatar"),
+        document.getElementById("user-avatar-sidebar"),
+      ];
+
+      avatarElements.forEach((el) => {
+        if (!el) return;
+
+        if (avatarImage) {
+          // Display uploaded image
+          el.style.backgroundImage = `url(${avatarImage})`;
+          el.textContent = "";
+        } else if (user.fullName) {
+          // Display first letter
+          const firstLetter = user.fullName.charAt(0).toUpperCase();
+          el.textContent = firstLetter;
+          el.style.backgroundImage = "";
+        }
+      });
+    }
+
+    // Handle avatar upload
+    document
+      .getElementById("avatar-upload")
+      .addEventListener("change", function (e) {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            localStorage.setItem("userAvatar", event.target.result);
+            updateAvatarDisplay();
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+    // Initialize avatar display
+    updateAvatarDisplay();
+  </script>
 </html>

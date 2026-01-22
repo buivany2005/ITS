@@ -101,11 +101,6 @@
             href="../use/danh_sach_xe.html"
             >Danh sách xe</a
           >
-          <a
-            class="text-sm font-semibold hover:text-primary transition-colors text-[#111418] dark:text-gray-300"
-            href="#"
-            >Liên hệ</a
-          >
         </nav>
         <div class="flex items-center gap-3">
           <button
@@ -152,7 +147,7 @@
           </p>
           <!-- Search Widget -->
           <div
-            class="bg-white dark:bg-background-dark p-2 md:p-3 rounded-xl shadow-2xl max-w-[900px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-2 items-end"
+            class="bg-white dark:bg-background-dark p-2 md:p-3 rounded-xl shadow-2xl max-w-[700px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-2 items-end"
           >
             <!-- Vehicle Type -->
             <div class="flex flex-col text-left p-2">
@@ -162,11 +157,13 @@
               >
               <div class="relative">
                 <select
+                  id="select-type"
                   class="w-full h-12 bg-gray-50 dark:bg-gray-800 border-none rounded-lg text-sm font-semibold text-[#111418] dark:text-white focus:ring-2 focus:ring-primary appearance-none px-4"
                 >
-                  <option>Ô tô</option>
-                  <option>Xe máy</option>
-                  <option>Xe đạp</option>
+                  <option value="">Tất cả</option>
+                  <option value="OTO">Ô tô</option>
+                  <option value="XEMAY">Xe máy</option>
+                  <option value="XEDAP">Xe đạp</option>
                 </select>
                 <span
                   class="material-symbols-outlined absolute right-3 top-3 text-gray-400 pointer-events-none"
@@ -182,34 +179,18 @@
               >
               <div class="relative">
                 <select
+                  id="select-location"
                   class="w-full h-12 bg-gray-50 dark:bg-gray-800 border-none rounded-lg text-sm font-semibold text-[#111418] dark:text-white focus:ring-2 focus:ring-primary appearance-none px-4"
                 >
-                  <option>Hà Nội</option>
-                  <option>TP. Hồ Chí Minh</option>
-                  <option>Đà Nẵng</option>
-                  <option>Đà Lạt</option>
+                  <option value="">Tất cả</option>
+                  <option value="Hà Nội">Hà Nội</option>
+                  <option value="Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                  <option value="Đà Nẵng">Đà Nẵng</option>
+                  <option value="Đà Lạt">Đà Lạt</option>
                 </select>
                 <span
                   class="material-symbols-outlined absolute right-3 top-3 text-gray-400 pointer-events-none"
                   >location_on</span
-                >
-              </div>
-            </div>
-            <!-- Dates -->
-            <div class="flex flex-col text-left p-2">
-              <span
-                class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1 ml-1"
-                >Ngày nhận/trả</span
-              >
-              <div class="relative">
-                <input
-                  class="w-full h-12 bg-gray-50 dark:bg-gray-800 border-none rounded-lg text-sm font-semibold text-[#111418] dark:text-white focus:ring-2 focus:ring-primary px-4"
-                  placeholder="Chọn ngày"
-                  type="text"
-                />
-                <span
-                  class="material-symbols-outlined absolute right-3 top-3 text-gray-400 pointer-events-none"
-                  >calendar_month</span
                 >
               </div>
             </div>
@@ -243,7 +224,7 @@
               class="size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary transition-colors overflow-hidden"
             >
               <img
-                src="../../img/oto/Toyota_Granvia_2021.png"
+                src="/img/oto/Toyota_Granvia_2021.png"
                 alt="Ô tô"
                 class="w-12 h-12 object-cover"
               />
@@ -261,7 +242,7 @@
               class="size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary transition-colors overflow-hidden"
             >
               <img
-                src="../../img/oto/xe_may/Exciter_150.png"
+                src="/img/oto/xe_may/Exciter_150.png"
                 alt="Xe máy"
                 class="w-12 h-12 object-cover"
               />
@@ -279,7 +260,7 @@
               class="size-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-primary transition-colors overflow-hidden"
             >
               <img
-                src="../../img/oto/xe_dap/Road_Fascino.png"
+                src="/img/oto/xe_dap/Road_Fascino.png"
                 alt="Xe đạp"
                 class="w-12 h-12 object-cover"
               />
@@ -323,7 +304,7 @@
                 class="h-48 w-full bg-cover bg-center relative"
                 data-alt="Modern electric car in a city setting"
                 style="
-                  background-image: url(&quot;../../img/oto/Toyota_Granvia_2021.png&quot;);
+                  background-image: url(&quot;/img/oto/Toyota_Granvia_2021.png&quot;);
                 "
               >
                 <div
@@ -361,7 +342,7 @@
                 class="h-48 w-full bg-cover bg-center relative"
                 data-alt="Vintage motorbike on a coastal road"
                 style="
-                  background-image: url(&quot;../../img/oto/xe_may/Exciter_150.png&quot;);
+                  background-image: url(&quot;/img/oto/xe_may/Exciter_150.png&quot;);
                 "
               >
                 <div
@@ -399,7 +380,7 @@
                 class="h-48 w-full bg-cover bg-center relative"
                 data-alt="Mountain bike on a forest trail"
                 style="
-                  background-image: url(&quot;../../img/oto/xe_dap/Road_Fascino.png&quot;);
+                  background-image: url(&quot;/img/oto/xe_dap/Road_Fascino.png&quot;);
                 "
               >
                 <div

@@ -112,12 +112,22 @@
         </div>
         <div class="flex flex-1 justify-end gap-6 items-center">
           <div
-            class="hidden lg:flex w-full max-w-xs items-center rounded-lg bg-[#f0f2f4] dark:bg-slate-800 px-3 py-2"
+            class="hidden lg:flex w-full max-w-xs items-center rounded-lg bg-[#f0f2f4] dark:bg-slate-800 px-3 py-2 gap-2"
           >
-            <span class="material-symbols-outlined text-[#617589]">search</span>
+            <button
+              id="search-button"
+              class="flex items-center justify-center hover:text-primary transition-colors cursor-pointer"
+              type="button"
+            >
+              <span
+                class="material-symbols-outlined text-[#617589] hover:text-primary"
+                >search</span
+              >
+            </button>
             <input
+              id="search-input"
               class="w-full border-none bg-transparent focus:ring-0 text-sm"
-              placeholder="Tìm kiếm phương tiện..."
+              placeholder="Tìm kiếm phương tiện"
               type="text"
             />
           </div>
@@ -157,154 +167,253 @@
         <!-- Sidebar Filters -->
         <aside class="w-full lg:w-72 flex-shrink-0">
           <div
-            class="sticky top-24 bg-white dark:bg-slate-900 rounded-xl p-6 border border-[#f0f2f4] dark:border-slate-800 shadow-sm"
+            class="sticky top-24 bg-white dark:bg-slate-900 rounded-xl border border-[#f0f2f4] dark:border-slate-800 shadow-sm overflow-hidden flex flex-col"
+            style="max-height: calc(100vh - 7rem)"
           >
-            <div class="flex items-center gap-2 mb-6">
+            <div
+              class="flex items-center gap-2 p-6 pb-4 border-b border-[#f0f2f4] dark:border-slate-800 flex-shrink-0"
+            >
               <span class="material-symbols-outlined text-primary"
                 >filter_list</span
               >
               <h2 class="text-lg font-bold">Bộ lọc tìm kiếm</h2>
             </div>
-            <!-- Category: Loại xe -->
-            <div class="mb-8">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="material-symbols-outlined text-[#617589] text-xl"
-                  >directions_car</span
-                >
-                <span
-                  class="font-bold text-sm uppercase tracking-wider text-[#617589]"
-                  >Loại xe</span
-                >
-              </div>
-              <div class="space-y-1">
-                <label
-                  class="flex items-center gap-3 py-2 cursor-pointer group"
-                >
-                  <input
-                    id="filter-type-oto"
-                    class="h-5 w-5 rounded border-[#dbe0e6] dark:border-slate-700 text-primary focus:ring-primary/20 bg-transparent"
-                    type="checkbox"
-                  />
-                  <span class="text-sm font-medium group-hover:text-primary"
-                    >Ô tô</span
+            <div class="overflow-y-auto px-6 py-4 flex-1 custom-scrollbar">
+              <!-- Category: Loại xe -->
+              <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="material-symbols-outlined text-[#617589] text-xl"
+                    >directions_car</span
                   >
-                </label>
-                <label
-                  class="flex items-center gap-3 py-2 cursor-pointer group"
-                >
-                  <input
-                    id="filter-type-xemay"
-                    class="h-5 w-5 rounded border-[#dbe0e6] dark:border-slate-700 text-primary focus:ring-primary/20 bg-transparent"
-                    type="checkbox"
-                  />
-                  <span class="text-sm font-medium group-hover:text-primary"
-                    >Xe máy</span
+                  <span
+                    class="font-bold text-sm uppercase tracking-wider text-[#617589]"
+                    >Loại xe</span
                   >
-                </label>
-                <label
-                  class="flex items-center gap-3 py-2 cursor-pointer group"
-                >
-                  <input
-                    id="filter-type-xedap"
-                    class="h-5 w-5 rounded border-[#dbe0e6] dark:border-slate-700 text-primary focus:ring-primary/20 bg-transparent"
-                    type="checkbox"
-                  />
-                  <span class="text-sm font-medium group-hover:text-primary"
-                    >Xe đạp</span
-                  >
-                </label>
-              </div>
-            </div>
-            <!-- Category: Giá thuê -->
-            <div class="mb-8">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="material-symbols-outlined text-[#617589] text-xl"
-                  >payments</span
-                >
-                <span
-                  class="font-bold text-sm uppercase tracking-wider text-[#617589]"
-                  >Giá thuê (VNĐ)</span
-                >
-              </div>
-              <div class="pt-2 pb-6">
-                <div
-                  class="relative h-1 w-full bg-[#dbe0e6] dark:bg-slate-700 rounded-full"
-                >
-                  <div
-                    class="absolute left-[10%] right-[30%] h-full bg-primary rounded-full"
-                  ></div>
-                  <div
-                    class="absolute left-[10%] -top-1.5 size-4 bg-primary border-2 border-white dark:border-slate-900 rounded-full cursor-pointer shadow-sm"
-                  ></div>
-                  <div
-                    class="absolute right-[30%] -top-1.5 size-4 bg-primary border-2 border-white dark:border-slate-900 rounded-full cursor-pointer shadow-sm"
-                  ></div>
                 </div>
-                <div class="flex justify-between mt-4">
-                  <div class="text-[11px] text-[#617589] text-center">
-                    <div class="font-bold text-[#111418] dark:text-white">
-                      100.000đ
-                    </div>
-                    Tối thiểu
-                  </div>
-                  <div class="text-[11px] text-[#617589] text-center">
-                    <div class="font-bold text-[#111418] dark:text-white">
-                      1.500.000đ
-                    </div>
-                    Tối đa
-                  </div>
+                <div class="space-y-1">
+                  <label
+                    class="flex items-center gap-3 py-2 cursor-pointer group"
+                  >
+                    <input
+                      id="filter-type-oto"
+                      class="h-5 w-5 rounded border-[#dbe0e6] dark:border-slate-700 text-primary focus:ring-primary/20 bg-transparent"
+                      type="checkbox"
+                    />
+                    <span class="text-sm font-medium group-hover:text-primary"
+                      >Ô tô</span
+                    >
+                  </label>
+                  <label
+                    class="flex items-center gap-3 py-2 cursor-pointer group"
+                  >
+                    <input
+                      id="filter-type-xemay"
+                      class="h-5 w-5 rounded border-[#dbe0e6] dark:border-slate-700 text-primary focus:ring-primary/20 bg-transparent"
+                      type="checkbox"
+                    />
+                    <span class="text-sm font-medium group-hover:text-primary"
+                      >Xe máy</span
+                    >
+                  </label>
+                  <label
+                    class="flex items-center gap-3 py-2 cursor-pointer group"
+                  >
+                    <input
+                      id="filter-type-xedap"
+                      class="h-5 w-5 rounded border-[#dbe0e6] dark:border-slate-700 text-primary focus:ring-primary/20 bg-transparent"
+                      type="checkbox"
+                    />
+                    <span class="text-sm font-medium group-hover:text-primary"
+                      >Xe đạp</span
+                    >
+                  </label>
                 </div>
               </div>
-            </div>
-            <!-- Category: Khu vực -->
-            <div class="mb-8">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="material-symbols-outlined text-[#617589] text-xl"
-                  >location_on</span
-                >
-                <span
-                  class="font-bold text-sm uppercase tracking-wider text-[#617589]"
-                  >Khu vực</span
-                >
+              <!-- Category: Giá thuê -->
+              <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="material-symbols-outlined text-[#617589] text-xl"
+                    >payments</span
+                  >
+                  <span
+                    class="font-bold text-sm uppercase tracking-wider text-[#617589]"
+                    >Giá thuê (VNĐ)</span
+                  >
+                </div>
+                <div class="pt-2 pb-6">
+                  <!-- Dual Range Slider -->
+                  <div class="relative h-2 mb-6">
+                    <div
+                      class="absolute inset-0 bg-[#dbe0e6] dark:bg-slate-700 rounded-full"
+                    ></div>
+                    <div
+                      id="price-range-track"
+                      class="absolute h-full bg-primary rounded-full"
+                      style="left: 0%; right: 0%"
+                    ></div>
+                    <input
+                      id="filter-price-min"
+                      type="range"
+                      min="0"
+                      max="10000000"
+                      step="100000"
+                      value="0"
+                      class="price-range-input absolute w-full h-2 appearance-none bg-transparent cursor-pointer"
+                      style="z-index: 3"
+                    />
+                    <input
+                      id="filter-price-max"
+                      type="range"
+                      min="0"
+                      max="10000000"
+                      step="100000"
+                      value="10000000"
+                      class="price-range-input absolute w-full h-2 appearance-none bg-transparent cursor-pointer"
+                      style="z-index: 4"
+                    />
+                  </div>
+                  <!-- Price Labels -->
+                  <div class="flex justify-between">
+                    <div class="text-center">
+                      <div
+                        id="price-min-label"
+                        class="font-bold text-sm text-[#111418] dark:text-white"
+                      >
+                        0đ
+                      </div>
+                      <div class="text-[11px] text-[#617589]">Tối thiểu</div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        id="price-max-label"
+                        class="font-bold text-sm text-[#111418] dark:text-white"
+                      >
+                        10.000.000đ
+                      </div>
+                      <div class="text-[11px] text-[#617589]">Tối đa</div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <select
-                class="w-full rounded-lg border-[#dbe0e6] dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:border-primary focus:ring-primary/20 transition-all cursor-pointer"
+              <style>
+                .price-range-input {
+                  -webkit-appearance: none;
+                  appearance: none;
+                  background: transparent;
+                }
+                .price-range-input::-webkit-slider-runnable-track {
+                  height: 8px;
+                  background: transparent;
+                }
+                .price-range-input::-webkit-slider-thumb {
+                  -webkit-appearance: none;
+                  width: 20px;
+                  height: 20px;
+                  background: #137fec;
+                  border: 3px solid white;
+                  border-radius: 50%;
+                  cursor: pointer;
+                  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+                  margin-top: -6px;
+                }
+                .price-range-input::-webkit-slider-thumb:hover {
+                  transform: scale(1.1);
+                }
+                .price-range-input::-moz-range-track {
+                  height: 8px;
+                  background: transparent;
+                }
+                .price-range-input::-moz-range-thumb {
+                  width: 20px;
+                  height: 20px;
+                  background: #137fec;
+                  border: 3px solid white;
+                  border-radius: 50%;
+                  cursor: pointer;
+                  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+                }
+                /* Custom Scrollbar */
+                .custom-scrollbar::-webkit-scrollbar {
+                  width: 8px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-track {
+                  background: #f0f2f4;
+                  border-radius: 4px;
+                }
+                .dark .custom-scrollbar::-webkit-scrollbar-track {
+                  background: #1e293b;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                  background: #cbd5e1;
+                  border-radius: 4px;
+                }
+                .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+                  background: #475569;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                  background: #137fec;
+                }
+                .custom-scrollbar {
+                  scrollbar-width: thin;
+                  scrollbar-color: #cbd5e1 #f0f2f4;
+                }
+                .dark .custom-scrollbar {
+                  scrollbar-color: #475569 #1e293b;
+                }
+              </style>
+              <!-- Category: Khu vực -->
+              <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="material-symbols-outlined text-[#617589] text-xl"
+                    >location_on</span
+                  >
+                  <span
+                    class="font-bold text-sm uppercase tracking-wider text-[#617589]"
+                    >Khu vực</span
+                  >
+                </div>
+                <select
+                  id="filter-location"
+                  class="w-full rounded-lg border-[#dbe0e6] dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:border-primary focus:ring-primary/20 transition-all cursor-pointer"
+                >
+                  <option value="all">Tất cả khu vực</option>
+                  <option value="Hà Nội">Hà Nội</option>
+                  <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                  <option value="Đà Nẵng">Đà Nẵng</option>
+                  <option value="Đà Lạt">Đà Lạt</option>
+                </select>
+              </div>
+              <!-- Category: Tình trạng -->
+              <div class="mb-6">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="material-symbols-outlined text-[#617589] text-xl"
+                    >event_available</span
+                  >
+                  <span
+                    class="font-bold text-sm uppercase tracking-wider text-[#617589]"
+                    >Tình trạng</span
+                  >
+                </div>
+                <label
+                  class="flex items-center gap-3 py-2 cursor-pointer group"
+                >
+                  <input
+                    checked=""
+                    class="h-5 w-5 rounded border-[#dbe0e6] dark:border-slate-700 text-primary focus:ring-primary/20 bg-transparent"
+                    type="checkbox"
+                  />
+                  <span class="text-sm font-medium group-hover:text-primary"
+                    >Đang còn trống</span
+                  >
+                </label>
+              </div>
+              <button
+                id="btn-reset-filters"
+                class="w-full py-3 bg-[#f0f2f4] dark:bg-slate-800 text-sm font-bold rounded-lg hover:bg-primary hover:text-white transition-all duration-200"
               >
-                <option>Tất cả khu vực</option>
-                <option>Hà Nội</option>
-                <option>TP. Hồ Chí Minh</option>
-                <option>Đà Nẵng</option>
-                <option>Đà Lạt</option>
-              </select>
+                Đặt lại bộ lọc
+              </button>
             </div>
-            <!-- Category: Tình trạng -->
-            <div class="mb-6">
-              <div class="flex items-center gap-2 mb-3">
-                <span class="material-symbols-outlined text-[#617589] text-xl"
-                  >event_available</span
-                >
-                <span
-                  class="font-bold text-sm uppercase tracking-wider text-[#617589]"
-                  >Tình trạng</span
-                >
-              </div>
-              <label class="flex items-center gap-3 py-2 cursor-pointer group">
-                <input
-                  checked=""
-                  class="h-5 w-5 rounded border-[#dbe0e6] dark:border-slate-700 text-primary focus:ring-primary/20 bg-transparent"
-                  type="checkbox"
-                />
-                <span class="text-sm font-medium group-hover:text-primary"
-                  >Đang còn trống</span
-                >
-              </label>
-            </div>
-            <button
-              id="btn-reset-filters"
-              class="w-full py-3 bg-[#f0f2f4] dark:bg-slate-800 text-sm font-bold rounded-lg hover:bg-primary hover:text-white transition-all duration-200"
-            >
-              Đặt lại bộ lọc
-            </button>
           </div>
         </aside>
         <!-- Main Content Area -->
@@ -319,12 +428,13 @@
                 >Sắp xếp theo:</span
               >
               <select
+                id="sort-select"
                 class="rounded-lg border-[#dbe0e6] dark:border-slate-700 bg-white dark:bg-slate-800 text-sm py-1.5 pl-3 pr-8 focus:border-primary focus:ring-primary/20"
               >
-                <option>Phổ biến nhất</option>
-                <option>Giá thấp đến cao</option>
-                <option>Giá cao đến thấp</option>
-                <option>Đánh giá tốt nhất</option>
+                <option value="popular">Phổ biến nhất</option>
+                <option value="price-asc">Giá thấp đến cao</option>
+                <option value="price-desc">Giá cao đến thấp</option>
+                <option value="rating">Đánh giá tốt nhất</option>
               </select>
             </div>
           </div>
@@ -333,38 +443,11 @@
             <!-- Vehicles will be loaded dynamically via JavaScript -->
           </div>
           <!-- Pagination -->
-          <div class="flex items-center justify-center gap-2 mt-12 pb-10">
-            <button
-              class="size-10 flex items-center justify-center rounded-lg border border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-slate-900 hover:text-primary transition-colors"
-            >
-              <span class="material-symbols-outlined">chevron_left</span>
-            </button>
-            <button
-              class="size-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold"
-            >
-              1
-            </button>
-            <button
-              class="size-10 flex items-center justify-center rounded-lg border border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-slate-900 hover:text-primary font-bold transition-colors"
-            >
-              2
-            </button>
-            <button
-              class="size-10 flex items-center justify-center rounded-lg border border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-slate-900 hover:text-primary font-bold transition-colors"
-            >
-              3
-            </button>
-            <span class="px-2 text-[#617589]">...</span>
-            <button
-              class="size-10 flex items-center justify-center rounded-lg border border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-slate-900 hover:text-primary font-bold transition-colors"
-            >
-              8
-            </button>
-            <button
-              class="size-10 flex items-center justify-center rounded-lg border border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-slate-900 hover:text-primary transition-colors"
-            >
-              <span class="material-symbols-outlined">chevron_right</span>
-            </button>
+          <div
+            id="pagination-container"
+            class="flex items-center justify-center gap-2 mt-12 pb-10"
+          >
+            <!-- Pagination will be generated dynamically -->
           </div>
         </div>
       </div>

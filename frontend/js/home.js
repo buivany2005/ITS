@@ -69,27 +69,20 @@
   checkLoginStatus();
 
   if (searchBtn) {
-    searchBtn.addEventListener("click", async () => {
-      const widget = searchBtn.closest("section") || document;
-      const selects = widget.querySelectorAll("select");
-      const input = widget.querySelector(
-        'input[type="text"], input[type="date"], input[type="email"]'
-      );
-      const type = selects[0] ? selects[0].value : "";
-      const location = selects[1] ? selects[1].value : "";
-      const date = input ? input.value : "";
-      const params = { type, location, date };
-      try {
-        const results = await window.api.searchVehicles(params);
-        // store results temporarily and navigate to list page
-        try {
-          sessionStorage.setItem("searchResults", JSON.stringify(results));
-        } catch (e) {}
-        const qs = new URLSearchParams(params).toString();
-        window.location.href = "../use/danh_sach_xe.html?" + qs;
-      } catch (err) {
-        alert("Lỗi khi tìm kiếm: " + (err.message || err));
-      }
+    searchBtn.addEventListener("click", () => {
+      const selectType = document.getElementById("select-type");
+      const selectLocation = document.getElementById("select-location");
+
+      const type = selectType ? selectType.value : "";
+      const location = selectLocation ? selectLocation.value : "";
+
+      // Build query params, only include non-empty values
+      const params = new URLSearchParams();
+      if (type) params.set("type", type);
+      if (location) params.set("location", location);
+
+      const qs = params.toString();
+      window.location.href = "../use/danh_sach_xe.html" + (qs ? "?" + qs : "");
     });
   }
 
