@@ -19,7 +19,7 @@
     if (filters.q) params.set("q", filters.q);
     if (filters.category && filters.category !== "all")
       params.set("category", filters.category);
-    fetch("/api/vehicles?" + params.toString())
+    fetch("/api/admin/vehicles?" + params.toString())
       .then((r) => r.json())
       .then((data) => {
         vehicles = data || [];
@@ -43,17 +43,17 @@
               </div>
               <div>
                 <div class="text-sm font-medium text-gray-900">${escapeHtml(
-                  v.name
+                  v.name,
                 )}</div>
                 <div class="text-xs text-gray-500">${escapeHtml(
-                  v.model || ""
+                  v.model || "",
                 )}</div>
               </div>
             </div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">${escapeHtml(v.category)}</td>
           <td class="px-6 py-4 whitespace-nowrap">${escapeHtml(
-            v.licensePlate || ""
+            v.licensePlate || "",
           )}</td>
           <td class="px-6 py-4 whitespace-nowrap">${
             v.status || "available"
@@ -80,16 +80,14 @@
     // attach action handlers
     qsa(".btn-edit").forEach((btn) => btn.addEventListener("click", onEdit));
     qsa(".btn-delete").forEach((btn) =>
-      btn.addEventListener("click", onDelete)
+      btn.addEventListener("click", onDelete),
     );
   }
 
   function onEdit(e) {
     const id = e.currentTarget.dataset.id;
-    // Navigate to edit page (server should handle)
-    window.location.href = `/admin/vehicles/edit.html?id=${encodeURIComponent(
-      id
-    )}`;
+    // Navigate to edit page (placeholder)
+    alert("Chức năng chỉnh sửa chưa được triển khai");
   }
 
   function onDelete(e) {
@@ -121,7 +119,7 @@
   }
 
   function onAddClick() {
-    window.location.href = "/admin/vehicles/new.html";
+    alert("Chức năng thêm phương tiện mới chưa được triển khai");
   }
 
   function onToggleSidebar() {
@@ -145,7 +143,7 @@
   function attachExistingHandlers() {
     qsa(".btn-edit").forEach((btn) => btn.addEventListener("click", onEdit));
     qsa(".btn-delete").forEach((btn) =>
-      btn.addEventListener("click", onDelete)
+      btn.addEventListener("click", onDelete),
     );
   }
 

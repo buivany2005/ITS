@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html class="light" lang="vi">
   <head>
@@ -46,7 +46,11 @@
         font-family: "Plus Jakarta Sans", sans-serif;
       }
       .material-symbols-outlined {
-        font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
       }
       .chart-gradient-blue {
         background: linear-gradient(
@@ -107,7 +111,7 @@
             class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-gray-200"
             data-alt="Ảnh đại diện quản trị viên"
             style="
-              background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDsFahTE38yodaHEZucpi2jDakfsfQEw-pufOQG1zk8QsKrveTvepyBRkXeDd1YEevwVOYLhyUKnmyeugteIBvVyrAjIw0TaD4Snm2TmCAyvLe3A4NwND3u29O1UW3kKEr8yetgWcMzFgMOgXA0ZQWFeLWcI8w8BVosVyQ7aAyKQf41KAWEKkIpKouDvqy0E_l-rlpQOOIipCUSEov6Rih1DPL-Q4dhkTYEgwdPaXeo3sQulDe0KxGaoM0HOFUcQE2VSkE-OHGmQ9hv');
+              background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDsFahTE38yodaHEZucpi2jDakfsfQEw-pufOQG1zk8QsKrveTvepyBRkXeDd1YEevwVOYLhyUKnmyeugteIBvVyrAjIw0TaD4Snm2TmCAyvLe3A4NwND3u29O1UW3kKEr8yetgWcMzFgMOgXA0ZQWFeLWcI8w8BVosVyQ7aAyKQf41KAWEKkIpKouDvqy0E_l-rlpQOOIipCUSEov6Rih1DPL-Q4dhkTYEgwdPaXeo3sQulDe0KxGaoM0HOFUcQE2VSkE-OHGmQ9hv&quot;);
             "
           ></div>
         </div>
@@ -144,7 +148,7 @@
               </a>
               <a
                 class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-                href="#"
+                href="quan_ly_phuong_tien.html"
               >
                 <span class="material-symbols-outlined text-[22px]"
                   >directions_car</span
@@ -157,7 +161,7 @@
               </a>
               <a
                 class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-                href="#"
+                href="quan_ly_don_hang.html"
               >
                 <span class="material-symbols-outlined text-[22px]"
                   >calendar_month</span
@@ -181,22 +185,18 @@
               </a>
               <a
                 class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary"
-                href="#"
+                href="quan_ly_xe.html"
               >
-                <button
-                  id="btn-range"
-                  class="flex items-center gap-2 px-4 h-10 bg-white dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 rounded-lg text-sm font-medium text-[#111418] dark:text-white"
-                >
+                <span class="material-symbols-outlined text-[22px]"
                   >analytics</span
                 >
                 <p class="text-sm font-bold">Thống kê &amp; Báo cáo</p>
               </a>
               <a
                 class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-              <button
-                id="btn-export"
-                class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:shadow-lg transition-all"
+                href="#"
               >
+                <span class="material-symbols-outlined text-[22px]"
                   >settings</span
                 >
                 <p
@@ -447,7 +447,10 @@
               <h2 class="text-[#111418] dark:text-white text-lg font-bold">
                 Các đơn gần đây
               </h2>
-              <button id="btn-view-all" class="text-primary text-sm font-bold hover:underline">
+              <button
+                id="btn-view-all"
+                class="text-primary text-sm font-bold hover:underline"
+              >
                 Xem tất cả
               </button>
             </div>
@@ -641,12 +644,13 @@
           const current = btnRange.textContent.trim();
           const choice = prompt(
             "Chọn khoảng thời gian (ví dụ: '7 ngày qua', '30 ngày qua', 'Quý này')",
-            current
+            current,
           );
           if (choice && choice.trim()) {
             // Update label only (demo). Hook API here if available.
             btnRange.childNodes.forEach((n) => {
-              if (n.nodeType === Node.TEXT_NODE) n.nodeValue = " " + choice.trim();
+              if (n.nodeType === Node.TEXT_NODE)
+                n.nodeValue = " " + choice.trim();
             });
           }
         });
@@ -660,7 +664,9 @@
           return s;
         };
         const csv = rows.map((r) => r.map(escape).join(",")).join("\n");
-        const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+        const blob = new Blob(["\ufeff" + csv], {
+          type: "text/csv;charset=utf-8;",
+        });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
@@ -673,16 +679,23 @@
 
       function collectDashboardData() {
         // Collect summary cards (title:value)
-        const summaries = $$('.grid.grid-cols-1.md\:grid-cols-3 .p-6');
+        const summaries = $$(".grid.grid-cols-1.md\:grid-cols-3 .p-6");
         const summaryRows = [["Chỉ số", "Giá trị"]];
         summaries.forEach((card) => {
-          const title = card.querySelector("p.text-sm.font-medium, p.text-[#617589]")?.textContent?.trim() || "";
-          const value = card.querySelector("p.text-2xl, .text-2xl")?.textContent?.trim() || "";
+          const title =
+            card
+              .querySelector("p.text-sm.font-medium, p.text-[#617589]")
+              ?.textContent?.trim() || "";
+          const value =
+            card.querySelector("p.text-2xl, .text-2xl")?.textContent?.trim() ||
+            "";
           if (title && value) summaryRows.push([title, value]);
         });
 
         // Collect recent orders table
-        const tableRows = [["Khách hàng", "Loại xe", "Ngày thuê", "Thành tiền", "Trạng thái"]];
+        const tableRows = [
+          ["Khách hàng", "Loại xe", "Ngày thuê", "Thành tiền", "Trạng thái"],
+        ];
         $$("tbody tr").forEach((tr) => {
           const tds = $$("td", tr);
           if (tds.length >= 5) {
@@ -710,6 +723,58 @@
           const d = String(today.getDate()).padStart(2, "0");
           downloadCSV(`bao_cao_dashboard_${y}${m}${d}.csv`, merged);
         });
+      }
+    })();
+  </script>
+  <script>
+    // Highlight active menu item based on current page
+    (function () {
+      const currentPath = window.location.pathname.split("/").pop();
+      const navLinks = document.querySelectorAll("aside nav a");
+
+      // Remove active class from all
+      navLinks.forEach((link) => {
+        link.classList.remove("bg-primary/10", "text-primary");
+        link.classList.add("hover:bg-[#f0f2f4]", "dark:hover:bg-gray-800");
+      });
+
+      // Add active class based on current page
+      if (currentPath === "quan_ly_xe.html") {
+        // For dashboard/stats page, highlight "Thống kê & Báo cáo"
+        const statsLink = Array.from(navLinks).find(
+          (link) =>
+            link.href.includes("quan_ly_xe.html") &&
+            link.textContent.includes("Thống kê"),
+        );
+        if (statsLink) {
+          statsLink.classList.add("bg-primary/10", "text-primary");
+          statsLink.classList.remove(
+            "hover:bg-[#f0f2f4]",
+            "dark:hover:bg-gray-800",
+          );
+        }
+      } else if (currentPath === "quan_ly_phuong_tien.html") {
+        const vehicleLink = Array.from(navLinks).find((link) =>
+          link.href.includes("quan_ly_phuong_tien.html"),
+        );
+        if (vehicleLink) {
+          vehicleLink.classList.add("bg-primary/10", "text-primary");
+          vehicleLink.classList.remove(
+            "hover:bg-[#f0f2f4]",
+            "dark:hover:bg-gray-800",
+          );
+        }
+      } else if (currentPath === "quan_ly_don_hang.html") {
+        const orderLink = Array.from(navLinks).find((link) =>
+          link.href.includes("quan_ly_don_hang.html"),
+        );
+        if (orderLink) {
+          orderLink.classList.add("bg-primary/10", "text-primary");
+          orderLink.classList.remove(
+            "hover:bg-[#f0f2f4]",
+            "dark:hover:bg-gray-800",
+          );
+        }
       }
     })();
   </script>

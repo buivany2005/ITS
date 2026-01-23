@@ -177,6 +177,30 @@ public class OrderService {
         return stats;
     }
     
+    /**
+     * Export orders to Excel
+     */
+    public byte[] exportOrdersToExcel() throws Exception {
+        List<Order> orders = orderRepository.findAll();
+        
+        // For simplicity, return a basic Excel file. In real implementation, use Apache POI or similar.
+        // Here, we'll create a simple CSV as Excel-compatible
+        StringBuilder csv = new StringBuilder();
+        csv.append("ID,Khách hàng,Phương tiện,Ngày thuê,Ngày trả,Trạng thái,Tổng tiền\n");
+        
+        for (Order order : orders) {
+            csv.append(order.getId()).append(",");
+            csv.append(order.getUser().getFullName()).append(",");
+            csv.append(order.getVehicle().getName()).append(",");
+            csv.append(order.getDateFrom()).append(",");
+            csv.append(order.getDateTo()).append(",");
+            csv.append(order.getStatus()).append(",");
+            csv.append(order.getTotalPrice()).append("\n");
+        }
+        
+        return csv.toString().getBytes("UTF-8");
+    }
+    
     // Inner class for stats
     public static class OrderStats {
         private long totalOrders;

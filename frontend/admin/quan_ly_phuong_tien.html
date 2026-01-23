@@ -82,27 +82,68 @@
             </div>
           </div>
           <!-- Nav Links -->
-          <nav class="flex flex-col gap-2 flex-1">
+          <nav class="flex flex-col gap-1">
             <a
-              class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-semibold transition-all"
-              href="#"
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+              href="quan_ly_xe.html"
             >
-              <span class="material-symbols-outlined">directions_bike</span>
-              <span class="text-sm">Quản lý phương tiện</span>
+              <span class="material-symbols-outlined text-[22px]"
+                >dashboard</span
+              >
+              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+                Bảng điều khiển
+              </p>
             </a>
             <a
-              class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#617589] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
-              href="#"
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+              href="quan_ly_phuong_tien.html"
             >
-              <span class="material-symbols-outlined">receipt_long</span>
-              <span class="text-sm font-medium">Quản lý đơn hàng</span>
+              <span class="material-symbols-outlined text-[22px]"
+                >directions_car</span
+              >
+              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+                Quản lý xe
+              </p>
             </a>
             <a
-              class="flex items-center gap-3 px-4 py-3 rounded-xl text-[#617589] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+              href="quan_ly_don_hang.html"
+            >
+              <span class="material-symbols-outlined text-[22px]"
+                >calendar_month</span
+              >
+              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+                Đơn đặt xe
+              </p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
               href="#"
             >
-              <span class="material-symbols-outlined">leaderboard</span>
-              <span class="text-sm font-medium">Thống kê</span>
+              <span class="material-symbols-outlined text-[22px]">group</span>
+              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+                Khách hàng
+              </p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+              href="quan_ly_xe.html"
+            >
+              <span class="material-symbols-outlined text-[22px]"
+                >analytics</span
+              >
+              <p class="text-sm font-bold">Thống kê &amp; Báo cáo</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+              href="#"
+            >
+              <span class="material-symbols-outlined text-[22px]"
+                >settings</span
+              >
+              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+                Cài đặt
+              </p>
             </a>
           </nav>
           <!-- Bottom Links -->
@@ -544,6 +585,58 @@
       </main>
     </div>
     <script src="../js/admin-vehicles.js"></script>
+    <script>
+      // Highlight active menu item based on current page
+      (function () {
+        const currentPath = window.location.pathname.split("/").pop();
+        const navLinks = document.querySelectorAll("aside nav a");
+
+        // Remove active class from all
+        navLinks.forEach((link) => {
+          link.classList.remove("bg-primary/10", "text-primary");
+          link.classList.add("hover:bg-[#f0f2f4]", "dark:hover:bg-gray-800");
+        });
+
+        // Add active class based on current page
+        if (currentPath === "quan_ly_xe.html") {
+          // For dashboard/stats page, highlight "Thống kê & Báo cáo"
+          const statsLink = Array.from(navLinks).find(
+            (link) =>
+              link.href.includes("quan_ly_xe.html") &&
+              link.textContent.includes("Thống kê"),
+          );
+          if (statsLink) {
+            statsLink.classList.add("bg-primary/10", "text-primary");
+            statsLink.classList.remove(
+              "hover:bg-[#f0f2f4]",
+              "dark:hover:bg-gray-800",
+            );
+          }
+        } else if (currentPath === "quan_ly_phuong_tien.html") {
+          const vehicleLink = Array.from(navLinks).find((link) =>
+            link.href.includes("quan_ly_phuong_tien.html"),
+          );
+          if (vehicleLink) {
+            vehicleLink.classList.add("bg-primary/10", "text-primary");
+            vehicleLink.classList.remove(
+              "hover:bg-[#f0f2f4]",
+              "dark:hover:bg-gray-800",
+            );
+          }
+        } else if (currentPath === "quan_ly_don_hang.html") {
+          const orderLink = Array.from(navLinks).find((link) =>
+            link.href.includes("quan_ly_don_hang.html"),
+          );
+          if (orderLink) {
+            orderLink.classList.add("bg-primary/10", "text-primary");
+            orderLink.classList.remove(
+              "hover:bg-[#f0f2f4]",
+              "dark:hover:bg-gray-800",
+            );
+          }
+        }
+      })();
+    </script>
     <script src="../js/auth-check.js"></script>
   </body>
 </html>

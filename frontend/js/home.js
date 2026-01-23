@@ -87,15 +87,10 @@
   }
 
   document.querySelectorAll('[data-add="promo"]').forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const item = { type: "promo", id: btn.getAttribute("data-id") || null };
-      btn.disabled = true;
-      try {
-        await window.api.addToCart(item);
-        btn.classList.add("bg-primary", "text-white");
-      } catch (err) {
-        btn.disabled = false;
-        alert("Không thể thêm vào giỏ: " + (err.message || err));
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+      if (id) {
+        window.location.href = `../use/chi_tiet_xe.html?id=${id}`;
       }
     });
   });

@@ -138,6 +138,29 @@ public class AdminController {
         return ResponseEntity.ok(stats);
     }
     
+    /**
+     * Get all vehicles for admin
+     */
+    @GetMapping("/vehicles")
+    public ResponseEntity<?> getAllVehicles(@RequestParam(required = false) String q,
+                                           @RequestParam(required = false) String category) {
+        try {
+            List<Vehicle> vehicles;
+            if (q != null && !q.isEmpty()) {
+                vehicles = vehicleService.searchVehicles(q);
+            } else if (category != null && !category.isEmpty()) {
+                VehicleType type = VehicleType.valueOf(category.toUpperCase());
+                vehicles = vehicleService.getVehiclesByType(type);
+            } else {
+                vehicles = vehicleService.getAllVehicles();
+            }
+            return ResponseEntity.ok(vehicles);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(Map.of("error", e.getMessage()));
+        }
+    }
+    
     // ==================== ORDER MANAGEMENT ====================
     
     /**
@@ -184,6 +207,22 @@ public class AdminController {
     public ResponseEntity<?> getOrderStats() {
         OrderService.OrderStats stats = orderService.getOrderStats();
         return ResponseEntity.ok(stats);
+    }
+    
+    /**
+     * Export orders to Excel
+     */
+    @GetMapping("/orders/export")
+    public ResponseEntity<byte[]> exportOrders() {
+        try {
+            byte[] excelData = orderService.exportOrdersToExcel();
+            return ResponseEntity.ok()
+                .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .header("Content-Disposition", "attachment; filename=orders.xlsx")
+                .body(excelData);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
     
     // ==================== USER MANAGEMENT ====================

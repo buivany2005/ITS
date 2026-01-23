@@ -165,23 +165,359 @@
 
   // Update specifications section
   function updateSpecifications(vehicle) {
-    const specItems = document.querySelectorAll(".grid .flex.flex-col");
-    specItems.forEach((item) => {
-      const label = item.querySelector(".text-xs");
-      const value = item.querySelector(".text-sm.font-bold");
-      if (label && value) {
-        const labelText = label.textContent.toLowerCase();
-        if (labelText.includes("nhiên liệu")) {
-          value.textContent = vehicle.fuelType || "Xăng";
-        } else if (labelText.includes("hộp số")) {
-          value.textContent = vehicle.transmission || "Tự động";
-        } else if (labelText.includes("chỗ")) {
-          value.textContent = vehicle.seats || 5;
-        } else if (labelText.includes("năm")) {
-          value.textContent = vehicle.year || 2023;
-        }
-      }
-    });
+    const specContainer = document.querySelector(
+      ".grid.grid-cols-2.sm\\:grid-cols-4",
+    );
+    if (!specContainer) return;
+
+    let specs = [];
+
+    if (vehicle.vehicleType === "OTO") {
+      specs = [
+        {
+          icon: "ev_station",
+          label: "Nhiên liệu",
+          value: vehicle.fuelType || "Xăng",
+        },
+        {
+          icon: "settings_input_component",
+          label: "Hộp số",
+          value: vehicle.transmission || "Tự động",
+        },
+        {
+          icon: "airline_seat_recline_extra",
+          label: "Số ghế",
+          value: `${vehicle.seats || 5} Chỗ`,
+        },
+        {
+          icon: "speed",
+          label: "Động cơ",
+          value: vehicle.model || "1.5L",
+        },
+      ];
+    } else if (vehicle.vehicleType === "XEMAY") {
+      specs = [
+        {
+          icon: "ev_station",
+          label: "Nhiên liệu",
+          value: vehicle.fuelType || "Xăng",
+        },
+        {
+          icon: "speed",
+          label: "Công suất",
+          value: vehicle.model || "150cc",
+        },
+        {
+          icon: "airline_seat_recline_extra",
+          label: "Số ghế",
+          value: `${vehicle.seats || 2} Chỗ`,
+        },
+        {
+          icon: "local_shipping",
+          label: "Tải trọng",
+          value: "150kg",
+        },
+      ];
+    } else if (vehicle.vehicleType === "XEDAP") {
+      specs = [
+        {
+          icon: "pedal_bike",
+          label: "Loại xe",
+          value: vehicle.fuelType === "Điện" ? "Xe đạp điện" : "Xe đạp cơ",
+        },
+        {
+          icon: "battery_full",
+          label: "Pin",
+          value: vehicle.fuelType === "Điện" ? "36V 10Ah" : "Không áp dụng",
+        },
+        {
+          icon: "airline_seat_recline_extra",
+          label: "Số ghế",
+          value: `${vehicle.seats || 1} Chỗ`,
+        },
+        {
+          icon: "local_shipping",
+          label: "Tải trọng",
+          value: "120kg",
+        },
+      ];
+    }
+
+    specContainer.innerHTML = specs
+      .map(
+        (spec) => `
+      <div class="flex flex-col items-center gap-2 p-4 bg-background-light dark:bg-gray-800 rounded-xl">
+        <span class="material-symbols-outlined text-primary text-3xl">${spec.icon}</span>
+        <span class="text-xs text-[#617589] dark:text-gray-400 font-medium uppercase">${spec.label}</span>
+        <span class="text-sm font-bold">${spec.value}</span>
+      </div>
+    `,
+      )
+      .join("");
+
+    // Update rental conditions, insurance, and regulations based on vehicle type
+    updateRentalConditions(vehicle);
+    updateInsurance(vehicle);
+    updateRegulations(vehicle);
+  }
+
+  function updateRentalConditions(vehicle) {
+    const dieuKienTab = document.getElementById("dieu-kien");
+    if (!dieuKienTab) return;
+
+    let conditions = [];
+
+    if (vehicle.vehicleType === "OTO") {
+      conditions = [
+        {
+          icon: "id_card",
+          title: "Giấy tờ thuê xe",
+          description:
+            "Yêu cầu CCCD gắn chip (đối chiếu) và Bằng lái xe hạng B1 trở lên.",
+        },
+        {
+          icon: "account_balance_wallet",
+          title: "Tài sản thế chấp",
+          description:
+            "15 triệu đồng (tiền mặt/chuyển khoản) hoặc Xe máy có giá trị tương đương (kèm cavet gốc).",
+        },
+        {
+          icon: "priority_high",
+          title: "Lưu ý",
+          description:
+            "Khách hàng phải trên 21 tuổi và có kinh nghiệm lái xe tối thiểu 1 năm.",
+        },
+      ];
+    } else if (vehicle.vehicleType === "XEMAY") {
+      conditions = [
+        {
+          icon: "id_card",
+          title: "Giấy tờ thuê xe",
+          description:
+            "Yêu cầu CCCD gắn chip (đối chiếu) và Bằng lái xe hạng A1 trở lên.",
+        },
+        {
+          icon: "account_balance_wallet",
+          title: "Tài sản thế chấp",
+          description:
+            "5 triệu đồng (tiền mặt/chuyển khoản) hoặc Xe đạp điện có giá trị tương đương.",
+        },
+        {
+          icon: "priority_high",
+          title: "Lưu ý",
+          description:
+            "Khách hàng phải trên 18 tuổi và có kinh nghiệm lái xe máy tối thiểu 6 tháng.",
+        },
+      ];
+    } else if (vehicle.vehicleType === "XEDAP") {
+      conditions = [
+        {
+          icon: "id_card",
+          title: "Giấy tờ thuê xe",
+          description: "Yêu cầu CCCD gắn chip (đối chiếu).",
+        },
+        {
+          icon: "account_balance_wallet",
+          title: "Tài sản thế chấp",
+          description:
+            "1 triệu đồng (tiền mặt/chuyển khoản) hoặc tiền cọc bằng thẻ tín dụng.",
+        },
+        {
+          icon: "priority_high",
+          title: "Lưu ý",
+          description:
+            "Khách hàng phải trên 16 tuổi. Không yêu cầu bằng lái xe.",
+        },
+      ];
+    }
+
+    dieuKienTab.innerHTML = conditions
+      .map(
+        (condition) => `
+      <div class="flex gap-4">
+        <span class="material-symbols-outlined text-primary">${condition.icon}</span>
+        <div>
+          <p class="font-bold">${condition.title}</p>
+          <p class="text-sm text-[#617589] dark:text-gray-400">${condition.description}</p>
+        </div>
+      </div>
+    `,
+      )
+      .join("");
+  }
+
+  function updateInsurance(vehicle) {
+    const baoHiemTab = document.getElementById("bao-hiem");
+    if (!baoHiemTab) return;
+
+    let insurance = [];
+
+    if (vehicle.vehicleType === "OTO") {
+      insurance = [
+        {
+          icon: "shield_with_house",
+          title: "Bảo hiểm Trách nhiệm Dân sự",
+          description:
+            "Bắt buộc. Bảo vệ thiệt hại gây ra cho bên thứ ba. Bảo hiểm tối thiểu 1 tỷ đồng.",
+        },
+        {
+          icon: "verified",
+          title: "Bảo hiểm Hạn chế Phạm vi",
+          description:
+            "Tùy chọn. Bảo phí: 2% tổng giá trị thuê xe. Được bảo hiểm từ 70% giá trị phương tiện.",
+        },
+        {
+          icon: "info",
+          title: "Chi tiết",
+          description:
+            "Không bảo hiểm cho hư hỏng do chế độ bảo dưỡng không đúng hay va chạm do tắc đường.",
+        },
+      ];
+    } else if (vehicle.vehicleType === "XEMAY") {
+      insurance = [
+        {
+          icon: "shield_with_house",
+          title: "Bảo hiểm Trách nhiệm Dân sự",
+          description:
+            "Bắt buộc. Bảo vệ thiệt hại gây ra cho bên thứ ba. Bảo hiểm tối thiểu 50 triệu đồng.",
+        },
+        {
+          icon: "verified",
+          title: "Bảo hiểm Vật chất",
+          description:
+            "Tùy chọn. Bảo phí: 1.5% tổng giá trị thuê xe. Được bảo hiểm từ 80% giá trị phương tiện.",
+        },
+        {
+          icon: "info",
+          title: "Chi tiết",
+          description:
+            "Không bảo hiểm cho hư hỏng do lốp xe, phụ tùng thay thế định kỳ.",
+        },
+      ];
+    } else if (vehicle.vehicleType === "XEDAP") {
+      insurance = [
+        {
+          icon: "shield_with_house",
+          title: "Bảo hiểm Trách nhiệm Dân sự",
+          description:
+            "Bắt buộc. Bảo vệ thiệt hại gây ra cho bên thứ ba. Bảo hiểm tối thiểu 10 triệu đồng.",
+        },
+        {
+          icon: "verified",
+          title: "Bảo hiểm Vật chất",
+          description:
+            "Tùy chọn. Bảo phí: 1% tổng giá trị thuê xe. Được bảo hiểm từ 90% giá trị phương tiện.",
+        },
+        {
+          icon: "info",
+          title: "Chi tiết",
+          description:
+            "Không bảo hiểm cho hư hỏng do sử dụng sai mục đích hoặc vận chuyển hàng hóa nặng.",
+        },
+      ];
+    }
+
+    baoHiemTab.innerHTML = insurance
+      .map(
+        (item) => `
+      <div class="flex gap-4">
+        <span class="material-symbols-outlined text-primary">${item.icon}</span>
+        <div>
+          <p class="font-bold">${item.title}</p>
+          <p class="text-sm text-[#617589] dark:text-gray-400">${item.description}</p>
+        </div>
+      </div>
+    `,
+      )
+      .join("");
+  }
+
+  function updateRegulations(vehicle) {
+    const quyDinhTab = document.getElementById("quy-dinh");
+    if (!quyDinhTab) return;
+
+    let regulations = [];
+
+    if (vehicle.vehicleType === "OTO") {
+      regulations = [
+        {
+          icon: "schedule",
+          title: "Thời gian thuê xe",
+          description:
+            "Tối thiểu 1 ngày. Nhận xe lúc 8:00 sáng, trả xe lúc 18:00 chiều. Trễ giờ tính thêm phí 100.000đ/giờ.",
+        },
+        {
+          icon: "local_gas_station",
+          title: "Xăng dầu",
+          description:
+            "Xe được giao với đầy xăng. Khách hàng phải trả về đầy xăng. Thiếu xăng tính theo giá thị trường.",
+        },
+        {
+          icon: "warning",
+          title: "Lỗi vi phạm giao thông",
+          description:
+            "Khách hàng chịu trách nhiệm thanh toán mọi khoản phạt giao thông phát sinh trong thời gian thuê.",
+        },
+      ];
+    } else if (vehicle.vehicleType === "XEMAY") {
+      regulations = [
+        {
+          icon: "schedule",
+          title: "Thời gian thuê xe",
+          description:
+            "Tối thiểu 1 ngày. Nhận xe lúc 8:00 sáng, trả xe lúc 18:00 chiều. Trễ giờ tính thêm phí 50.000đ/giờ.",
+        },
+        {
+          icon: "local_gas_station",
+          title: "Xăng dầu",
+          description:
+            "Xe được giao với đầy xăng. Khách hàng phải trả về đầy xăng. Thiếu xăng tính theo giá thị trường.",
+        },
+        {
+          icon: "warning",
+          title: "Lỗi vi phạm giao thông",
+          description:
+            "Khách hàng chịu trách nhiệm thanh toán mọi khoản phạt giao thông phát sinh trong thời gian thuê.",
+        },
+      ];
+    } else if (vehicle.vehicleType === "XEDAP") {
+      regulations = [
+        {
+          icon: "schedule",
+          title: "Thời gian thuê xe",
+          description:
+            "Tối thiểu 4 giờ. Nhận xe từ 8:00 sáng đến 18:00 chiều. Trễ giờ tính thêm phí 20.000đ/giờ.",
+        },
+        {
+          icon: "battery_full",
+          title: "Pin và sạc",
+          description:
+            vehicle.fuelType === "Điện"
+              ? "Xe được giao với pin đầy. Khách hàng phải trả về pin đầy. Có thể thuê kèm bộ sạc."
+              : "Không áp dụng.",
+        },
+        {
+          icon: "warning",
+          title: "Lỗi vi phạm",
+          description:
+            "Khách hàng chịu trách nhiệm về mất mát hoặc hư hỏng xe trong thời gian thuê.",
+        },
+      ];
+    }
+
+    quyDinhTab.innerHTML = regulations
+      .map(
+        (regulation) => `
+      <div class="flex gap-4">
+        <span class="material-symbols-outlined text-primary">${regulation.icon}</span>
+        <div>
+          <p class="font-bold">${regulation.title}</p>
+          <p class="text-sm text-[#617589] dark:text-gray-400">${regulation.description}</p>
+        </div>
+      </div>
+    `,
+      )
+      .join("");
   }
 
   // Attach event listeners
@@ -211,6 +547,37 @@
 
     // Initial calculation
     calculateTotal();
+
+    // Tab switching functionality
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabContents = document.querySelectorAll(".tab-content");
+
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const targetTab = button.getAttribute("data-tab");
+
+        // Remove active state from all buttons
+        tabButtons.forEach((btn) => {
+          btn.classList.remove("text-primary", "border-b-2", "border-primary");
+          btn.classList.add("text-[#617589]", "dark:text-gray-400");
+        });
+
+        // Add active state to clicked button
+        button.classList.remove("text-[#617589]", "dark:text-gray-400");
+        button.classList.add("text-primary", "border-b-2", "border-primary");
+
+        // Hide all tab contents
+        tabContents.forEach((content) => {
+          content.classList.add("hidden");
+        });
+
+        // Show target tab content
+        const targetContent = document.getElementById(targetTab);
+        if (targetContent) {
+          targetContent.classList.remove("hidden");
+        }
+      });
+    });
   }
 
   // Calculate total cost based on selected dates

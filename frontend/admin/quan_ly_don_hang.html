@@ -84,14 +84,21 @@
         <nav class="flex-1 px-4 space-y-1 overflow-y-auto">
           <a
             class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
-            href="#"
+            href="quan_ly_xe.html"
           >
             <span class="material-symbols-outlined">dashboard</span>
             <span class="text-sm font-semibold">Bảng điều khiển</span>
           </a>
           <a
+            class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            href="quan_ly_phuong_tien.html"
+          >
+            <span class="material-symbols-outlined">commute</span>
+            <span class="text-sm font-semibold">Quản lý xe</span>
+          </a>
+          <a
             class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg transition-colors"
-            href="#"
+            href="quan_ly_don_hang.html"
           >
             <span
               class="material-symbols-outlined"
@@ -106,22 +113,15 @@
             class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
             href="#"
           >
-            <span class="material-symbols-outlined">commute</span>
-            <span class="text-sm font-semibold">Quản lý xe</span>
-          </a>
-          <a
-            class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
-            href="#"
-          >
             <span class="material-symbols-outlined">group</span>
             <span class="text-sm font-semibold">Khách hàng</span>
           </a>
           <a
             class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
-            href="#"
+            href="quan_ly_xe.html"
           >
             <span class="material-symbols-outlined">analytics</span>
-            <span class="text-sm font-semibold">Báo cáo</span>
+            <span class="text-sm font-semibold">Thống kê & Báo cáo</span>
           </a>
           <div
             class="pt-4 pb-2 px-3 text-[10px] font-bold text-[#617589] uppercase tracking-widest"
@@ -714,5 +714,57 @@
     </div>
   </body>
   <script src="../js/admin-orders.js"></script>
+  <script>
+    // Highlight active menu item based on current page
+    (function () {
+      const currentPath = window.location.pathname.split("/").pop();
+      const navLinks = document.querySelectorAll("aside nav a");
+
+      // Remove active class from all
+      navLinks.forEach((link) => {
+        link.classList.remove("bg-primary/10", "text-primary");
+        link.classList.add("hover:bg-[#f0f2f4]", "dark:hover:bg-gray-800");
+      });
+
+      // Add active class based on current page
+      if (currentPath === "quan_ly_xe.html") {
+        // For dashboard/stats page, highlight "Thống kê & Báo cáo"
+        const statsLink = Array.from(navLinks).find(
+          (link) =>
+            link.href.includes("quan_ly_xe.html") &&
+            link.textContent.includes("Thống kê"),
+        );
+        if (statsLink) {
+          statsLink.classList.add("bg-primary/10", "text-primary");
+          statsLink.classList.remove(
+            "hover:bg-[#f0f2f4]",
+            "dark:hover:bg-gray-800",
+          );
+        }
+      } else if (currentPath === "quan_ly_phuong_tien.html") {
+        const vehicleLink = Array.from(navLinks).find((link) =>
+          link.href.includes("quan_ly_phuong_tien.html"),
+        );
+        if (vehicleLink) {
+          vehicleLink.classList.add("bg-primary/10", "text-primary");
+          vehicleLink.classList.remove(
+            "hover:bg-[#f0f2f4]",
+            "dark:hover:bg-gray-800",
+          );
+        }
+      } else if (currentPath === "quan_ly_don_hang.html") {
+        const orderLink = Array.from(navLinks).find((link) =>
+          link.href.includes("quan_ly_don_hang.html"),
+        );
+        if (orderLink) {
+          orderLink.classList.add("bg-primary/10", "text-primary");
+          orderLink.classList.remove(
+            "hover:bg-[#f0f2f4]",
+            "dark:hover:bg-gray-800",
+          );
+        }
+      }
+    })();
+  </script>
   <script src="../js/auth-check.js"></script>
 </html>
