@@ -1,6 +1,8 @@
 package com.example.backend.controller;
 
 import com.example.backend.dto.OrderResponse;
+import com.example.backend.dto.VehicleRequest;
+import com.example.backend.dto.VehicleResponse;
 import com.example.backend.entity.Order.OrderStatus;
 import com.example.backend.entity.User.UserRole;
 import com.example.backend.entity.Vehicle;
@@ -9,6 +11,7 @@ import com.example.backend.entity.Vehicle.VehicleType;
 import com.example.backend.service.OrderService;
 import com.example.backend.service.UserService;
 import com.example.backend.service.VehicleService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin")
@@ -38,11 +42,20 @@ public class AdminController {
      * Create new vehicle
      */
     @PostMapping("/vehicles")
-    public ResponseEntity<?> createVehicle(@RequestBody VehicleRequest request) {
+    public ResponseEntity<?> createVehicle(@Valid @RequestBody VehicleRequest request) {
         try {
+            // Validate vehicle type
+            VehicleType vehicleType;
+            try {
+                vehicleType = VehicleType.valueOf(request.type.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Loại xe không hợp lệ. Hãy chọn: OTO, XEMAY, XEDAP"));
+            }
+            
             Vehicle vehicle = new Vehicle();
             vehicle.setName(request.name);
-            vehicle.setVehicleType(VehicleType.valueOf(request.type.toUpperCase()));
+            vehicle.setVehicleType(vehicleType);
             vehicle.setBrand(request.brand);
             vehicle.setModel(request.model);
             vehicle.setYear(request.year);
@@ -57,10 +70,10 @@ public class AdminController {
             vehicle.setStatus(VehicleStatus.AVAILABLE);
             
             Vehicle saved = vehicleService.createVehicle(vehicle);
-            return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+            return ResponseEntity.status(HttpStatus.CREATED).body(VehicleResponse.fromEntity(saved));
         } catch (Exception e) {
             return ResponseEntity.badRequest()
-                .body(Map.of("error", e.getMessage()));
+                .body(Map.of("error", "Lỗi khi thêm phương tiện: " + e.getMessage()));
         }
     }
     
@@ -70,11 +83,20 @@ public class AdminController {
     @PutMapping("/vehicles/{id}")
     public ResponseEntity<?> updateVehicle(
             @PathVariable Long id, 
-            @RequestBody VehicleRequest request) {
+            @Valid @RequestBody VehicleRequest request) {
         try {
+            // Validate vehicle type
+            VehicleType vehicleType;
+            try {
+                vehicleType = VehicleType.valueOf(request.type.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Loại xe không hợp lệ. Hãy chọn: OTO, XEMAY, XEDAP"));
+            }
+            
             Vehicle vehicle = new Vehicle();
             vehicle.setName(request.name);
-            vehicle.setVehicleType(VehicleType.valueOf(request.type.toUpperCase()));
+            vehicle.setVehicleType(vehicleType);
             vehicle.setBrand(request.brand);
             vehicle.setModel(request.model);
             vehicle.setYear(request.year);
@@ -91,7 +113,23 @@ public class AdminController {
             }
             
             Vehicle updated = vehicleService.updateVehicle(id, vehicle);
-            return ResponseEntity.ok(updated);
+            return ResponseEntity.ok(VehicleResponse.fromEntity(updated));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(Map.of("error", "Lỗi khi cập nhật phương tiện: " + e.getMessage()));
+        }
+    }
+    
+    /**
+     * Get vehicle by ID (for edit)
+     */
+    @GetMapping("/vehicles/{id}")
+    public ResponseEntity<?> getVehicleById(@PathVariable Long id) {
+        try {
+            Vehicle vehicle = vehicleService.getVehicleById(id)
+                .orElseThrow(() -> new RuntimeException("Phương tiện không tồn tại"));
+            VehicleResponse response = VehicleResponse.fromEntity(vehicle);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", e.getMessage()));
@@ -148,13 +186,19 @@ public class AdminController {
             List<Vehicle> vehicles;
             if (q != null && !q.isEmpty()) {
                 vehicles = vehicleService.searchVehicles(q);
-            } else if (category != null && !category.isEmpty()) {
+            } else if (category != null && !category.isEmpty() && !category.equals("all")) {
                 VehicleType type = VehicleType.valueOf(category.toUpperCase());
                 vehicles = vehicleService.getVehiclesByType(type);
             } else {
                 vehicles = vehicleService.getAllVehicles();
             }
-            return ResponseEntity.ok(vehicles);
+            
+            // Convert to VehicleResponse DTO
+            List<VehicleResponse> response = vehicles.stream()
+                .map(VehicleResponse::fromEntity)
+                .collect(Collectors.toList());
+            
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", e.getMessage()));
@@ -177,6 +221,20 @@ public class AdminController {
                 orders = orderService.getAllOrders();
             }
             return ResponseEntity.ok(orders);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(Map.of("error", e.getMessage()));
+        }
+    }
+    
+    /**
+     * Get order by ID (for viewing details)
+     */
+    @GetMapping("/orders/{id}")
+    public ResponseEntity<?> getOrderById(@PathVariable Long id) {
+        try {
+            OrderResponse order = orderService.getOrderById(id);
+            return ResponseEntity.ok(order);
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", e.getMessage()));
@@ -293,24 +351,5 @@ public class AdminController {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", e.getMessage()));
         }
-    }
-    
-    // ==================== INNER CLASSES ====================
-    
-    static class VehicleRequest {
-        public String name;
-        public String type;
-        public String brand;
-        public String model;
-        public Integer year;
-        public String color;
-        public String licensePlate;
-        public BigDecimal pricePerDay;
-        public String description;
-        public String imageUrl;
-        public Integer seats;
-        public String fuelType;
-        public String transmission;
-        public String status;
     }
 }
