@@ -32,7 +32,7 @@ public class VehicleRequest {
     public String color;
     
     @NotBlank(message = "Biển số xe không được để trống")
-    @Pattern(regexp = "\\d{2}[A-Z]-\\d+\\.\\d+", message = "Biển số xe không hợp lệ (ví dụ: 29-G1 123.45)")
+    @Pattern(regexp = "^[0-9]{2,3}[A-Z]-\\d{4,6}$", message = "Biển số xe không hợp lệ (ví dụ: 79A-27289)")
     public String licensePlate;
     
     @NotNull(message = "Giá thuê/ngày không được để trống")
@@ -41,22 +41,23 @@ public class VehicleRequest {
     public BigDecimal pricePerDay;
     
     @Size(max = 500, message = "Mô tả không được vượt quá 500 ký tự")
-    public String description;
+    public String description = "";
     
-    @Size(max = 255, message = "URL hình ảnh không được vượt quá 255 ký tự")
-    public String imageUrl;
+    @Size(max = 2048, message = "URL hình ảnh không được vượt quá 2048 ký tự")
+    public String imageUrl = "";
     
+    @NotNull(message = "Số chỗ ngồi không được để trống")
     @Min(value = 1, message = "Số chỗ ngồi phải ≥ 1")
     @Max(value = 50, message = "Số chỗ ngồi không được vượt quá 50")
-    public Integer seats;
+    public Integer seats = 1;
     
     @Size(max = 50, message = "Loại nhiên liệu không được vượt quá 50 ký tự")
-    public String fuelType;
+    public String fuelType = "";
     
     @Size(max = 50, message = "Truyền động không được vượt quá 50 ký tự")
-    public String transmission;
+    public String transmission = "";
     
-    public String status;
+    public String status = "AVAILABLE";
     
     // Getters and Setters
     public String getName() { return name; }

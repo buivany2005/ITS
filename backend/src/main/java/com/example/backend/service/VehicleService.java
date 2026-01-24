@@ -5,11 +5,17 @@ import com.example.backend.entity.Vehicle.VehicleStatus;
 import com.example.backend.entity.Vehicle.VehicleType;
 import com.example.backend.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -24,7 +30,33 @@ public class VehicleService {
      */
     @Transactional(readOnly = true)
     public List<Vehicle> getAllVehicles() {
-        return vehicleRepository.findAll();
+        return vehicleRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+    }
+    
+    /**
+     * Get vehicles with pagination
+     */
+    @Transactional(readOnly = true)
+    public Map<String, Object> getVehiclesWithPagination(int page, int size, String query, String category) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<Vehicle> vehiclePage;
+        
+        if (query != null && !query.isEmpty()) {
+            vehiclePage = vehicleRepository.findByNameContainingIgnoreCase(query, pageable);
+        } else if (category != null && !category.isEmpty() && !category.equals("all")) {
+            VehicleType type = VehicleType.valueOf(category.toUpperCase());
+            vehiclePage = vehicleRepository.findByVehicleType(type, pageable);
+        } else {
+            vehiclePage = vehicleRepository.findAll(pageable);
+        }
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("vehicles", vehiclePage.getContent());
+        response.put("currentPage", vehiclePage.getNumber());
+        response.put("totalItems", vehiclePage.getTotalElements());
+        response.put("totalPages", vehiclePage.getTotalPages());
+        
+        return response;
     }
     
     /**

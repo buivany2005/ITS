@@ -221,15 +221,23 @@
     
     filteredUsers.forEach((user) => {
       rows.push([
-        user.id,
-        user.fullName || "N/A",
-        user.email,
-        user.phone || "N/A",
+        user.id || "",
+        escapeHtml(user.fullName || "N/A"),
+        escapeHtml(user.email || ""),
+        escapeHtml(user.phone || "N/A"),
         getRoleLabel(user.role),
       ]);
     });
     
-    const csv = rows.map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n");
+    // Proper CSV format with quoted fields
+    const csv = rows.map((row) => 
+      row.map((cell) => {
+        // Escape quotes and wrap in quotes
+        const escaped = String(cell).replace(/"/g, '""');
+        return `"${escaped}"`;
+      }).join(",")
+    ).join("\n");
+    
     const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");

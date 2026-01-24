@@ -2,6 +2,8 @@ package com.example.backend.repository;
 
 import com.example.backend.entity.Order;
 import com.example.backend.entity.Order.OrderStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +20,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     
     // Find orders by status
     List<Order> findByStatusOrderByCreatedAtDesc(OrderStatus status);
+    
+    Page<Order> findByStatusOrderByCreatedAtDesc(OrderStatus status, Pageable pageable);
     
     // Find orders by vehicle
     List<Order> findByVehicleId(Long vehicleId);
@@ -45,4 +49,35 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     
     // Find user's orders by status
     List<Order> findByUserIdAndStatusOrderByCreatedAtDesc(Long userId, OrderStatus status);
+    
+    // Search orders by vehicle name
+    @Query("SELECT o FROM Order o WHERE LOWER(o.vehicle.name) LIKE LOWER(CONCAT('%', :query, '%')) ORDER BY o.createdAt DESC")
+    List<Order> searchByVehicleName(@Param("query") String query);
+    
+    @Query("SELECT o FROM Order o WHERE LOWER(o.vehicle.name) LIKE LOWER(CONCAT('%', :query, '%')) ORDER BY o.createdAt DESC")
+    Page<Order> searchByVehicleName(@Param("query") String query, Pageable pageable);
+    
+    // Search orders by vehicle name and date range
+    @Query("SELECT o FROM Order o WHERE LOWER(o.vehicle.name) LIKE LOWER(CONCAT('%', :query, '%')) " +
+           "AND o.dateFrom >= :dateFrom AND o.dateTo <= :dateTo ORDER BY o.createdAt DESC")
+    List<Order> searchByVehicleNameAndDateRange(@Param("query") String query, 
+                                                @Param("dateFrom") LocalDate dateFrom, 
+                                                @Param("dateTo") LocalDate dateTo);
+    
+    @Query("SELECT o FROM Order o WHERE LOWER(o.vehicle.name) LIKE LOWER(CONCAT('%', :query, '%')) " +
+           "AND o.dateFrom >= :dateFrom AND o.dateTo <= :dateTo ORDER BY o.createdAt DESC")
+    Page<Order> searchByVehicleNameAndDateRange(@Param("query") String query, 
+                                                @Param("dateFrom") LocalDate dateFrom, 
+                                                @Param("dateTo") LocalDate dateTo,
+                                                Pageable pageable);
+    
+    // Find orders by date range
+    @Query("SELECT o FROM Order o WHERE o.dateFrom >= :dateFrom AND o.dateTo <= :dateTo ORDER BY o.createdAt DESC")
+    List<Order> findByDateRange(@Param("dateFrom") LocalDate dateFrom, 
+                                @Param("dateTo") LocalDate dateTo);
+    
+    @Query("SELECT o FROM Order o WHERE o.dateFrom >= :dateFrom AND o.dateTo <= :dateTo ORDER BY o.createdAt DESC")
+    Page<Order> findByDateRange(@Param("dateFrom") LocalDate dateFrom, 
+                                @Param("dateTo") LocalDate dateTo,
+                                Pageable pageable);
 }

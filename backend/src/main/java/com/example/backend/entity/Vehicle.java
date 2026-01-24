@@ -1,11 +1,13 @@
 package com.example.backend.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "vehicles")
 public class Vehicle {
@@ -76,6 +78,6 @@ public class Vehicle {
     }
     
     public enum VehicleStatus {
-        AVAILABLE, RENTED, MAINTENANCE
+        AVAILABLE, RENTED, MAINTENANCE, UNAVAILABLE
     }
 }

@@ -11,13 +11,18 @@ import com.example.backend.entity.Vehicle.VehicleType;
 import com.example.backend.service.OrderService;
 import com.example.backend.service.UserService;
 import com.example.backend.service.VehicleService;
+import com.example.backend.util.ExcelExporter;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -168,36 +173,22 @@ public class AdminController {
     }
     
     /**
-     * Get vehicle statistics
-     */
-    @GetMapping("/vehicles/stats")
-    public ResponseEntity<?> getVehicleStats() {
-        VehicleService.VehicleStats stats = vehicleService.getVehicleStats();
-        return ResponseEntity.ok(stats);
-    }
-    
-    /**
-     * Get all vehicles for admin
+     * Get all vehicles for admin (with pagination)
      */
     @GetMapping("/vehicles")
-    public ResponseEntity<?> getAllVehicles(@RequestParam(required = false) String q,
-                                           @RequestParam(required = false) String category) {
+    public ResponseEntity<?> getAllVehicles(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "12") int size,
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) String category) {
         try {
-            List<Vehicle> vehicles;
-            if (q != null && !q.isEmpty()) {
-                vehicles = vehicleService.searchVehicles(q);
-            } else if (category != null && !category.isEmpty() && !category.equals("all")) {
-                VehicleType type = VehicleType.valueOf(category.toUpperCase());
-                vehicles = vehicleService.getVehiclesByType(type);
-            } else {
-                vehicles = vehicleService.getAllVehicles();
-            }
-            
-            // Convert to VehicleResponse DTO
-            List<VehicleResponse> response = vehicles.stream()
+            Map<String, Object> response = vehicleService.getVehiclesWithPagination(page, size, q, category);
+            // Convert vehicles to VehicleResponse DTO
+            List<VehicleResponse> vehicleResponses = ((List<Vehicle>) response.get("vehicles"))
+                .stream()
                 .map(VehicleResponse::fromEntity)
                 .collect(Collectors.toList());
-            
+            response.put("vehicles", vehicleResponses);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest()
@@ -205,25 +196,83 @@ public class AdminController {
         }
     }
     
+    /**
+     * Export vehicles to Excel
+     */
+    @GetMapping("/vehicles/export")
+    public ResponseEntity<?> exportVehicles() {
+        try {
+            List<Vehicle> vehicles = vehicleService.getAllVehicles();
+            List<VehicleResponse> responses = vehicles.stream()
+                .map(VehicleResponse::fromEntity)
+                .collect(Collectors.toList());
+            
+            byte[] excelData = ExcelExporter.exportVehiclesToExcel(responses);
+            String filename = "danh-sach-xe-" + LocalDateTime.now().format(
+                DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss")) + ".xlsx";
+            
+            return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                .body(excelData);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "Không thể export file Excel: " + e.getMessage()));
+        }
+    }
+    
     // ==================== ORDER MANAGEMENT ====================
     
     /**
-     * Get all orders
+     * Get all orders (with pagination and search)
      */
     @GetMapping("/orders")
-    public ResponseEntity<?> getAllOrders(@RequestParam(required = false) String status) {
+    public ResponseEntity<?> getAllOrders(
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "12") int size,
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String dateFrom,
+            @RequestParam(required = false) String dateTo) {
         try {
-            List<OrderResponse> orders;
-            if (status != null && !status.isEmpty()) {
-                OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
-                orders = orderService.getOrdersByStatus(orderStatus);
-            } else {
-                orders = orderService.getAllOrders();
+            // Parse dates if provided
+            java.time.LocalDate fromDate = null;
+            java.time.LocalDate toDate = null;
+            
+            if (dateFrom != null && !dateFrom.isEmpty()) {
+                fromDate = java.time.LocalDate.parse(dateFrom);
             }
-            return ResponseEntity.ok(orders);
+            if (dateTo != null && !dateTo.isEmpty()) {
+                toDate = java.time.LocalDate.parse(dateTo);
+            }
+            
+            Map<String, Object> response = orderService.getOrdersWithPagination(
+                page, size, q, status, fromDate, toDate);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", e.getMessage()));
+        }
+    }
+    
+    /**
+     * Export orders to Excel
+     */
+    @GetMapping("/orders/export")
+    public ResponseEntity<?> exportOrders() {
+        try {
+            List<OrderResponse> orders = orderService.getAllOrders();
+            byte[] excelData = ExcelExporter.exportOrdersToExcel(orders);
+            String filename = "don-dat-xe-" + LocalDateTime.now().format(
+                DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss")) + ".xlsx";
+            
+            return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                .body(excelData);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "Không thể export file Excel: " + e.getMessage()));
         }
     }
     
@@ -259,27 +308,37 @@ public class AdminController {
     }
     
     /**
-     * Get order statistics
+     * Get statistics report
      */
-    @GetMapping("/orders/stats")
-    public ResponseEntity<?> getOrderStats() {
-        OrderService.OrderStats stats = orderService.getOrderStats();
-        return ResponseEntity.ok(stats);
+    @GetMapping("/stats")
+    public ResponseEntity<?> getStatistics() {
+        try {
+            Map<String, Object> stats = orderService.getStatisticsReport();
+            return ResponseEntity.ok(stats);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(Map.of("error", e.getMessage()));
+        }
     }
     
     /**
-     * Export orders to Excel
+     * Export statistics to Excel
      */
-    @GetMapping("/orders/export")
-    public ResponseEntity<byte[]> exportOrders() {
+    @GetMapping("/stats/export")
+    public ResponseEntity<?> exportStatistics() {
         try {
-            byte[] excelData = orderService.exportOrdersToExcel();
+            Map<String, Object> stats = orderService.getStatisticsReport();
+            byte[] excelData = ExcelExporter.exportStatisticsReport(stats);
+            String filename = "thong-ke-bao-cao-" + LocalDateTime.now().format(
+                DateTimeFormatter.ofPattern("yyyyMMdd-HHmmss")) + ".xlsx";
+            
             return ResponseEntity.ok()
-                .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                .header("Content-Disposition", "attachment; filename=orders.xlsx")
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_OCTET_STREAM_VALUE)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
                 .body(excelData);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "Không thể export file Excel: " + e.getMessage()));
         }
     }
     
@@ -338,11 +397,10 @@ public class AdminController {
     public ResponseEntity<?> getDashboardStats() {
         try {
             VehicleService.VehicleStats vehicleStats = vehicleService.getVehicleStats();
-            OrderService.OrderStats orderStats = orderService.getOrderStats();
+            OrderService orderService = this.orderService; // Use the injected service
             
             Map<String, Object> dashboard = Map.of(
                 "vehicles", vehicleStats,
-                "orders", orderStats,
                 "totalUsers", userService.getAllUsers().size()
             );
             

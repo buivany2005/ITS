@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug POST Request</title>
+</head>
+<body>
+    <h1>Debug Vehicle POST</h1>
+    <div id="result"></div>
+    
+    <script>
+        async function testPost() {
+            const data = {
+                name: "Test Honda Vision",
+                type: "XEMAY",
+                brand: "Honda",
+                model: "Vision",
+                year: 2023,
+                color: "Black",
+                licensePlate: "79A-27289",
+                pricePerDay: 150000,
+                seats: 2,
+                fuelType: "Xăng",
+                transmission: "Automatic",
+                description: "Test vehicle",
+                imageUrl: "https://images.search.yahoo.com/test.png"
+            };
+            
+            console.log("Sending:", JSON.stringify(data));
+            
+            try {
+                const response = await fetch("/api/admin/vehicles", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                document.getElementById("result").innerHTML = `
+                    <p>Status: ${response.status}</p>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `;
+                
+                console.log("Response:", response.status, result);
+            } catch (err) {
+                document.getElementById("result").innerHTML = `<p>Error: ${err.message}</p>`;
+                console.error(err);
+            }
+        }
+        
+        testPost();
+    </script>
+</body>
+</html>
