@@ -5,17 +5,24 @@ import com.example.backend.entity.Vehicle.VehicleStatus;
 import com.example.backend.entity.Vehicle.VehicleType;
 import com.example.backend.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+<<<<<<< HEAD
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+=======
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+<<<<<<< HEAD
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+=======
+import java.util.List;
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
 import java.util.Optional;
 
 @Service
@@ -30,6 +37,7 @@ public class VehicleService {
      */
     @Transactional(readOnly = true)
     public List<Vehicle> getAllVehicles() {
+<<<<<<< HEAD
         return vehicleRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
     
@@ -57,6 +65,9 @@ public class VehicleService {
         response.put("totalPages", vehiclePage.getTotalPages());
         
         return response;
+=======
+        return vehicleRepository.findAll();
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
     }
     
     /**

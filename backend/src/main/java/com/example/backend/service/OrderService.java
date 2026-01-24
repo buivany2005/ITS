@@ -176,6 +176,8 @@ public class OrderService {
     }
     
     /**
+=======
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
      * Get orders by status (admin)
      */
     @Transactional(readOnly = true)
@@ -243,7 +245,6 @@ public class OrderService {
         stats.setCancelledOrders(orderRepository.countByStatus(OrderStatus.CANCELLED));
         return stats;
     }
-    
     /**
      * Get statistics report
      */

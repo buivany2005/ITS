@@ -28,7 +28,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
+
 @CrossOrigin(origins = "*")
 public class AdminController {
     
@@ -41,6 +42,7 @@ public class AdminController {
     @Autowired
     private UserService userService;
     
+<<<<<<< HEAD
     // ==================== VEHICLE MANAGEMENT ====================
     
     /**
@@ -61,6 +63,14 @@ public class AdminController {
             Vehicle vehicle = new Vehicle();
             vehicle.setName(request.name);
             vehicle.setVehicleType(vehicleType);
+=======
+    @PostMapping("/vehicles")
+    public ResponseEntity<?> createVehicle(@RequestBody VehicleRequest request) {
+        try {
+            Vehicle vehicle = new Vehicle();
+            vehicle.setName(request.name);
+            vehicle.setVehicleType(VehicleType.valueOf(request.type.toUpperCase()));
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
             vehicle.setBrand(request.brand);
             vehicle.setModel(request.model);
             vehicle.setYear(request.year);
@@ -75,6 +85,7 @@ public class AdminController {
             vehicle.setStatus(VehicleStatus.AVAILABLE);
             
             Vehicle saved = vehicleService.createVehicle(vehicle);
+<<<<<<< HEAD
             return ResponseEntity.status(HttpStatus.CREATED).body(VehicleResponse.fromEntity(saved));
         } catch (Exception e) {
             return ResponseEntity.badRequest()
@@ -102,6 +113,23 @@ public class AdminController {
             Vehicle vehicle = new Vehicle();
             vehicle.setName(request.name);
             vehicle.setVehicleType(vehicleType);
+=======
+            return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(Map.of("error", e.getMessage()));
+        }
+    }
+    
+    @PutMapping("/vehicles/{id}")
+    public ResponseEntity<?> updateVehicle(
+            @PathVariable Long id, 
+            @RequestBody VehicleRequest request) {
+        try {
+            Vehicle vehicle = new Vehicle();
+            vehicle.setName(request.name);
+            vehicle.setVehicleType(VehicleType.valueOf(request.type.toUpperCase()));
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
             vehicle.setBrand(request.brand);
             vehicle.setModel(request.model);
             vehicle.setYear(request.year);
@@ -118,6 +146,7 @@ public class AdminController {
             }
             
             Vehicle updated = vehicleService.updateVehicle(id, vehicle);
+<<<<<<< HEAD
             return ResponseEntity.ok(VehicleResponse.fromEntity(updated));
         } catch (Exception e) {
             return ResponseEntity.badRequest()
@@ -135,15 +164,21 @@ public class AdminController {
                 .orElseThrow(() -> new RuntimeException("Phương tiện không tồn tại"));
             VehicleResponse response = VehicleResponse.fromEntity(vehicle);
             return ResponseEntity.ok(response);
+=======
+            return ResponseEntity.ok(updated);
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", e.getMessage()));
         }
     }
     
+<<<<<<< HEAD
     /**
      * Delete vehicle
      */
+=======
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
     @DeleteMapping("/vehicles/{id}")
     public ResponseEntity<?> deleteVehicle(@PathVariable Long id) {
         try {
@@ -155,9 +190,12 @@ public class AdminController {
         }
     }
     
+<<<<<<< HEAD
     /**
      * Update vehicle status
      */
+=======
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
     @PatchMapping("/vehicles/{id}/status")
     public ResponseEntity<?> updateVehicleStatus(
             @PathVariable Long id,
@@ -172,6 +210,7 @@ public class AdminController {
         }
     }
     
+<<<<<<< HEAD
     /**
      * Get all vehicles for admin (with pagination)
      */
@@ -249,12 +288,32 @@ public class AdminController {
             Map<String, Object> response = orderService.getOrdersWithPagination(
                 page, size, q, status, fromDate, toDate);
             return ResponseEntity.ok(response);
+=======
+    @GetMapping("/vehicles/stats")
+    public ResponseEntity<?> getVehicleStats() {
+        VehicleService.VehicleStats stats = vehicleService.getVehicleStats();
+        return ResponseEntity.ok(stats);
+    }
+    
+    @GetMapping("/orders")
+    public ResponseEntity<?> getAllOrders(@RequestParam(required = false) String status) {
+        try {
+            List<OrderResponse> orders;
+            if (status != null && !status.isEmpty()) {
+                OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
+                orders = orderService.getOrdersByStatus(orderStatus);
+            } else {
+                orders = orderService.getAllOrders();
+            }
+            return ResponseEntity.ok(orders);
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", e.getMessage()));
         }
     }
     
+<<<<<<< HEAD
     /**
      * Export orders to Excel
      */
@@ -293,6 +352,8 @@ public class AdminController {
     /**
      * Update order status
      */
+=======
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
     @PatchMapping("/orders/{id}/status")
     public ResponseEntity<?> updateOrderStatus(
             @PathVariable Long id,
@@ -307,6 +368,7 @@ public class AdminController {
         }
     }
     
+<<<<<<< HEAD
     /**
      * Get statistics report
      */
@@ -315,12 +377,48 @@ public class AdminController {
         try {
             Map<String, Object> stats = orderService.getStatisticsReport();
             return ResponseEntity.ok(stats);
+=======
+    @GetMapping("/orders/export")
+    public ResponseEntity<?> exportOrders() {
+        try {
+            List<OrderResponse> orders = orderService.getAllOrders();
+            
+            StringBuilder csv = new StringBuilder();
+            csv.append("ID,Khách hàng,Phương tiện,Loại xe,Từ ngày,Đến ngày,Số ngày,Giá/ngày,Tổng tiền,Trạng thái,Ngày tạo\n");
+            
+            for (OrderResponse order : orders) {
+                csv.append(order.getId()).append(",")
+                   .append(escapeCSV(order.getUserName())).append(",")
+                   .append(escapeCSV(order.getVehicleName())).append(",")
+                   .append(order.getVehicleType()).append(",")
+                   .append(order.getDateFrom()).append(",")
+                   .append(order.getDateTo()).append(",")
+                   .append(order.getTotalDays()).append(",")
+                   .append(order.getPricePerDay()).append(",")
+                   .append(order.getTotalPrice()).append(",")
+                   .append(order.getStatus()).append(",")
+                   .append(order.getCreatedAt()).append("\n");
+            }
+            
+            byte[] content = csv.toString().getBytes(StandardCharsets.UTF_8);
+            
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.parseMediaType("text/csv"));
+            headers.setContentDispositionFormData("attachment", "orders.csv");
+            headers.setContentLength(content.length);
+            
+            return ResponseEntity.ok()
+                .headers(headers)
+                .body(content);
+                
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", e.getMessage()));
         }
     }
     
+<<<<<<< HEAD
     /**
      * Export statistics to Excel
      */
@@ -347,6 +445,22 @@ public class AdminController {
     /**
      * Get all users
      */
+=======
+    private String escapeCSV(String value) {
+        if (value == null) return "";
+        if (value.contains(",") || value.contains("\"") || value.contains("\n")) {
+            return "\"" + value.replace("\"", "\"\"") + "\"";
+        }
+        return value;
+    }
+    
+    @GetMapping("/orders/stats")
+    public ResponseEntity<?> getOrderStats() {
+        OrderService.OrderStats stats = orderService.getOrderStats();
+        return ResponseEntity.ok(stats);
+    }
+    
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers() {
         try {
@@ -357,9 +471,12 @@ public class AdminController {
         }
     }
     
+<<<<<<< HEAD
     /**
      * Update user role
      */
+=======
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
     @PatchMapping("/users/{id}/role")
     public ResponseEntity<?> updateUserRole(
             @PathVariable Long id,
@@ -374,9 +491,12 @@ public class AdminController {
         }
     }
     
+<<<<<<< HEAD
     /**
      * Delete user
      */
+=======
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         try {
@@ -388,19 +508,30 @@ public class AdminController {
         }
     }
     
+<<<<<<< HEAD
     // ==================== DASHBOARD ====================
     
     /**
      * Get dashboard statistics
      */
+=======
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
     @GetMapping("/dashboard")
     public ResponseEntity<?> getDashboardStats() {
         try {
             VehicleService.VehicleStats vehicleStats = vehicleService.getVehicleStats();
+<<<<<<< HEAD
             OrderService orderService = this.orderService; // Use the injected service
             
             Map<String, Object> dashboard = Map.of(
                 "vehicles", vehicleStats,
+=======
+            OrderService.OrderStats orderStats = orderService.getOrderStats();
+            
+            Map<String, Object> dashboard = Map.of(
+                "vehicles", vehicleStats,
+                "orders", orderStats,
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
                 "totalUsers", userService.getAllUsers().size()
             );
             
@@ -410,4 +541,25 @@ public class AdminController {
                 .body(Map.of("error", e.getMessage()));
         }
     }
+<<<<<<< HEAD
 }
+=======
+    
+    static class VehicleRequest {
+        public String name;
+        public String type;
+        public String brand;
+        public String model;
+        public Integer year;
+        public String color;
+        public String licensePlate;
+        public BigDecimal pricePerDay;
+        public String description;
+        public String imageUrl;
+        public Integer seats;
+        public String fuelType;
+        public String transmission;
+        public String status;
+    }
+}
+>>>>>>> fafb6f636f639debf1e987ffba5915058ddf4722
