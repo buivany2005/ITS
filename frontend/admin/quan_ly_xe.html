@@ -68,155 +68,123 @@
       <!-- TopNavBar -->
       <header
         class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#dbe0e6] dark:border-gray-800 bg-white dark:bg-background-dark px-10 py-3 sticky top-0 z-50"
-      >
-        <div class="flex items-center gap-8">
-          <div class="flex items-center gap-4 text-[#111418] dark:text-white">
-            <div class="size-6 text-primary">
-              <span class="material-symbols-outlined text-3xl"
+      ></header>
+      <div class="flex flex-1">
+        <aside
+          class="w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col"
+        >
+          <div class="p-6">
+            <div class="flex items-center gap-3">
+              <div
+                class="bg-primary size-10 rounded-lg flex items-center justify-center text-white"
+              >
+                <span class="material-symbols-outlined">directions_car</span>
+              </div>
+              <div>
+                <h1
+                  class="text-[#111418] dark:text-white text-base font-bold leading-normal"
+                >
+                  Hệ thống Thuê Xe
+                </h1>
+                <p
+                  class="text-[#617589] dark:text-slate-400 text-xs mt-1 font-medium"
+                >
+                  Quản trị viên Hệ thống
+                </p>
+              </div>
+            </div>
+          </div>
+          <nav class="flex flex-col gap-1">
+            <a
+              class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+              href="quan_ly_xe.html"
+            >
+              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+                Bảng điều khiển
+              </p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+              href="quan_ly_phuong_tien.html"
+            >
+              <span class="material-symbols-outlined text-[22px]"
                 >directions_car</span
               >
-            </div>
-            <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">
-              Admin Rental
-            </h2>
-          </div>
-          <label class="flex flex-col min-w-40 !h-10 max-w-64">
+              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+                Quản lý xe
+              </p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+              href="quan_ly_don_hang.html"
+            >
+              <span class="material-symbols-outlined text-[22px]"
+                >calendar_month</span
+              >
+              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+                Đơn đặt xe
+              </p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+              href="quan_ly_khach_hang.html"
+            >
+              <span class="material-symbols-outlined text-[22px]">group</span>
+              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+                Khách hàng
+              </p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary"
+              href="quan_ly_xe.html"
+            >
+              <span class="material-symbols-outlined text-[22px]"
+                >analytics</span
+              >
+              <p class="text-sm font-bold">Thống kê &amp; Báo cáo</p>
+            </a>
+            <a
+              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+              href="#"
+            >
+              <span class="material-symbols-outlined text-[22px]"
+                >settings</span
+              >
+              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+                Cài đặt
+              </p>
+            </a>
+          </nav>
+          <div class="p-4 border-t border-slate-200 dark:border-slate-800">
             <div
-              class="flex w-full flex-1 items-stretch rounded-lg h-full border border-transparent focus-within:border-primary transition-all"
+              class="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl"
             >
               <div
-                class="text-[#617589] flex bg-[#f0f2f4] dark:bg-gray-800 items-center justify-center pl-4 rounded-l-lg border-r-0"
-              >
-                <span class="material-symbols-outlined text-xl">search</span>
+                class="size-8 rounded-full bg-cover bg-center"
+                data-alt="Ảnh đại diện quản trị viên"
+                style="
+                  background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDA0HeOJZSnYNEzB5kzlsDa_u-ySK8TVKa_-RZBYr1JTR4l4B8Zwsory4WFCandQsM1AbIenjn3stXaHZBjwBwz4jPcUQWU9YL77MAi4aGDHV1aBajGxm6nnOuLoemcJoQRH-DLEcAwRsi9qQ7PcZP6_Y99WmyGmiQrd-5cbduovcXrx9PR_eOOotETBWvXL1aBZ9Ery-4rICP0Gpgg1ITG8GhnUcKMuDs4F7P5gJMmV7KXUgbMbmEj4_E4RthK1vtFQI2Om83W6Ytd&quot;);
+                "
+              ></div>
+              <div class="flex-1 overflow-hidden">
+                <p
+                  class="text-sm font-bold text-[#111418] dark:text-white truncate"
+                >
+                  Nguyễn Văn An
+                </p>
+                <p class="text-xs text-[#617589] dark:text-slate-400 truncate">
+                  an.nguyen@rental.vn
+                </p>
               </div>
-              <input
-                class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-[#111418] dark:text-white focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] dark:bg-gray-800 focus:border-none h-full placeholder:text-[#617589] px-4 rounded-l-none border-l-0 pl-2 text-base font-normal"
-                placeholder="Tìm kiếm dữ liệu..."
-                value=""
-              />
-            </div>
-          </label>
-        </div>
-        <div class="flex flex-1 justify-end gap-6 items-center">
-          <div class="flex items-center gap-2 text-[#617589]">
-            <span class="material-symbols-outlined">notifications</span>
-          </div>
-          <button
-            id="btn-logout"
-            class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors"
-          >
-            <span class="truncate">Đăng xuất</span>
-          </button>
-          <div
-            class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-gray-200"
-            data-alt="Ảnh đại diện quản trị viên"
-            style="
-              background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDsFahTE38yodaHEZucpi2jDakfsfQEw-pufOQG1zk8QsKrveTvepyBRkXeDd1YEevwVOYLhyUKnmyeugteIBvVyrAjIw0TaD4Snm2TmCAyvLe3A4NwND3u29O1UW3kKEr8yetgWcMzFgMOgXA0ZQWFeLWcI8w8BVosVyQ7aAyKQf41KAWEKkIpKouDvqy0E_l-rlpQOOIipCUSEov6Rih1DPL-Q4dhkTYEgwdPaXeo3sQulDe0KxGaoM0HOFUcQE2VSkE-OHGmQ9hv&quot;);
-            "
-          ></div>
-        </div>
-      </header>
-      <div class="flex flex-1">
-        <!-- SideNavBar -->
-        <aside
-          class="w-64 border-r border-[#dbe0e6] dark:border-gray-800 bg-white dark:bg-background-dark hidden lg:flex flex-col justify-between p-4 sticky top-[65px] h-[calc(100vh-65px)]"
-        >
-          <div class="flex flex-col gap-4">
-            <div class="flex flex-col px-3 mb-4">
-              <h1
-                class="text-[#111418] dark:text-white text-base font-bold leading-normal"
+              <span class="material-symbols-outlined text-slate-400 text-sm"
+                >logout</span
               >
-                Admin Panel
-              </h1>
-              <p class="text-[#617589] text-xs font-normal leading-normal">
-                Quản lý hệ thống xe
-              </p>
-            </div>
-            <nav class="flex flex-col gap-1">
-              <a
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-                href="#"
-              >
-                <span class="material-symbols-outlined text-[22px]"
-                  >dashboard</span
-                >
-                <p
-                  class="text-[#111418] dark:text-gray-300 text-sm font-medium"
-                >
-                  Bảng điều khiển
-                </p>
-              </a>
-              <a
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-                href="quan_ly_phuong_tien.html"
-              >
-                <span class="material-symbols-outlined text-[22px]"
-                  >directions_car</span
-                >
-                <p
-                  class="text-[#111418] dark:text-gray-300 text-sm font-medium"
-                >
-                  Quản lý xe
-                </p>
-              </a>
-              <a
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-                href="quan_ly_don_hang.html"
-              >
-                <span class="material-symbols-outlined text-[22px]"
-                  >calendar_month</span
-                >
-                <p
-                  class="text-[#111418] dark:text-gray-300 text-sm font-medium"
-                >
-                  Đơn đặt xe
-                </p>
-              </a>
-              <a
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-                href="quan_ly_khach_hang.html"
-              >
-                <span class="material-symbols-outlined text-[22px]">group</span>
-                <p
-                  class="text-[#111418] dark:text-gray-300 text-sm font-medium"
-                >
-                  Khách hàng
-                </p>
-              </a>
-              <a
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary"
-                href="quan_ly_xe.html"
-              >
-                <span class="material-symbols-outlined text-[22px]"
-                  >analytics</span
-                >
-                <p class="text-sm font-bold">Thống kê &amp; Báo cáo</p>
-              </a>
-              <a
-                class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-                href="#"
-              >
-                <span class="material-symbols-outlined text-[22px]"
-                  >settings</span
-                >
-                <p
-                  class="text-[#111418] dark:text-gray-300 text-sm font-medium"
-                >
-                  Cài đặt
-                </p>
-              </a>
-            </nav>
-          </div>
-          <div class="px-3 py-4 border-t border-[#f0f2f4] dark:border-gray-800">
-            <div class="flex items-center gap-3">
-              <div class="size-2 rounded-full bg-green-500"></div>
-              <p class="text-xs text-[#617589]">Hệ thống: Hoạt động</p>
             </div>
           </div>
         </aside>
         <!-- Main Content Area -->
         <main
-          class="flex-1 flex flex-col p-6 lg:p-10 max-w-[1200px] mx-auto w-full"
+          class="flex-1 ml-72 flex flex-col p-6 lg:p-10 max-w-[1200px] mx-auto w-full"
         >
           <!-- PageHeading -->
           <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
@@ -721,7 +689,8 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement("a");
             a.href = url;
-            a.download = "don_hang_" + new Date().toISOString().split("T")[0] + ".xlsx";
+            a.download =
+              "don_hang_" + new Date().toISOString().split("T")[0] + ".xlsx";
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -778,6 +747,17 @@
         if (orderLink) {
           orderLink.classList.add("bg-primary/10", "text-primary");
           orderLink.classList.remove(
+            "hover:bg-[#f0f2f4]",
+            "dark:hover:bg-gray-800",
+          );
+        }
+      } else if (currentPath === "quan_ly_khach_hang.html") {
+        const customerLink = Array.from(navLinks).find((link) =>
+          link.href.includes("quan_ly_khach_hang.html"),
+        );
+        if (customerLink) {
+          customerLink.classList.add("bg-primary/10", "text-primary");
+          customerLink.classList.remove(
             "hover:bg-[#f0f2f4]",
             "dark:hover:bg-gray-800",
           );

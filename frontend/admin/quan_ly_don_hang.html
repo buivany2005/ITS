@@ -81,59 +81,61 @@
             </div>
           </div>
         </div>
-        <nav class="flex-1 px-4 space-y-1 overflow-y-auto">
+        <nav class="flex flex-col gap-1">
           <a
             class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
             href="quan_ly_xe.html"
           >
-            <span class="material-symbols-outlined">dashboard</span>
-            <span class="text-sm font-semibold">Bảng điều khiển</span>
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Bảng điều khiển
+            </p>
           </a>
           <a
-            class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
             href="quan_ly_phuong_tien.html"
           >
-            <span class="material-symbols-outlined">commute</span>
-            <span class="text-sm font-semibold">Quản lý xe</span>
+            <span class="material-symbols-outlined text-[22px]"
+              >directions_car</span
+            >
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Quản lý xe
+            </p>
           </a>
           <a
-            class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg transition-colors"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary"
             href="quan_ly_don_hang.html"
           >
-            <span
-              class="material-symbols-outlined"
-              style="font-variation-settings: &quot;FILL&quot; 1"
-              >receipt_long</span
+            <span class="material-symbols-outlined text-[22px]"
+              >calendar_month</span
             >
-            <span class="text-sm font-bold tracking-tight"
-              >Quản lý đơn hàng</span
-            >
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Đơn đặt xe
+            </p>
           </a>
           <a
-            class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
             href="quan_ly_khach_hang.html"
           >
-            <span class="material-symbols-outlined">group</span>
-            <span class="text-sm font-semibold">Khách hàng</span>
+            <span class="material-symbols-outlined text-[22px]">group</span>
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Khách hàng
+            </p>
           </a>
           <a
-            class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
             href="quan_ly_xe.html"
           >
-            <span class="material-symbols-outlined">analytics</span>
-            <span class="text-sm font-semibold">Thống kê & Báo cáo</span>
+            <span class="material-symbols-outlined text-[22px]">analytics</span>
+            <p class="text-sm font-bold">Thống kê &amp; Báo cáo</p>
           </a>
-          <div
-            class="pt-4 pb-2 px-3 text-[10px] font-bold text-[#617589] uppercase tracking-widest"
-          >
-            Hệ thống
-          </div>
           <a
-            class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
             href="#"
           >
-            <span class="material-symbols-outlined">settings</span>
-            <span class="text-sm font-semibold">Cài đặt</span>
+            <span class="material-symbols-outlined text-[22px]">settings</span>
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Cài đặt
+            </p>
           </a>
         </nav>
         <div class="p-4 border-t border-slate-200 dark:border-slate-800">
@@ -759,6 +761,17 @@
         if (orderLink) {
           orderLink.classList.add("bg-primary/10", "text-primary");
           orderLink.classList.remove(
+            "hover:bg-[#f0f2f4]",
+            "dark:hover:bg-gray-800",
+          );
+        }
+      } else if (currentPath === "quan_ly_khach_hang.html") {
+        const customerLink = Array.from(navLinks).find((link) =>
+          link.href.includes("quan_ly_khach_hang.html"),
+        );
+        if (customerLink) {
+          customerLink.classList.add("bg-primary/10", "text-primary");
+          customerLink.classList.remove(
             "hover:bg-[#f0f2f4]",
             "dark:hover:bg-gray-800",
           );
