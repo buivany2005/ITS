@@ -1,0 +1,783 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Quản lý đơn hàng toàn hệ thống</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+    </style>
+  </head>
+  <body class="bg-background-light dark:bg-background-dark min-h-screen">
+    <div class="flex h-screen overflow-hidden">
+      <!-- Sidebar Navigation -->
+      <aside
+        class="w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col"
+      >
+        <div class="p-6">
+          <div class="flex items-center gap-3">
+            <div
+              class="bg-primary size-10 rounded-lg flex items-center justify-center text-white"
+            >
+              <span class="material-symbols-outlined">directions_car</span>
+            </div>
+            <div>
+              <h1
+                class="text-[#111418] dark:text-white text-base font-bold leading-none"
+              >
+                Hệ thống Thuê Xe
+              </h1>
+              <p
+                class="text-[#617589] dark:text-slate-400 text-xs mt-1 font-medium"
+              >
+                Quản trị viên Hệ thống
+              </p>
+            </div>
+          </div>
+        </div>
+        <nav class="flex flex-col gap-1">
+          <a
+            class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            href="quan_ly_xe.html"
+          >
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Bảng điều khiển
+            </p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+            href="quan_ly_phuong_tien.html"
+          >
+            <span class="material-symbols-outlined text-[22px]"
+              >directions_car</span
+            >
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Quản lý xe
+            </p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary"
+            href="quan_ly_don_hang.html"
+          >
+            <span class="material-symbols-outlined text-[22px]"
+              >calendar_month</span
+            >
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Đơn đặt xe
+            </p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+            href="quan_ly_khach_hang.html"
+          >
+            <span class="material-symbols-outlined text-[22px]">group</span>
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Khách hàng
+            </p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+            href="quan_ly_xe.html"
+          >
+            <span class="material-symbols-outlined text-[22px]">analytics</span>
+            <p class="text-sm font-bold">Thống kê &amp; Báo cáo</p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+            href="#"
+          >
+            <span class="material-symbols-outlined text-[22px]">settings</span>
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Cài đặt
+            </p>
+          </a>
+        </nav>
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+          <div
+            class="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl"
+          >
+            <div
+              class="size-8 rounded-full bg-cover bg-center"
+              data-alt="Ảnh đại diện quản trị viên"
+              style="
+                background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDA0HeOJZSnYNEzB5kzlsDa_u-ySK8TVKa_-RZBYr1JTR4l4B8Zwsory4WFCandQsM1AbIenjn3stXaHZBjwBwz4jPcUQWU9YL77MAi4aGDHV1aBajGxm6nnOuLoemcJoQRH-DLEcAwRsi9qQ7PcZP6_Y99WmyGmiQrd-5cbduovcXrx9PR_eOOotETBWvXL1aBZ9Ery-4rICP0Gpgg1ITG8GhnUcKMuDs4F7P5gJMmV7KXUgbMbmEj4_E4RthK1vtFQI2Om83W6Ytd&quot;);
+              "
+            ></div>
+            <div class="flex-1 overflow-hidden">
+              <p
+                class="text-sm font-bold text-[#111418] dark:text-white truncate"
+              >
+                Nguyễn Văn An
+              </p>
+              <p class="text-xs text-[#617589] dark:text-slate-400 truncate">
+                an.nguyen@rental.vn
+              </p>
+            </div>
+            <span class="material-symbols-outlined text-slate-400 text-sm"
+              >logout</span
+            >
+          </div>
+        </div>
+      </aside>
+      <!-- Main Content -->
+      <main class="flex-1 overflow-y-auto relative z-0">
+        <div class="max-w-[1200px] mx-auto p-8">
+          <!-- Page Heading -->
+          <div
+            class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
+          >
+            <div>
+              <h2
+                class="text-[#111418] dark:text-white text-3xl font-black leading-tight tracking-tight"
+              >
+                Quản lý đơn hàng toàn hệ thống
+              </h2>
+              <p
+                class="text-[#617589] dark:text-slate-400 text-base font-normal mt-1"
+              >
+                Theo dõi, phê duyệt và cập nhật trạng thái đặt xe của khách
+                hàng.
+              </p>
+            </div>
+            <button
+              id="btn-export"
+              class="bg-primary text-white px-6 py-2.5 rounded-lg font-bold text-sm shadow-sm hover:bg-primary/90 transition-all flex items-center gap-2"
+            >
+              <span class="material-symbols-outlined text-xl">download</span>
+              Xuất báo cáo (Excel)
+            </button>
+          </div>
+          <!-- Stats Grid -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+          >
+            <div
+              class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"
+            >
+              <p class="text-[#617589] dark:text-slate-400 text-sm font-medium">
+                Tổng đơn hàng
+              </p>
+              <div class="flex items-end justify-between mt-2">
+                <p class="text-[#111418] dark:text-white text-3xl font-bold">
+                  1,250
+                </p>
+                <span
+                  class="text-[#078838] bg-[#078838]/10 px-2 py-0.5 rounded text-xs font-bold"
+                  >+12%</span
+                >
+              </div>
+            </div>
+            <div
+              class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"
+            >
+              <p class="text-[#617589] dark:text-slate-400 text-sm font-medium">
+                Chờ duyệt
+              </p>
+              <div class="flex items-end justify-between mt-2">
+                <p class="text-[#111418] dark:text-white text-3xl font-bold">
+                  45
+                </p>
+                <span
+                  class="text-[#078838] bg-[#078838]/10 px-2 py-0.5 rounded text-xs font-bold"
+                  >+5%</span
+                >
+              </div>
+            </div>
+            <div
+              class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"
+            >
+              <p class="text-[#617589] dark:text-slate-400 text-sm font-medium">
+                Đang thuê
+              </p>
+              <div class="flex items-end justify-between mt-2">
+                <p class="text-[#111418] dark:text-white text-3xl font-bold">
+                  128
+                </p>
+                <span
+                  class="text-[#e73908] bg-[#e73908]/10 px-2 py-0.5 rounded text-xs font-bold"
+                  >-2%</span
+                >
+              </div>
+            </div>
+            <div
+              class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"
+            >
+              <p class="text-[#617589] dark:text-slate-400 text-sm font-medium">
+                Hoàn thành tháng
+              </p>
+              <div class="flex items-end justify-between mt-2">
+                <p class="text-[#111418] dark:text-white text-3xl font-bold">
+                  842
+                </p>
+                <span
+                  class="text-[#078838] bg-[#078838]/10 px-2 py-0.5 rounded text-xs font-bold"
+                  >+18%</span
+                >
+              </div>
+            </div>
+          </div>
+          <!-- Filters & Search -->
+          <div
+            class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 mb-6 shadow-sm overflow-hidden"
+          >
+            <div class="p-4 border-b border-slate-100 dark:border-slate-800">
+              <div class="flex flex-wrap items-center gap-4">
+                <div class="flex-1 min-w-[300px]">
+                  <label class="relative block">
+                    <span
+                      class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400"
+                    >
+                      <span class="material-symbols-outlined">search</span>
+                    </span>
+                    <input
+                      id="order-search"
+                      class="w-full bg-[#f0f2f4] dark:bg-slate-800 border-none rounded-lg pl-10 pr-4 py-2.5 text-sm focus:ring-2 focus:ring-primary/20"
+                      placeholder="Tìm theo ID đơn hàng, tên khách hàng hoặc số điện thoại..."
+                      type="text"
+                    />
+                  </label>
+                </div>
+                <div class="flex items-center gap-2">
+                  <label
+                    class="text-sm font-bold text-[#617589] dark:text-slate-400 whitespace-nowrap"
+                    >Thời gian:</label
+                  >
+                  <input
+                    id="date-from"
+                    class="bg-[#f0f2f4] dark:bg-slate-800 border-none rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20"
+                    type="date"
+                  />
+                  <span class="text-slate-400">→</span>
+                  <input
+                    id="date-to"
+                    class="bg-[#f0f2f4] dark:bg-slate-800 border-none rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/20"
+                    type="date"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- Status Tabs -->
+            <div
+              class="flex border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900/50 px-4 gap-8"
+            >
+              <a
+                class="border-b-[3px] border-primary text-primary pb-3 pt-4 text-sm font-bold tracking-tight status-tab"
+                href="#"
+                data-status="all"
+                >Tất cả</a
+              >
+              <a
+                class="border-b-[3px] border-transparent text-[#617589] dark:text-slate-400 hover:text-[#111418] dark:hover:text-white pb-3 pt-4 text-sm font-bold tracking-tight status-tab"
+                href="#"
+                data-status="pending"
+                >Chờ duyệt (45)</a
+              >
+              <a
+                class="border-b-[3px] border-transparent text-[#617589] dark:text-slate-400 hover:text-[#111418] dark:hover:text-white pb-3 pt-4 text-sm font-bold tracking-tight status-tab"
+                href="#"
+                data-status="active"
+                >Đang thuê (128)</a
+              >
+              <a
+                class="border-b-[3px] border-transparent text-[#617589] dark:text-slate-400 hover:text-[#111418] dark:hover:text-white pb-3 pt-4 text-sm font-bold tracking-tight status-tab"
+                href="#"
+                data-status="completed"
+                >Hoàn thành</a
+              >
+              <a
+                class="border-b-[3px] border-transparent text-[#617589] dark:text-slate-400 hover:text-[#111418] dark:hover:text-white pb-3 pt-4 text-sm font-bold tracking-tight status-tab"
+                href="#"
+                data-status="cancelled"
+                >Đã hủy</a
+              >
+            </div>
+            <!-- Table Container -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead
+                  class="bg-slate-50 dark:bg-slate-800/50 text-[#617589] dark:text-slate-400 text-xs font-bold uppercase tracking-wider"
+                >
+                  <tr>
+                    <th class="px-6 py-4">ID Đơn hàng</th>
+                    <th class="px-6 py-4">Khách hàng</th>
+                    <th class="px-6 py-4">Phương tiện</th>
+                    <th class="px-6 py-4">Thời gian thuê</th>
+                    <th class="px-6 py-4">Tổng tiền</th>
+                    <th class="px-6 py-4">Trạng thái</th>
+                    <th class="px-6 py-4 text-right">Thao tác</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+                  <!-- Row 1 -->
+                  <tr
+                    class="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors"
+                    data-order-id="BK-9021"
+                  >
+                    <td class="px-6 py-4">
+                      <span
+                        class="text-sm font-bold text-[#111418] dark:text-white"
+                        >#BK-9021</span
+                      >
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex flex-col">
+                        <span
+                          class="text-sm font-bold text-[#111418] dark:text-white"
+                          >Lê Minh Quân</span
+                        >
+                        <span class="text-xs text-[#617589] dark:text-slate-400"
+                          >090 123 4567</span
+                        >
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-slate-400 text-lg"
+                          >directions_car</span
+                        >
+                        <div class="flex flex-col">
+                          <span
+                            class="text-sm font-medium text-[#111418] dark:text-white"
+                            >VinFast Lux A2.0</span
+                          >
+                          <span
+                            class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-600 dark:text-slate-400 uppercase"
+                            >29A-123.45</span
+                          >
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex flex-col">
+                        <span
+                          class="text-xs font-medium text-[#111418] dark:text-white"
+                          >12/10/2023 - 08:00</span
+                        >
+                        <span class="text-xs text-[#617589] dark:text-slate-400"
+                          >14/10/2023 - 20:00</span
+                        >
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="text-sm font-bold text-primary"
+                        >2,400,000đ</span
+                      >
+                    </td>
+                    <td class="px-6 py-4">
+                      <select
+                        data-order-id="BK-9021"
+                        class="order-status-select bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400 text-xs font-bold py-1 px-2 border-none rounded focus:ring-0 cursor-pointer"
+                      >
+                        <option selected="" value="pending">Chờ duyệt</option>
+                        <option value="active">Đang thuê</option>
+                        <option value="completed">Hoàn thành</option>
+                        <option value="cancelled">Đã hủy</option>
+                      </select>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <button
+                        class="text-slate-400 hover:text-primary transition-colors btn-view"
+                        data-order-id="BK-9021"
+                      >
+                        <span class="material-symbols-outlined"
+                          >visibility</span
+                        >
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Row 2 -->
+                  <tr
+                    class="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors"
+                    data-order-id="BK-8942"
+                  >
+                    <td
+                      class="px-6 py-4 text-sm font-bold text-[#111418] dark:text-white"
+                    >
+                      #BK-8942
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex flex-col">
+                        <span
+                          class="text-sm font-bold text-[#111418] dark:text-white"
+                          >Trần Thị Hoa</span
+                        >
+                        <span class="text-xs text-[#617589] dark:text-slate-400"
+                          >091 888 9999</span
+                        >
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-slate-400 text-lg"
+                          >motorcycle</span
+                        >
+                        <div class="flex flex-col">
+                          <span
+                            class="text-sm font-medium text-[#111418] dark:text-white"
+                            >Honda Vision 2023</span
+                          >
+                          <span
+                            class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-600 dark:text-slate-400 uppercase"
+                            >59B-567.89</span
+                          >
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-xs font-medium">
+                      <div class="flex flex-col">
+                        <span class="text-[#111418] dark:text-white"
+                          >10/10/2023 - 07:30</span
+                        >
+                        <span class="text-[#617589] dark:text-slate-400"
+                          >15/10/2023 - 18:00</span
+                        >
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-bold text-primary">
+                      750,000đ
+                    </td>
+                    <td class="px-6 py-4">
+                      <select
+                        data-order-id="BK-8942"
+                        class="order-status-select bg-blue-50 dark:bg-blue-900/20 text-primary text-xs font-bold py-1 px-2 border-none rounded focus:ring-0 cursor-pointer"
+                      >
+                        <option value="pending">Chờ duyệt</option>
+                        <option selected="" value="active">Đang thuê</option>
+                        <option value="completed">Hoàn thành</option>
+                        <option value="cancelled">Đã hủy</option>
+                      </select>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <button
+                        class="text-slate-400 hover:text-primary transition-colors btn-view"
+                        data-order-id="BK-8942"
+                      >
+                        <span class="material-symbols-outlined"
+                          >visibility</span
+                        >
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Row 3 -->
+                  <tr
+                    class="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors"
+                    data-order-id="BK-8831"
+                  >
+                    <td
+                      class="px-6 py-4 text-sm font-bold text-[#111418] dark:text-white"
+                    >
+                      #BK-8831
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex flex-col">
+                        <span
+                          class="text-sm font-bold text-[#111418] dark:text-white"
+                          >Phạm Đức Việt</span
+                        >
+                        <span class="text-xs text-[#617589] dark:text-slate-400"
+                          >094 333 4444</span
+                        >
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-slate-400 text-lg"
+                          >pedal_bike</span
+                        >
+                        <div class="flex flex-col">
+                          <span
+                            class="text-sm font-medium text-[#111418] dark:text-white"
+                            >Xe đạp thể thao Giant</span
+                          >
+                          <span
+                            class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-600 dark:text-slate-400 uppercase"
+                            >RENT-001</span
+                          >
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-xs font-medium">
+                      <div class="flex flex-col">
+                        <span class="text-[#111418] dark:text-white"
+                          >09/10/2023 - 06:00</span
+                        >
+                        <span class="text-[#617589] dark:text-slate-400"
+                          >09/10/2023 - 18:00</span
+                        >
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-bold text-primary">
+                      150,000đ
+                    </td>
+                    <td class="px-6 py-4">
+                      <select
+                        data-order-id="BK-8831"
+                        class="order-status-select bg-green-50 dark:bg-green-900/20 text-[#078838] text-xs font-bold py-1 px-2 border-none rounded focus:ring-0 cursor-pointer"
+                      >
+                        <option value="pending">Chờ duyệt</option>
+                        <option value="active">Đang thuê</option>
+                        <option selected="" value="completed">
+                          Hoàn thành
+                        </option>
+                        <option value="cancelled">Đã hủy</option>
+                      </select>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <button
+                        class="text-slate-400 hover:text-primary transition-colors btn-view"
+                        data-order-id="BK-8831"
+                      >
+                        <span class="material-symbols-outlined"
+                          >visibility</span
+                        >
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- Row 4 -->
+                  <tr
+                    class="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors"
+                    data-order-id="BK-8720"
+                  >
+                    <td
+                      class="px-6 py-4 text-sm font-bold text-[#111418] dark:text-white"
+                    >
+                      #BK-8720
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex flex-col">
+                        <span
+                          class="text-sm font-bold text-[#111418] dark:text-white"
+                          >Hoàng Anh Dũng</span
+                        >
+                        <span class="text-xs text-[#617589] dark:text-slate-400"
+                          >097 555 6666</span
+                        >
+                      </div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex items-center gap-2">
+                        <span
+                          class="material-symbols-outlined text-slate-400 text-lg"
+                          >directions_car</span
+                        >
+                        <div class="flex flex-col">
+                          <span
+                            class="text-sm font-medium text-[#111418] dark:text-white"
+                            >Toyota Camry 2022</span
+                          >
+                          <span
+                            class="text-[10px] font-bold bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-slate-600 dark:text-slate-400 uppercase"
+                            >30H-999.99</span
+                          >
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-xs font-medium">
+                      <div class="flex flex-col">
+                        <span class="text-[#111418] dark:text-white"
+                          >05/10/2023 - 09:00</span
+                        >
+                        <span class="text-[#617589] dark:text-slate-400"
+                          >07/10/2023 - 09:00</span
+                        >
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-sm font-bold text-primary">
+                      3,200,000đ
+                    </td>
+                    <td class="px-6 py-4">
+                      <select
+                        data-order-id="BK-8720"
+                        class="order-status-select bg-red-50 dark:bg-red-900/20 text-[#e73908] text-xs font-bold py-1 px-2 border-none rounded focus:ring-0 cursor-pointer"
+                      >
+                        <option value="pending">Chờ duyệt</option>
+                        <option value="active">Đang thuê</option>
+                        <option value="completed">Hoàn thành</option>
+                        <option selected="" value="cancelled">Đã hủy</option>
+                      </select>
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <button
+                        class="text-slate-400 hover:text-primary transition-colors btn-view"
+                        data-order-id="BK-8720"
+                      >
+                        <span class="material-symbols-outlined"
+                          >visibility</span
+                        >
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Pagination -->
+            <div
+              class="p-4 bg-slate-50/50 dark:bg-slate-800/50 flex flex-wrap items-center justify-between gap-4"
+            >
+              <p class="text-xs font-medium text-[#617589] dark:text-slate-400">
+                Hiển thị 1 - 10 trong tổng số 1,250 đơn hàng
+              </p>
+              <div class="flex items-center gap-1">
+                <button
+                  id="btn-page-prev"
+                  class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-400 hover:text-primary transition-colors"
+                >
+                  <span class="material-symbols-outlined text-sm"
+                    >chevron_left</span
+                  >
+                </button>
+                <button
+                  data-page="1"
+                  class="page-btn size-8 flex items-center justify-center rounded bg-primary text-white text-xs font-bold"
+                >
+                  1
+                </button>
+                <button
+                  data-page="2"
+                  class="page-btn size-8 flex items-center justify-center rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-400 hover:border-primary"
+                >
+                  2
+                </button>
+                <button
+                  data-page="3"
+                  class="page-btn size-8 flex items-center justify-center rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-400 hover:border-primary"
+                >
+                  3
+                </button>
+                <span class="px-1 text-slate-400">...</span>
+                <button
+                  data-page="125"
+                  class="page-btn size-8 flex items-center justify-center rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-400 hover:border-primary"
+                >
+                  125
+                </button>
+                <button
+                  id="btn-page-next"
+                  class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-400 hover:text-primary transition-colors"
+                >
+                  <span class="material-symbols-outlined text-sm"
+                    >chevron_right</span
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+  <script src="../js/admin-orders.js"></script>
+  <script>
+    // Highlight active menu item based on current page
+    (function () {
+      const currentPath = window.location.pathname.split("/").pop();
+      const navLinks = document.querySelectorAll("aside nav a");
+
+      // Remove active class from all
+      navLinks.forEach((link) => {
+        link.classList.remove("bg-primary/10", "text-primary");
+        link.classList.add("hover:bg-[#f0f2f4]", "dark:hover:bg-gray-800");
+      });
+
+      // Add active class based on current page
+      if (currentPath === "quan_ly_xe.html") {
+        // For dashboard/stats page, highlight "Thống kê & Báo cáo"
+        const statsLink = Array.from(navLinks).find(
+          (link) =>
+            link.href.includes("quan_ly_xe.html") &&
+            link.textContent.includes("Thống kê"),
+        );
+        if (statsLink) {
+          statsLink.classList.add("bg-primary/10", "text-primary");
+          statsLink.classList.remove(
+            "hover:bg-[#f0f2f4]",
+            "dark:hover:bg-gray-800",
+          );
+        }
+      } else if (currentPath === "quan_ly_phuong_tien.html") {
+        const vehicleLink = Array.from(navLinks).find((link) =>
+          link.href.includes("quan_ly_phuong_tien.html"),
+        );
+        if (vehicleLink) {
+          vehicleLink.classList.add("bg-primary/10", "text-primary");
+          vehicleLink.classList.remove(
+            "hover:bg-[#f0f2f4]",
+            "dark:hover:bg-gray-800",
+          );
+        }
+      } else if (currentPath === "quan_ly_don_hang.html") {
+        const orderLink = Array.from(navLinks).find((link) =>
+          link.href.includes("quan_ly_don_hang.html"),
+        );
+        if (orderLink) {
+          orderLink.classList.add("bg-primary/10", "text-primary");
+          orderLink.classList.remove(
+            "hover:bg-[#f0f2f4]",
+            "dark:hover:bg-gray-800",
+          );
+        }
+      } else if (currentPath === "quan_ly_khach_hang.html") {
+        const customerLink = Array.from(navLinks).find((link) =>
+          link.href.includes("quan_ly_khach_hang.html"),
+        );
+        if (customerLink) {
+          customerLink.classList.add("bg-primary/10", "text-primary");
+          customerLink.classList.remove(
+            "hover:bg-[#f0f2f4]",
+            "dark:hover:bg-gray-800",
+          );
+        }
+      }
+    })();
+  </script>
+  <script src="../js/auth-check.js"></script>
+</html>

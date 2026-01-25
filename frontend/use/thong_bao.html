@@ -1,0 +1,372 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Thông báo | XeNhanh</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white antialiased min-h-screen"
+  >
+    <!-- Top Navigation -->
+    <header
+      class="sticky top-0 z-50 w-full border-b border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-background-dark px-4 lg:px-20 py-3"
+    >
+      <div
+        class="max-w-[1440px] mx-auto flex items-center justify-between gap-4"
+      >
+        <div class="flex items-center gap-8">
+          <a
+            href="../home/index.html"
+            class="flex items-center gap-2 text-primary"
+          >
+            <span class="material-symbols-outlined text-3xl font-bold"
+              >directions_car</span
+            >
+            <h2
+              class="text-xl font-extrabold tracking-tight text-[#111418] dark:text-white"
+            >
+              XeNhanh
+            </h2>
+          </a>
+          <nav class="hidden md:flex items-center gap-6">
+            <a
+              class="text-sm font-semibold hover:text-primary transition-colors"
+              href="../home/index.html"
+              >Trang chủ</a
+            >
+            <a
+              class="text-sm font-semibold hover:text-primary transition-colors"
+              href="./danh_sach_xe.html"
+              >Khám phá</a
+            >
+            <a
+              class="text-sm font-semibold hover:text-primary transition-colors"
+              href="#"
+              >Dịch vụ</a
+            >
+            <a
+              class="text-sm font-semibold hover:text-primary transition-colors"
+              href="#"
+              >Hỗ trợ</a
+            >
+          </nav>
+        </div>
+        <div class="flex flex-1 items-center justify-end gap-4 max-w-md">
+          <div class="relative w-full hidden sm:block">
+            <span
+              class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+              >search</span
+            >
+            <input
+              class="w-full bg-[#f0f2f4] dark:bg-slate-800 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary transition-all"
+              placeholder="Tìm kiếm đơn hàng..."
+              type="text"
+            />
+          </div>
+          <div class="flex items-center gap-2">
+            <button
+              class="p-2 rounded-lg bg-[#f0f2f4] dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors"
+            >
+              <span class="material-symbols-outlined text-xl"
+                >notifications</span
+              >
+            </button>
+            <div
+              class="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white font-bold cursor-pointer bg-cover bg-center"
+              id="user-avatar"
+              onclick="document.getElementById('avatar-upload').click()"
+            >
+              A
+            </div>
+            <input
+              type="file"
+              id="avatar-upload"
+              accept="image/*"
+              class="hidden"
+            />
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main
+      class="max-w-[1440px] mx-auto px-4 lg:px-20 py-8 flex gap-8 flex-col lg:flex-row"
+    >
+      <!-- Sidebar -->
+      <aside class="w-full lg:w-80 flex-shrink-0">
+        <div
+          class="bg-white dark:bg-slate-900 rounded-xl border border-[#dbe0e6] dark:border-slate-800 p-6 sticky top-24"
+        >
+          <div
+            class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100 dark:border-slate-800"
+          >
+            <div
+              id="user-avatar-sidebar"
+              class="w-16 h-16 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white font-bold text-2xl cursor-pointer bg-cover bg-center"
+              onclick="document.getElementById('avatar-upload').click()"
+            >
+              A
+            </div>
+            <div>
+              <h3
+                class="font-bold text-[#111418] dark:text-white leading-none mb-1"
+                id="user-name"
+              >
+                Nguyễn Văn A
+              </h3>
+              <p
+                class="text-xs text-primary font-semibold flex items-center gap-1"
+              >
+                <span class="material-symbols-outlined text-xs">verified</span>
+                Khách hàng thân thiết
+              </p>
+            </div>
+          </div>
+          <nav class="flex flex-col gap-2">
+            <a
+              class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-background-light dark:hover:bg-slate-800 transition-all font-medium"
+              href="./thong_tin_ca_nhan.html"
+            >
+              <span class="material-symbols-outlined">person</span>
+              Thông tin cá nhân
+            </a>
+            <a
+              class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-background-light dark:hover:bg-slate-800 transition-all font-medium"
+              href="./quan_ly_xe.html"
+            >
+              <span class="material-symbols-outlined">assignment</span>
+              Đơn thuê của tôi
+            </a>
+            <a
+              class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary text-white shadow-md shadow-primary/30 transition-all font-semibold"
+              href="./thong_bao.html"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              Thông báo
+            </a>
+            <div
+              class="pt-4 mt-4 border-t border-gray-100 dark:border-slate-800"
+            >
+              <button
+                id="btn-logout"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all font-medium w-full text-left"
+              >
+                <span class="material-symbols-outlined">logout</span>
+                Đăng xuất
+              </button>
+            </div>
+          </nav>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <section class="flex-1 min-w-0">
+        <div class="mb-6">
+          <h1
+            class="text-3xl font-black text-[#111418] dark:text-white tracking-tight mb-2"
+          >
+            Thông báo
+          </h1>
+          <p class="text-[#617589] dark:text-gray-400">
+            Theo dõi các thông báo và cập nhật mới nhất.
+          </p>
+        </div>
+
+        <!-- Notifications List -->
+        <div class="space-y-4" id="notifications-container">
+          <!-- Sample notifications -->
+          <div
+            class="bg-white dark:bg-slate-900 rounded-xl border border-[#dbe0e6] dark:border-slate-800 p-6 hover:shadow-md transition-shadow"
+          >
+            <div class="flex gap-4">
+              <div
+                class="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 flex-shrink-0"
+              >
+                <span class="material-symbols-outlined text-2xl"
+                  >check_circle</span
+                >
+              </div>
+              <div class="flex-1">
+                <h3 class="font-bold text-lg mb-1">
+                  Đơn hàng đã được xác nhận
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                  Đơn thuê xe #ORD-2 của bạn đã được xác nhận. Vui lòng chuẩn bị
+                  giấy tờ để nhận xe.
+                </p>
+                <p class="text-xs text-gray-500">2 giờ trước</p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="bg-white dark:bg-slate-900 rounded-xl border border-[#dbe0e6] dark:border-slate-800 p-6 hover:shadow-md transition-shadow"
+          >
+            <div class="flex gap-4">
+              <div
+                class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 flex-shrink-0"
+              >
+                <span class="material-symbols-outlined text-2xl">info</span>
+              </div>
+              <div class="flex-1">
+                <h3 class="font-bold text-lg mb-1">
+                  Chương trình khuyến mãi mới
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                  Giảm 10% cho đơn đặt xe tiếp theo. Áp dụng đến hết tháng này!
+                </p>
+                <p class="text-xs text-gray-500">1 ngày trước</p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="bg-white dark:bg-slate-900 rounded-xl border border-[#dbe0e6] dark:border-slate-800 p-6 hover:shadow-md transition-shadow opacity-60"
+          >
+            <div class="flex gap-4">
+              <div
+                class="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 flex-shrink-0"
+              >
+                <span class="material-symbols-outlined text-2xl">schedule</span>
+              </div>
+              <div class="flex-1">
+                <h3 class="font-bold text-lg mb-1">Nhắc nhở trả xe</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                  Bạn có đơn thuê xe sắp hết hạn vào ngày 25/01/2026. Vui lòng
+                  chuẩn bị trả xe đúng hạn.
+                </p>
+                <p class="text-xs text-gray-500">3 ngày trước</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty state (hidden by default) -->
+        <div id="empty-state" class="hidden text-center py-16">
+          <span
+            class="material-symbols-outlined text-8xl text-gray-300 dark:text-gray-700 mb-4 block"
+            >notifications_off</span
+          >
+          <h3 class="text-xl font-bold mb-2">Chưa có thông báo</h3>
+          <p class="text-gray-500">
+            Các thông báo của bạn sẽ hiển thị tại đây.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      class="mt-12 border-t border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-8 text-center"
+    >
+      <div class="max-w-[1440px] mx-auto">
+        <div class="flex items-center justify-center gap-2 opacity-50">
+          <span class="material-symbols-outlined text-xl">directions_car</span>
+          <span class="text-sm font-bold">XeNhanh 2024</span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="../js/auth-check.js"></script>
+    <script>
+      // Avatar management
+      function updateAvatarDisplay() {
+        const user = JSON.parse(localStorage.getItem("user") || "{}");
+        const avatarImage = localStorage.getItem("userAvatar");
+
+        const avatarElements = [
+          document.getElementById("user-avatar"),
+          document.getElementById("user-avatar-sidebar"),
+        ];
+
+        avatarElements.forEach((el) => {
+          if (!el) return;
+
+          if (avatarImage) {
+            // Display uploaded image
+            el.style.backgroundImage = `url(${avatarImage})`;
+            el.textContent = "";
+          } else if (user.fullName) {
+            // Display first letter
+            const firstLetter = user.fullName.charAt(0).toUpperCase();
+            el.textContent = firstLetter;
+            el.style.backgroundImage = "";
+          }
+        });
+
+        // Update user name
+        if (user.fullName) {
+          document.getElementById("user-name").textContent = user.fullName;
+        }
+      }
+
+      // Handle avatar upload
+      document
+        .getElementById("avatar-upload")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          if (file && file.type.startsWith("image/")) {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+              localStorage.setItem("userAvatar", event.target.result);
+              updateAvatarDisplay();
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+      // Handle logout
+      document
+        .getElementById("btn-logout")
+        .addEventListener("click", function () {
+          if (confirm("Bạn có chắc chắn muốn đăng xuất?")) {
+            localStorage.removeItem("user");
+            window.location.href = "../login/login.html";
+          }
+        });
+
+      // Initialize
+      updateAvatarDisplay();
+    </script>
+  </body>
+</html>

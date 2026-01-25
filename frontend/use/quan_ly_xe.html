@@ -1,0 +1,597 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Quản lý đơn hàng của tôi | XeNhanh</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white antialiased min-h-screen"
+  >
+    <!-- Top Navigation Bar -->
+    <header
+      class="sticky top-0 z-50 w-full border-b border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-background-dark px-4 lg:px-20 py-3"
+    >
+      <div
+        class="max-w-[1440px] mx-auto flex items-center justify-between gap-4"
+      >
+        <div class="flex items-center gap-8">
+          <a
+            href="../home/index.html"
+            class="flex items-center gap-2 text-primary"
+          >
+            <span class="material-symbols-outlined text-3xl font-bold"
+              >directions_car</span
+            >
+            <h2
+              class="text-xl font-extrabold tracking-tight text-[#111418] dark:text-white"
+            >
+              XeNhanh
+            </h2>
+          </a>
+          <nav class="hidden md:flex items-center gap-6">
+            <a
+              class="text-sm font-semibold text-[#111418] dark:text-white hover:text-primary transition-colors"
+              href="../home/index.html"
+              >Trang chủ</a
+            >
+            <a
+              class="text-sm font-semibold text-[#111418] dark:text-white hover:text-primary transition-colors"
+              href="./danh_sach_xe.html"
+              >Khám phá</a
+            >
+            <a
+              class="text-sm font-semibold text-[#111418] dark:text-white hover:text-primary transition-colors"
+              href="./danh_sach_xe.html"
+              >Dịch vụ</a
+            >
+            <a
+              class="text-sm font-semibold text-[#111418] dark:text-white hover:text-primary transition-colors"
+              href="#"
+              >Hỗ trợ</a
+            >
+          </nav>
+        </div>
+        <div class="flex flex-1 items-center justify-end gap-4 max-w-md">
+          <div class="relative w-full hidden sm:block">
+            <span
+              class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"
+              >search</span
+            >
+            <input
+              class="w-full bg-[#f0f2f4] dark:bg-slate-800 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary transition-all"
+              placeholder="Tìm kiếm đơn hàng..."
+              type="text"
+            />
+          </div>
+          <div class="flex items-center gap-2">
+            <button
+              class="p-2 rounded-lg bg-[#f0f2f4] dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors"
+            >
+              <span class="material-symbols-outlined text-xl"
+                >notifications</span
+              >
+            </button>
+            <div class="h-8 w-px bg-gray-200 dark:bg-slate-700 mx-1"></div>
+            <div class="flex items-center gap-3 pl-1">
+              <div
+                id="user-avatar"
+                class="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white font-bold text-sm cursor-pointer bg-cover bg-center"
+                onclick="document.getElementById('avatar-upload').click()"
+              ></div>
+              <input
+                type="file"
+                id="avatar-upload"
+                accept="image/*"
+                class="hidden"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content Area -->
+    <main
+      class="max-w-[1440px] mx-auto flex flex-col md:flex-row gap-8 px-4 lg:px-20 py-8"
+    >
+      <!-- Side Navigation Bar -->
+      <aside class="w-full md:w-72 shrink-0">
+        <div
+          class="bg-white dark:bg-slate-900 rounded-xl border border-[#dbe0e6] dark:border-slate-800 p-6 space-y-8 sticky top-24"
+        >
+          <div class="flex items-center gap-4">
+            <div
+              id="user-avatar-sidebar"
+              class="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-blue-600 flex items-center justify-center text-white font-bold border-2 border-primary cursor-pointer bg-cover bg-center"
+              data-alt="Customer avatar profile"
+              onclick="document.getElementById('avatar-upload').click()"
+            ></div>
+            <div>
+              <h3
+                id="user-name"
+                class="font-bold text-[#111418] dark:text-white leading-none mb-1"
+              >
+                Nguyễn Văn A
+              </h3>
+              <p
+                class="text-xs text-primary font-semibold flex items-center gap-1"
+              >
+                <span class="material-symbols-outlined text-xs">verified</span>
+                Khách hàng thân thiết
+              </p>
+            </div>
+          </div>
+          <nav class="flex flex-col gap-2">
+            <a
+              class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-background-light dark:hover:bg-slate-800 transition-all font-medium"
+              href="./thong_tin_ca_nhan.html"
+            >
+              <span class="material-symbols-outlined">person</span>
+              Thông tin cá nhân
+            </a>
+            <a
+              class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary text-white shadow-md shadow-primary/30 transition-all font-semibold"
+              href="./quan_ly_xe.html"
+            >
+              <span class="material-symbols-outlined">assignment</span>
+              Đơn thuê của tôi
+            </a>
+            <a
+              class="flex items-center gap-3 px-4 py-3 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-background-light dark:hover:bg-slate-800 transition-all font-medium"
+              href="./thong_bao.html"
+            >
+              <span class="material-symbols-outlined">notifications</span>
+              Thông báo
+            </a>
+            <div
+              class="pt-4 mt-4 border-t border-gray-100 dark:border-slate-800"
+            >
+              <button
+                id="btn-logout"
+                class="flex items-center gap-3 px-4 py-3 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 transition-all font-medium w-full text-left"
+              >
+                <span class="material-symbols-outlined">logout</span>
+                Đăng xuất
+              </button>
+            </div>
+          </nav>
+        </div>
+      </aside>
+      <!-- Main Dashboard Section -->
+      <section class="flex-1 min-w-0">
+        <!-- Page Heading -->
+        <div class="mb-6">
+          <h1
+            class="text-3xl font-black text-[#111418] dark:text-white tracking-tight mb-2"
+          >
+            Đơn thuê của tôi
+          </h1>
+          <p class="text-[#617589] dark:text-gray-400">
+            Quản lý và theo dõi lịch sử thuê xe của bạn nhanh chóng.
+          </p>
+        </div>
+        <!-- Tabs/Chips -->
+        <div class="flex gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
+          <button
+            data-filter="all"
+            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-primary px-5 text-white text-sm font-bold"
+          >
+            Tất cả <span class="count">(12)</span>
+          </button>
+          <button
+            data-filter="PENDING"
+            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 px-5 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 transition-colors"
+          >
+            Đang xử lý <span class="count">(0)</span>
+          </button>
+          <button
+            data-filter="CONFIRMED"
+            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 px-5 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 transition-colors"
+          >
+            Đã xác nhận <span class="count">(0)</span>
+          </button>
+          <button
+            data-filter="IN_PROGRESS"
+            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 px-5 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 transition-colors"
+          >
+            Đang thuê <span class="count">(0)</span>
+          </button>
+          <button
+            data-filter="COMPLETED"
+            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 px-5 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 transition-colors"
+          >
+            Đã trả xe <span class="count">(0)</span>
+          </button>
+          <button
+            data-filter="CANCELLED"
+            class="whitespace-nowrap flex h-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 px-5 text-gray-700 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 transition-colors"
+          >
+            Đã hủy <span class="count">(0)</span>
+          </button>
+        </div>
+        <!-- Table Section -->
+        <div
+          class="bg-white dark:bg-slate-900 rounded-xl border border-[#dbe0e6] dark:border-slate-800 overflow-hidden shadow-sm"
+        >
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr
+                  class="bg-gray-50 dark:bg-slate-800/50 border-b border-[#dbe0e6] dark:border-slate-800"
+                >
+                  <th
+                    class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider uppercase"
+                  >
+                    Mã đơn hàng
+                  </th>
+                  <th
+                    class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider uppercase"
+                  >
+                    Tên xe
+                  </th>
+                  <th
+                    class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider uppercase"
+                  >
+                    Trạng thái
+                  </th>
+                  <th
+                    class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider uppercase"
+                  >
+                    Tổng tiền
+                  </th>
+                  <th
+                    class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider uppercase"
+                  >
+                    Hành động
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody class="divide-y divide-[#dbe0e6] dark:divide-slate-800">
+                <!-- Rows will be populated by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+          <!-- Pagination footer -->
+          <div
+            id="pagination-container"
+            class="px-6 py-4 bg-gray-50 dark:bg-slate-800/50 flex items-center justify-between border-t border-[#dbe0e6] dark:border-slate-800"
+          >
+            <p id="pagination-info" class="text-sm text-gray-500">
+              Hiển thị 1 - 5 của 12 đơn hàng
+            </p>
+            <div id="pagination-buttons" class="flex items-center gap-2">
+              <!-- Pagination buttons will be generated by JavaScript -->
+            </div>
+          </div>
+        </div>
+        <!-- Promotion banner (extra) -->
+        <div
+          class="mt-8 bg-primary/10 rounded-xl p-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-primary/20"
+        >
+          <div class="flex items-center gap-4">
+            <div
+              class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white"
+            >
+              <span class="material-symbols-outlined text-2xl">loyalty</span>
+            </div>
+            <div>
+              <h4 class="font-bold text-primary">Ưu đãi dành riêng cho bạn!</h4>
+              <p class="text-sm text-[#111418] dark:text-gray-300">
+                Giảm ngay 10% cho đơn đặt xe tiếp theo của bạn.
+              </p>
+            </div>
+          </div>
+          <button
+            class="bg-primary text-white font-bold py-2 px-6 rounded-lg hover:bg-primary/90 transition-all text-sm shadow-lg shadow-primary/20"
+          >
+            Sử dụng ngay
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Order Detail Modal -->
+    <div
+      id="order-detail-modal"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4"
+    >
+      <div
+        class="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+      >
+        <!-- Modal Header -->
+        <div
+          class="sticky top-0 bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between"
+        >
+          <h2
+            class="text-2xl font-bold text-[#111418] dark:text-white"
+            id="modal-title"
+          >
+            Chi tiết đơn hàng
+          </h2>
+          <button
+            onclick="closeOrderDetail()"
+            class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <span class="material-symbols-outlined text-gray-500">close</span>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 space-y-6">
+          <!-- Order Info -->
+          <div
+            class="bg-gradient-to-br from-primary/10 to-blue-500/10 rounded-xl p-6 border border-primary/20"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                  Mã đơn hàng
+                </p>
+                <h3
+                  class="text-2xl font-bold text-primary"
+                  id="detail-order-id"
+                >
+                  #ORD-001
+                </h3>
+              </div>
+              <div>
+                <span
+                  id="detail-status-badge"
+                  class="px-4 py-2 rounded-full text-sm font-bold bg-yellow-100 text-yellow-700"
+                  >Đang xử lý</span
+                >
+              </div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                  Ngày tạo
+                </p>
+                <p class="font-semibold" id="detail-created-date">22/01/2026</p>
+              </div>
+              <div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                  Tổng tiền
+                </p>
+                <p
+                  class="text-xl font-bold text-primary"
+                  id="detail-total-price"
+                >
+                  150.000đ
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicle Info -->
+          <div
+            class="border border-gray-200 dark:border-slate-800 rounded-xl p-6"
+          >
+            <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary"
+                >directions_car</span
+              >
+              Thông tin xe
+            </h4>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Tên xe:</span>
+                <span class="font-semibold" id="detail-vehicle-name"
+                  >Honda Vision 2023</span
+                >
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Loại xe:</span>
+                <span class="font-semibold" id="detail-vehicle-type"
+                  >XEMAY</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Rental Period -->
+          <div
+            class="border border-gray-200 dark:border-slate-800 rounded-xl p-6"
+          >
+            <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary"
+                >calendar_month</span
+              >
+              Thời gian thuê
+            </h4>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400"
+                  >Ngày bắt đầu:</span
+                >
+                <span class="font-semibold" id="detail-date-from"
+                  >22/01/2026</span
+                >
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400"
+                  >Ngày kết thúc:</span
+                >
+                <span class="font-semibold" id="detail-date-to"
+                  >23/01/2026</span
+                >
+              </div>
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Số ngày:</span>
+                <span class="font-semibold text-primary" id="detail-total-days"
+                  >1 ngày</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Price Breakdown -->
+          <div
+            class="border border-gray-200 dark:border-slate-800 rounded-xl p-6"
+          >
+            <h4 class="text-lg font-bold mb-4 flex items-center gap-2">
+              <span class="material-symbols-outlined text-primary"
+                >payments</span
+              >
+              Chi tiết giá
+            </h4>
+            <div class="space-y-3">
+              <div class="flex justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Giá thuê:</span>
+                <span class="font-semibold" id="detail-base-price"
+                  >150.000đ</span
+                >
+              </div>
+              <div
+                class="border-t border-gray-200 dark:border-slate-800 pt-3 mt-3"
+              >
+                <div class="flex justify-between text-lg">
+                  <span class="font-bold">Tổng cộng:</span>
+                  <span class="font-bold text-primary" id="detail-final-price"
+                    >150.000đ</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div
+          class="border-t border-gray-200 dark:border-slate-800 px-6 py-4 flex gap-3 justify-end"
+        >
+          <button
+            onclick="closeOrderDetail()"
+            class="px-6 py-3 rounded-lg border border-gray-300 dark:border-slate-700 text-gray-700 dark:text-gray-300 font-semibold hover:bg-gray-50 dark:hover:bg-slate-800 transition-all"
+          >
+            Đóng
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simple Footer -->
+    <footer
+      class="mt-12 border-t border-[#dbe0e6] dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-8 text-center"
+    >
+      <div
+        class="max-w-[1440px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4"
+      >
+        <div class="flex items-center gap-2 opacity-50">
+          <span class="material-symbols-outlined text-xl">directions_car</span>
+          <span class="text-sm font-bold">XeNhanh 2024</span>
+        </div>
+        <div class="flex gap-6 text-sm text-gray-500">
+          <a class="hover:text-primary transition-colors" href="#"
+            >Điều khoản dịch vụ</a
+          >
+          <a class="hover:text-primary transition-colors" href="#"
+            >Chính sách bảo mật</a
+          >
+          <a class="hover:text-primary transition-colors" href="#"
+            >Hỗ trợ khách hàng</a
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+  <script src="../js/api.js"></script>
+  <script src="../js/quan-ly-xe.js"></script>
+  <script src="../js/auth-check.js"></script>
+  <script>
+    // Avatar management
+    function updateAvatarDisplay() {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      const avatarImage = localStorage.getItem("userAvatar");
+
+      const avatarElements = [
+        document.getElementById("user-avatar"),
+        document.getElementById("user-avatar-sidebar"),
+      ];
+
+      avatarElements.forEach((el) => {
+        if (!el) return;
+
+        if (avatarImage) {
+          // Display uploaded image
+          el.style.backgroundImage = `url(${avatarImage})`;
+          el.textContent = "";
+        } else if (user.fullName) {
+          // Display first letter
+          const firstLetter = user.fullName.charAt(0).toUpperCase();
+          el.textContent = firstLetter;
+          el.style.backgroundImage = "";
+        }
+      });
+    }
+
+    // Handle avatar upload
+    document
+      .getElementById("avatar-upload")
+      .addEventListener("change", function (e) {
+        const file = e.target.files[0];
+        if (file && file.type.startsWith("image/")) {
+          const reader = new FileReader();
+          reader.onload = function (event) {
+            localStorage.setItem("userAvatar", event.target.result);
+            updateAvatarDisplay();
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+    // Initialize avatar display
+    updateAvatarDisplay();
+  </script>
+</html>

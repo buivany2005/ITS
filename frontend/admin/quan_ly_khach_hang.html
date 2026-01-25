@@ -1,0 +1,342 @@
+<!doctype html>
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Quản lý khách hàng</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-white transition-colors duration-200"
+  >
+    <div class="flex min-h-screen">
+      <!-- Sidebar Navigation -->
+      <aside
+        class="w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col"
+      >
+        <div class="p-6">
+          <div class="flex items-center gap-3">
+            <div
+              class="bg-primary size-10 rounded-lg flex items-center justify-center text-white"
+            >
+              <span class="material-symbols-outlined">directions_car</span>
+            </div>
+            <div>
+              <h1
+                class="text-[#111418] dark:text-white text-base font-bold leading-normal"
+              >
+                Hệ thống Thuê Xe
+              </h1>
+              <p
+                class="text-[#617589] dark:text-slate-400 text-xs mt-1 font-medium"
+              >
+                Quản trị viên Hệ thống
+              </p>
+            </div>
+          </div>
+        </div>
+        <nav class="flex flex-col gap-1">
+          <a
+            class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            href="quan_ly_xe.html"
+          >
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Bảng điều khiển
+            </p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+            href="quan_ly_phuong_tien.html"
+          >
+            <span class="material-symbols-outlined text-[22px]"
+              >directions_car</span
+            >
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Quản lý xe
+            </p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+            href="quan_ly_don_hang.html"
+          >
+            <span class="material-symbols-outlined text-[22px]"
+              >calendar_month</span
+            >
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Đơn đặt xe
+            </p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary"
+            href="quan_ly_khach_hang.html"
+          >
+            <span class="material-symbols-outlined text-[22px]">group</span>
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Khách hàng
+            </p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+            href="quan_ly_xe.html"
+          >
+            <span class="material-symbols-outlined text-[22px]">analytics</span>
+            <p class="text-sm font-bold">Thống kê &amp; Báo cáo</p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+            href="#"
+          >
+            <span class="material-symbols-outlined text-[22px]">settings</span>
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Cài đặt
+            </p>
+          </a>
+        </nav>
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+          <div
+            class="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl"
+          >
+            <div
+              class="size-8 rounded-full bg-cover bg-center"
+              data-alt="Ảnh đại diện quản trị viên"
+              style="
+                background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDA0HeOJZSnYNEzB5kzlsDa_u-ySK8TVKa_-RZBYr1JTR4l4B8Zwsory4WFCandQsM1AbIenjn3stXaHZBjwBwz4jPcUQWU9YL77MAi4aGDHV1aBajGxm6nnOuLoemcJoQRH-DLEcAwRsi9qQ7PcZP6_Y99WmyGmiQrd-5cbduovcXrx9PR_eOOotETBWvXL1aBZ9Ery-4rICP0Gpgg1ITG8GhnUcKMuDs4F7P5gJMmV7KXUgbMbmEj4_E4RthK1vtFQI2Om83W6Ytd&quot;);
+              "
+            ></div>
+            <div class="flex-1 overflow-hidden">
+              <p
+                class="text-sm font-bold text-[#111418] dark:text-white truncate"
+              >
+                Nguyễn Văn An
+              </p>
+              <p class="text-xs text-[#617589] dark:text-slate-400 truncate">
+                an.nguyen@rental.vn
+              </p>
+            </div>
+            <span class="material-symbols-outlined text-slate-400 text-sm"
+              >logout</span
+            >
+          </div>
+        </div>
+      </aside>
+      <!-- Main Content Area -->
+      <main class="flex-1 ml-72">
+        <div class="p-8 max-w-[1200px] mx-auto">
+          <!-- Page Header -->
+          <header
+            class="flex flex-wrap justify-between items-center gap-4 mb-8"
+          >
+            <div>
+              <h2
+                class="text-[#111418] dark:text-white text-3xl font-extrabold tracking-tight"
+              >
+                Quản lý khách hàng
+              </h2>
+              <p class="text-[#617589] dark:text-gray-400 mt-1">
+                Danh sách người dùng và khách hàng trong hệ thống
+              </p>
+            </div>
+            <div class="flex items-center gap-3">
+              <button
+                id="btn-export-users"
+                class="flex items-center gap-2 bg-white dark:bg-gray-800 hover:bg-gray-50 text-[#111418] dark:text-white px-5 py-2.5 rounded-xl font-medium transition-all shadow-sm border border-[#dbe0e6] dark:border-gray-700"
+              >
+                <span class="material-symbols-outlined">download</span>
+                <span>Xuất danh sách</span>
+              </button>
+            </div>
+          </header>
+          <!-- Search Bar -->
+          <div
+            class="bg-white dark:bg-[#1a242f] p-4 rounded-2xl shadow-sm border border-[#dbe0e6] dark:border-gray-700 mb-6"
+          >
+            <div class="flex flex-col md:flex-row gap-4">
+              <div class="flex-1 relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#617589]"
+                  >search</span
+                >
+                <input
+                  id="user-search"
+                  class="w-full pl-12 pr-4 py-3 bg-background-light dark:bg-background-dark border-none rounded-xl focus:ring-2 focus:ring-primary text-sm"
+                  placeholder="Tìm kiếm khách hàng theo tên hoặc email..."
+                  type="text"
+                />
+              </div>
+            </div>
+          </div>
+          <!-- Table Container -->
+          <div
+            class="bg-white dark:bg-[#1a242f] rounded-2xl shadow-sm border border-[#dbe0e6] dark:border-gray-700 overflow-hidden"
+          >
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="bg-gray-50 dark:bg-gray-800/50 border-b border-[#dbe0e6] dark:border-gray-700"
+                  >
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      ID
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Khách hàng
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Email
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Số điện thoại
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Vai trò
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider text-right"
+                    >
+                      Hành động
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="users-table-body"
+                  class="divide-y divide-gray-100 dark:divide-gray-800"
+                >
+                  <!-- Data will be loaded via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+            <!-- Pagination Footer -->
+            <div
+              class="px-6 py-4 flex items-center justify-between border-t border-[#dbe0e6] dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50"
+            >
+              <p
+                id="pagination-info"
+                class="text-sm text-[#617589] dark:text-gray-400"
+              >
+                Đang tải...
+              </p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <script src="../js/admin-users.js"></script>
+    <script>
+      // Highlight active menu item based on current page
+      (function () {
+        const currentPath = window.location.pathname.split("/").pop();
+        const navLinks = document.querySelectorAll("aside nav a");
+
+        // Remove active class from all
+        navLinks.forEach((link) => {
+          link.classList.remove("bg-primary/10", "text-primary");
+          link.classList.add("hover:bg-[#f0f2f4]", "dark:hover:bg-gray-800");
+        });
+
+        // Add active class based on current page
+        if (currentPath === "quan_ly_xe.html") {
+          // For dashboard/stats page, highlight "Thống kê & Báo cáo"
+          const statsLink = Array.from(navLinks).find(
+            (link) =>
+              link.href.includes("quan_ly_xe.html") &&
+              link.textContent.includes("Thống kê"),
+          );
+          if (statsLink) {
+            statsLink.classList.add("bg-primary/10", "text-primary");
+            statsLink.classList.remove(
+              "hover:bg-[#f0f2f4]",
+              "dark:hover:bg-gray-800",
+            );
+          }
+        } else if (currentPath === "quan_ly_phuong_tien.html") {
+          const vehicleLink = Array.from(navLinks).find((link) =>
+            link.href.includes("quan_ly_phuong_tien.html"),
+          );
+          if (vehicleLink) {
+            vehicleLink.classList.add("bg-primary/10", "text-primary");
+            vehicleLink.classList.remove(
+              "hover:bg-[#f0f2f4]",
+              "dark:hover:bg-gray-800",
+            );
+          }
+        } else if (currentPath === "quan_ly_don_hang.html") {
+          const orderLink = Array.from(navLinks).find((link) =>
+            link.href.includes("quan_ly_don_hang.html"),
+          );
+          if (orderLink) {
+            orderLink.classList.add("bg-primary/10", "text-primary");
+            orderLink.classList.remove(
+              "hover:bg-[#f0f2f4]",
+              "dark:hover:bg-gray-800",
+            );
+          }
+        } else if (currentPath === "quan_ly_khach_hang.html") {
+          const customerLink = Array.from(navLinks).find((link) =>
+            link.href.includes("quan_ly_khach_hang.html"),
+          );
+          if (customerLink) {
+            customerLink.classList.add("bg-primary/10", "text-primary");
+            customerLink.classList.remove(
+              "hover:bg-[#f0f2f4]",
+              "dark:hover:bg-gray-800",
+            );
+          }
+        }
+      })();
+    </script>
+    <script src="../js/auth-check.js"></script>
+  </body>
+</html>

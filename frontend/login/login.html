@@ -1,0 +1,556 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>XeDuyet - Đăng nhập / Đăng ký</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark font-display min-h-screen flex flex-col"
+  >
+    <!-- Top Navigation Bar -->
+    <header
+      class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#f0f2f4] dark:border-gray-800 bg-white dark:bg-background-dark px-10 py-3 z-10"
+    >
+      <div class="flex items-center gap-4 text-[#111418] dark:text-white">
+        <div class="size-6 text-primary">
+          <svg
+            fill="none"
+            viewbox="0 0 48 48"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              clip-rule="evenodd"
+              d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"
+              fill="currentColor"
+              fill-rule="evenodd"
+            ></path>
+          </svg>
+        </div>
+        <h2
+          class="text-[#111418] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]"
+        >
+          XeDuyet
+        </h2>
+      </div>
+      <div class="flex items-center gap-8">
+        <div class="hidden md:flex items-center gap-9">
+          <a
+            class="text-[#111418] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors"
+            href="../home/index.html"
+            >Trang chủ</a
+          >
+          <a
+            class="text-[#111418] dark:text-gray-300 text-sm font-medium leading-normal hover:text-primary transition-colors"
+            href="../use/danh_sach_xe.html"
+            >Danh sách xe</a
+          >
+        </div>
+      </div>
+    </header>
+    <!-- Main Content: Split Screen Layout -->
+    <main class="flex-1 flex flex-col lg:flex-row h-full overflow-hidden">
+      <!-- Left Side: Visual Panel -->
+      <div class="hidden lg:flex lg:w-3/5 relative overflow-hidden bg-gray-900">
+        <div
+          class="absolute inset-0 bg-cover bg-center"
+          data-alt="Scenic winding road through lush Vietnamese mountains"
+          style="
+            background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBecWNmOaNt3yT3fO-eQTZxj9lc9ia9dEPqVU412RcXecIi6JCs4U3KphwP6LkZwsks0oUZzyGSI4fCIR52QELbN4bZyrWYrUXJObs_O-eQKxoYbNIom0yQFINBMQwqXhleoJwsWT0PgYrpUSpluarzsbSdNBgFQhhCv9pmkK2rTdZZ-VeRp24C8tHCM-q6_G8vy3FFISGs0x7ge0kTH3XXoer3EpHrNFWxrtEJJjgM1DsaqAYd0iu66KD4zu1vznBvATeerzSKGO42&quot;);
+          "
+        ></div>
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"
+        ></div>
+        <div class="absolute bottom-20 left-16 right-16 text-white">
+          <h1
+            class="text-5xl font-black leading-tight tracking-[-0.033em] mb-4"
+          >
+            Khám phá Việt Nam<br />theo cách của bạn
+          </h1>
+          <p class="text-lg font-normal opacity-90 max-w-lg">
+            Hàng ngàn lựa chọn xe máy, ô tô và xe đạp đang chờ đón bạn trên mọi
+            nẻo đường đất nước. Khởi đầu hành trình ngay hôm nay.
+          </p>
+          <div class="mt-8 flex gap-4">
+            <div
+              class="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 text-sm font-medium"
+            >
+              <span class="material-symbols-outlined text-sm">verified</span>
+              Đối tác tin cậy
+            </div>
+            <div
+              class="flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-2 text-sm font-medium"
+            >
+              <span class="material-symbols-outlined text-sm"
+                >support_agent</span
+              >
+              Hỗ trợ 24/7
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right Side: Form Panel -->
+      <div
+        class="w-full lg:w-2/5 flex flex-col items-center justify-center bg-white dark:bg-background-dark p-8 lg:p-16 overflow-y-auto"
+      >
+        <div class="w-full max-w-[440px]">
+          <!-- Tabs Section -->
+          <div class="pb-8">
+            <div
+              class="flex border-b border-[#dbe0e6] dark:border-gray-700 gap-8"
+            >
+              <a
+                id="tab-login"
+                class="flex flex-1 flex-col items-center justify-center border-b-[3px] border-primary text-primary pb-[13px] pt-4 cursor-pointer"
+              >
+                <p class="text-sm font-bold leading-normal tracking-[0.015em]">
+                  Đăng nhập
+                </p>
+              </a>
+              <a
+                id="tab-register"
+                class="flex flex-1 flex-col items-center justify-center border-b-[3px] border-transparent text-[#617589] dark:text-gray-400 pb-[13px] pt-4 hover:text-primary transition-colors cursor-pointer"
+              >
+                <p class="text-sm font-bold leading-normal tracking-[0.015em]">
+                  Đăng ký
+                </p>
+              </a>
+            </div>
+          </div>
+          <div id="login-heading" class="mb-8">
+            <h2 class="text-2xl font-bold text-[#111418] dark:text-white mb-2">
+              Chào mừng bạn quay lại!
+            </h2>
+            <p class="text-[#617589] dark:text-gray-400 text-sm">
+              Vui lòng nhập thông tin để tiếp tục hành trình của bạn.
+            </p>
+          </div>
+          <!-- Form Fields -->
+          <div id="login-form" class="space-y-4">
+            <div class="flex flex-col gap-2">
+              <label
+                class="text-[#111418] dark:text-gray-200 text-base font-medium leading-normal"
+                >Email hoặc Số điện thoại</label
+              >
+              <input
+                id="login-username"
+                class="form-input flex w-full rounded-lg text-[#111418] dark:text-white focus:ring-2 focus:ring-primary focus:border-primary border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#617589] p-[15px] text-base font-normal transition-all"
+                placeholder="Nhập email hoặc số điện thoại của bạn"
+                type="text"
+              />
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="flex justify-between items-center">
+                <label
+                  class="text-[#111418] dark:text-gray-200 text-base font-medium leading-normal"
+                  >Mật khẩu</label
+                >
+                <a
+                  id="btn-forgot"
+                  class="text-primary text-sm font-semibold hover:underline cursor-pointer"
+                  >Quên mật khẩu?</a
+                >
+              </div>
+              <div class="relative flex w-full items-stretch rounded-lg">
+                <input
+                  id="login-password"
+                  class="form-input flex w-full rounded-lg text-[#111418] dark:text-white focus:ring-2 focus:ring-primary focus:border-primary border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-gray-800 h-14 placeholder:text-[#617589] p-[15px] pr-12 text-base font-normal transition-all"
+                  placeholder="Nhập mật khẩu"
+                  type="password"
+                />
+                <div
+                  id="toggle-password"
+                  class="absolute right-4 top-1/2 -translate-y-1/2 text-[#617589] cursor-pointer hover:text-primary"
+                >
+                  <span class="material-symbols-outlined">visibility</span>
+                </div>
+              </div>
+            </div>
+            <p id="login-error" class="hidden text-sm text-red-600"></p>
+          </div>
+          <!-- Submit Button -->
+          <button
+            id="btn-login"
+            class="mt-8 w-full flex items-center justify-center overflow-hidden rounded-lg h-14 px-5 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all"
+          >
+            <span>Đăng nhập</span>
+          </button>
+          <!-- Register Form -->
+          <div id="register-section" class="hidden mt-6">
+            <div class="mb-4">
+              <h2
+                class="text-2xl font-bold text-[#111418] dark:text-white mb-2"
+              >
+                Tạo tài khoản mới
+              </h2>
+              <p class="text-[#617589] dark:text-gray-400 text-sm">
+                Nhập thông tin bên dưới để đăng ký.
+              </p>
+            </div>
+            <div class="space-y-4">
+              <div class="flex flex-col gap-2">
+                <label
+                  class="text-[#111418] dark:text-gray-200 text-base font-medium"
+                  >Họ và tên</label
+                >
+                <input
+                  id="reg-fullname"
+                  class="form-input flex w-full rounded-lg text-[#111418] dark:text-white focus:ring-2 focus:ring-primary focus:border-primary border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-gray-800 h-12 placeholder:text-[#617589] px-4"
+                  placeholder="Nguyễn Văn A"
+                  type="text"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label
+                  class="text-[#111418] dark:text-gray-200 text-base font-medium"
+                  >Email</label
+                >
+                <input
+                  id="reg-email"
+                  class="form-input flex w-full rounded-lg text-[#111418] dark:text-white focus:ring-2 focus:ring-primary focus:border-primary border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-gray-800 h-12 placeholder:text-[#617589] px-4"
+                  placeholder="you@example.com"
+                  type="email"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label
+                  class="text-[#111418] dark:text-gray-200 text-base font-medium"
+                  >Mật khẩu</label
+                >
+                <input
+                  id="reg-password"
+                  class="form-input flex w-full rounded-lg text-[#111418] dark:text-white focus:ring-2 focus:ring-primary focus:border-primary border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-gray-800 h-12 placeholder:text-[#617589] px-4"
+                  placeholder="Ít nhất 6 ký tự"
+                  type="password"
+                />
+              </div>
+              <div class="flex flex-col gap-2">
+                <label
+                  class="text-[#111418] dark:text-gray-200 text-base font-medium"
+                  >Xác nhận mật khẩu</label
+                >
+                <input
+                  id="reg-password2"
+                  class="form-input flex w-full rounded-lg text-[#111418] dark:text-white focus:ring-2 focus:ring-primary focus:border-primary border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-gray-800 h-12 placeholder:text-[#617589] px-4"
+                  placeholder="Nhập lại mật khẩu"
+                  type="password"
+                />
+              </div>
+              <p id="register-error" class="hidden text-sm text-red-600"></p>
+              <button
+                id="btn-register"
+                class="w-full flex items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-all"
+              >
+                Đăng ký
+              </button>
+            </div>
+          </div>
+          <!-- Divider -->
+          <div class="relative flex items-center py-8">
+            <div
+              class="flex-grow border-t border-[#dbe0e6] dark:border-gray-700"
+            ></div>
+            <span
+              class="flex-shrink mx-4 text-[#617589] dark:text-gray-400 text-sm font-medium"
+              >Hoặc tiếp tục với</span
+            >
+            <div
+              class="flex-grow border-t border-[#dbe0e6] dark:border-gray-700"
+            ></div>
+          </div>
+          <!-- Social Logins -->
+          <div class="grid grid-cols-2 gap-4">
+            <button
+              id="btn-google"
+              class="flex items-center justify-center gap-3 border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg h-12 px-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              <img
+                alt="Google"
+                class="w-5 h-5"
+                data-alt="Google brand logo"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd5f7d8pPocrTJvljjoihPG3iBAEibSmUmfXmz1nw6yQr6uhXoJSNMvdE1fhaTFr2YZYOdVQ3pJgxMIaCJ-jLcspkqcQgpx6eRRE64tdcWlFjIG-VCi-lA4LTot8O1IjlFOagoOOYr0GGYS7ul_SbY1h1EaLWZshxWGI6FGOPLdca-OYtmJDbmWqO-4eoIARiQQhR19EtLuOfQVctBre-_Vuii2OaEPZ2HMJptEJXcI8zRZtm_njZD0EJEuhsI469CDmUNsp_wdlb1"
+              />
+              <span class="text-sm font-bold text-[#111418] dark:text-white"
+                >Google</span
+              >
+            </button>
+            <button
+              id="btn-facebook"
+              class="flex items-center justify-center gap-3 border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-gray-800 rounded-lg h-12 px-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              <svg
+                class="w-5 h-5 text-[#1877F2] fill-current"
+                viewbox="0 0 24 24"
+              >
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                ></path>
+              </svg>
+              <span class="text-sm font-bold text-[#111418] dark:text-white"
+                >Facebook</span
+              >
+            </button>
+          </div>
+          <p class="mt-8 text-center text-sm text-[#617589] dark:text-gray-400">
+            Chưa có tài khoản?
+            <a class="text-primary font-bold hover:underline" href="#"
+              >Tham gia ngay</a
+            >
+          </p>
+        </div>
+      </div>
+    </main>
+    <!-- Simple Footer for Legal -->
+    <footer
+      class="bg-white dark:bg-background-dark py-4 px-10 border-t border-[#f0f2f4] dark:border-gray-800 flex flex-col md:flex-row justify-between items-center text-xs text-[#617589] dark:text-gray-400 gap-4"
+    >
+      <div class="flex gap-6">
+        <a class="hover:text-primary" href="#">Điều khoản sử dụng</a>
+        <a class="hover:text-primary" href="#">Chính sách bảo mật</a>
+        <a class="hover:text-primary" href="#">Quy định chung</a>
+      </div>
+      <p>© 2024 XeDuyet Vietnam. Tất cả quyền được bảo lưu.</p>
+    </footer>
+  </body>
+  <script src="../js/api.js"></script>
+  <script>
+    (function () {
+      const $ = (s, r = document) => r.querySelector(s);
+      const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+      const btnHome = $("#btn-home");
+      const tabLogin = $("#tab-login");
+      const tabRegister = $("#tab-register");
+      const loginHeading = $("#login-heading");
+      const loginForm = $("#login-form");
+      const loginUsername = $("#login-username");
+      const loginPassword = $("#login-password");
+      const loginError = $("#login-error");
+      const btnForgot = $("#btn-forgot");
+      const togglePw = $("#toggle-password");
+      const btnLogin = $("#btn-login");
+      const regSection = $("#register-section");
+      const regName = $("#reg-fullname");
+      const regEmail = $("#reg-email");
+      const regPw = $("#reg-password");
+      const regPw2 = $("#reg-password2");
+      const regError = $("#register-error");
+      const btnRegister = $("#btn-register");
+      const btnGoogle = $("#btn-google");
+      const btnFacebook = $("#btn-facebook");
+
+      function setActiveTab(mode) {
+        const activeCls = ["border-primary", "text-primary"];
+        const inactiveCls = ["border-transparent", "text-[#617589]"];
+        if (mode === "login") {
+          tabLogin.classList.add(...activeCls);
+          tabLogin.classList.remove(...inactiveCls);
+          tabRegister.classList.remove(...activeCls);
+          tabRegister.classList.add(...inactiveCls);
+          loginHeading.classList.remove("hidden");
+          loginForm.classList.remove("hidden");
+          btnLogin.classList.remove("hidden");
+          regSection.classList.add("hidden");
+        } else {
+          tabRegister.classList.add(...activeCls);
+          tabRegister.classList.remove(...inactiveCls);
+          tabLogin.classList.remove(...activeCls);
+          tabLogin.classList.add(...inactiveCls);
+          loginHeading.classList.add("hidden");
+          loginForm.classList.add("hidden");
+          btnLogin.classList.add("hidden");
+          regSection.classList.remove("hidden");
+        }
+      }
+
+      if (btnHome)
+        btnHome.addEventListener(
+          "click",
+          () => (window.location.href = "../home/index.html"),
+        );
+      if (tabLogin)
+        tabLogin.addEventListener("click", () => setActiveTab("login"));
+      if (tabRegister)
+        tabRegister.addEventListener("click", () => setActiveTab("register"));
+
+      if (togglePw) {
+        togglePw.addEventListener("click", () => {
+          const isPw = loginPassword.getAttribute("type") === "password";
+          loginPassword.setAttribute("type", isPw ? "text" : "password");
+          togglePw.innerHTML = `<span class="material-symbols-outlined">${
+            isPw ? "visibility_off" : "visibility"
+          }</span>`;
+        });
+      }
+
+      if (btnForgot) {
+        btnForgot.addEventListener("click", async () => {
+          const email = prompt(
+            "Nhập email để đặt lại mật khẩu:",
+            loginUsername?.value || "",
+          );
+          if (email && email.includes("@")) {
+            alert("Nếu email tồn tại, hướng dẫn đặt lại mật khẩu sẽ được gửi.");
+          }
+        });
+      }
+
+      function showError(el, msg) {
+        if (!el) return;
+        el.textContent = msg;
+        el.classList.remove("hidden");
+      }
+      function clearError(el) {
+        if (!el) return;
+        el.textContent = "";
+        el.classList.add("hidden");
+      }
+
+      if (btnLogin) {
+        btnLogin.addEventListener("click", async (e) => {
+          e.preventDefault();
+          clearError(loginError);
+          const email = (loginUsername?.value || "").trim();
+          const password = (loginPassword?.value || "").trim();
+          if (!email || !password) {
+            showError(loginError, "Vui lòng nhập đầy đủ thông tin.");
+            return;
+          }
+          btnLogin.disabled = true;
+          btnLogin.classList.add("opacity-70");
+          try {
+            const res = await (window.api?.login?.({ email, password }) ||
+              Promise.reject(new Error("API không sẵn sàng")));
+            // Lưu thông tin user vào localStorage
+            if (res) {
+              console.log("Login successful, saving user:", res);
+              localStorage.setItem("user", JSON.stringify(res));
+              console.log(
+                "User saved to localStorage:",
+                localStorage.getItem("user"),
+              );
+            }
+            // Chuyển hướng dựa theo role
+            if (res && res.role === "ADMIN") {
+              window.location.href = "../admin/quan_ly_xe.html";
+            } else {
+              window.location.href = "../home/index.html";
+            }
+          } catch (err) {
+            showError(loginError, (err && err.message) || "Đăng nhập thất bại");
+          } finally {
+            btnLogin.disabled = false;
+            btnLogin.classList.remove("opacity-70");
+          }
+        });
+      }
+
+      if (btnRegister) {
+        btnRegister.addEventListener("click", async (e) => {
+          e.preventDefault();
+          clearError(regError);
+          const fullName = (regName?.value || "").trim();
+          const email = (regEmail?.value || "").trim();
+          const pw1 = (regPw?.value || "").trim();
+          const pw2 = (regPw2?.value || "").trim();
+          if (!fullName || !email || !pw1 || !pw2) {
+            showError(regError, "Vui lòng điền đầy đủ thông tin.");
+            return;
+          }
+          if (pw1.length < 6) {
+            showError(regError, "Mật khẩu phải có ít nhất 6 ký tự.");
+            return;
+          }
+          if (pw1 !== pw2) {
+            showError(regError, "Mật khẩu xác nhận không khớp.");
+            return;
+          }
+          btnRegister.disabled = true;
+          btnRegister.classList.add("opacity-70");
+          try {
+            await (window.api?.register?.({
+              fullName,
+              email,
+              password: pw1,
+              confirmPassword: pw2,
+            }) || Promise.reject(new Error("API không sẵn sàng")));
+            alert("Đăng ký thành công! Vui lòng đăng nhập.");
+            setActiveTab("login");
+            if (loginUsername) loginUsername.value = email;
+          } catch (err) {
+            showError(regError, (err && err.message) || "Đăng ký thất bại");
+          } finally {
+            btnRegister.disabled = false;
+            btnRegister.classList.remove("opacity-70");
+          }
+        });
+      }
+
+      if (btnGoogle)
+        btnGoogle.addEventListener("click", () =>
+          alert("Đăng nhập Google chưa được hỗ trợ."),
+        );
+      if (btnFacebook)
+        btnFacebook.addEventListener("click", () =>
+          alert("Đăng nhập Facebook chưa được hỗ trợ."),
+        );
+
+      // default active tab based on URL hash
+      if (location.hash === "#register") {
+        setActiveTab("register");
+      } else {
+        setActiveTab("login");
+      }
+    })();
+  </script>
+</html>

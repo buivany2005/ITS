@@ -1,0 +1,541 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Danh sách phương tiện - XeThue VN</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white transition-colors duration-200"
+  >
+    <!-- Top Navigation Bar -->
+    <header
+      class="sticky top-0 z-50 w-full border-b border-[#f0f2f4] dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3"
+    >
+      <div class="max-w-[1440px] mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-8">
+          <div class="flex items-center gap-4 text-primary">
+            <div class="size-8">
+              <svg
+                fill="none"
+                viewbox="0 0 48 48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_6_535)">
+                  <path
+                    clip-rule="evenodd"
+                    d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
+                    fill="currentColor"
+                    fill-rule="evenodd"
+                  ></path>
+                </g>
+                <defs>
+                  <clippath id="clip0_6_535">
+                    <rect fill="white" height="48" width="48"></rect>
+                  </clippath>
+                </defs>
+              </svg>
+            </div>
+            <h2
+              class="text-xl font-bold tracking-tight text-[#111418] dark:text-white"
+            >
+              XeThue VN
+            </h2>
+          </div>
+          <nav class="hidden md:flex items-center gap-8">
+            <a
+              class="text-sm font-medium hover:text-primary transition-colors"
+              href="../home/index.html"
+              >Trang chủ</a
+            >
+            <a class="text-sm font-bold text-primary" href="#">Danh sách xe</a>
+            <a
+              class="text-sm font-medium hover:text-primary transition-colors"
+              href="../home/index.html#about"
+              >Về chúng tôi</a
+            >
+            <a
+              class="text-sm font-medium hover:text-primary transition-colors"
+              href="../home/index.html#contact"
+              >Liên hệ</a
+            >
+          </nav>
+        </div>
+        <div class="flex flex-1 justify-end gap-6 items-center">
+          <div
+            class="hidden lg:flex w-full max-w-xs items-center rounded-lg bg-[#f0f2f4] dark:bg-slate-800 px-3 py-2 gap-2"
+          >
+            <button
+              id="search-button"
+              class="flex items-center justify-center hover:text-primary transition-colors cursor-pointer"
+              type="button"
+            >
+              <span
+                class="material-symbols-outlined text-[#617589] hover:text-primary"
+                >search</span
+              >
+            </button>
+            <input
+              id="search-input"
+              class="w-full border-none bg-transparent focus:ring-0 text-sm"
+              placeholder="Tìm kiếm phương tiện"
+              type="text"
+            />
+          </div>
+          <div class="flex gap-3">
+            <button
+              id="btn-register"
+              class="flex items-center justify-center rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors"
+            >
+              Đăng ký
+            </button>
+            <button
+              id="btn-login"
+              class="flex items-center justify-center rounded-lg h-10 px-6 bg-[#f0f2f4] dark:bg-slate-800 text-[#111418] dark:text-white text-sm font-bold hover:bg-[#e4e7ea] dark:hover:bg-slate-700 transition-colors"
+            >
+              Đăng nhập
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="max-w-[1440px] mx-auto px-4 lg:px-10 py-6">
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 mb-6">
+        <a
+          class="text-[#617589] dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors"
+          href="../home/index.html"
+          >Trang chủ</a
+        >
+        <span class="material-symbols-outlined text-sm text-[#617589]"
+          >chevron_right</span
+        >
+        <span class="text-[#111418] dark:text-white text-sm font-bold"
+          >Danh sách phương tiện</span
+        >
+      </nav>
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Sidebar Filters -->
+        <aside class="w-full lg:w-72 flex-shrink-0">
+          <div
+            class="sticky top-24 bg-white dark:bg-slate-900 rounded-xl border border-[#f0f2f4] dark:border-slate-800 shadow-sm overflow-hidden flex flex-col"
+            style="max-height: calc(100vh - 7rem)"
+          >
+            <div
+              class="flex items-center gap-2 p-6 pb-4 border-b border-[#f0f2f4] dark:border-slate-800 flex-shrink-0"
+            >
+              <span class="material-symbols-outlined text-primary"
+                >filter_list</span
+              >
+              <h2 class="text-lg font-bold">Bộ lọc tìm kiếm</h2>
+            </div>
+            <div class="overflow-y-auto px-6 py-4 flex-1 custom-scrollbar">
+              <!-- Category: Loại xe -->
+              <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="material-symbols-outlined text-[#617589] text-xl"
+                    >directions_car</span
+                  >
+                  <span
+                    class="font-bold text-sm uppercase tracking-wider text-[#617589]"
+                    >Loại xe</span
+                  >
+                </div>
+                <div class="space-y-1">
+                  <label
+                    class="flex items-center gap-3 py-2 cursor-pointer group"
+                  >
+                    <input
+                      id="filter-type-oto"
+                      class="h-5 w-5 rounded border-[#dbe0e6] dark:border-slate-700 text-primary focus:ring-primary/20 bg-transparent"
+                      type="checkbox"
+                    />
+                    <span class="text-sm font-medium group-hover:text-primary"
+                      >Ô tô</span
+                    >
+                  </label>
+                  <label
+                    class="flex items-center gap-3 py-2 cursor-pointer group"
+                  >
+                    <input
+                      id="filter-type-xemay"
+                      class="h-5 w-5 rounded border-[#dbe0e6] dark:border-slate-700 text-primary focus:ring-primary/20 bg-transparent"
+                      type="checkbox"
+                    />
+                    <span class="text-sm font-medium group-hover:text-primary"
+                      >Xe máy</span
+                    >
+                  </label>
+                  <label
+                    class="flex items-center gap-3 py-2 cursor-pointer group"
+                  >
+                    <input
+                      id="filter-type-xedap"
+                      class="h-5 w-5 rounded border-[#dbe0e6] dark:border-slate-700 text-primary focus:ring-primary/20 bg-transparent"
+                      type="checkbox"
+                    />
+                    <span class="text-sm font-medium group-hover:text-primary"
+                      >Xe đạp</span
+                    >
+                  </label>
+                </div>
+              </div>
+              <!-- Category: Giá thuê -->
+              <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="material-symbols-outlined text-[#617589] text-xl"
+                    >payments</span
+                  >
+                  <span
+                    class="font-bold text-sm uppercase tracking-wider text-[#617589]"
+                    >Giá thuê (VNĐ)</span
+                  >
+                </div>
+                <div class="pt-2 pb-6">
+                  <!-- Dual Range Slider -->
+                  <div class="relative h-2 mb-6">
+                    <div
+                      class="absolute inset-0 bg-[#dbe0e6] dark:bg-slate-700 rounded-full"
+                    ></div>
+                    <div
+                      id="price-range-track"
+                      class="absolute h-full bg-primary rounded-full"
+                      style="left: 0%; right: 0%"
+                    ></div>
+                    <input
+                      id="filter-price-min"
+                      type="range"
+                      min="0"
+                      max="10000000"
+                      step="100000"
+                      value="0"
+                      class="price-range-input absolute w-full h-2 appearance-none bg-transparent cursor-pointer"
+                      style="z-index: 3"
+                    />
+                    <input
+                      id="filter-price-max"
+                      type="range"
+                      min="0"
+                      max="10000000"
+                      step="100000"
+                      value="10000000"
+                      class="price-range-input absolute w-full h-2 appearance-none bg-transparent cursor-pointer"
+                      style="z-index: 4"
+                    />
+                  </div>
+                  <!-- Price Labels -->
+                  <div class="flex justify-between">
+                    <div class="text-center">
+                      <div
+                        id="price-min-label"
+                        class="font-bold text-sm text-[#111418] dark:text-white"
+                      >
+                        0đ
+                      </div>
+                      <div class="text-[11px] text-[#617589]">Tối thiểu</div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        id="price-max-label"
+                        class="font-bold text-sm text-[#111418] dark:text-white"
+                      >
+                        10.000.000đ
+                      </div>
+                      <div class="text-[11px] text-[#617589]">Tối đa</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <style>
+                .price-range-input {
+                  -webkit-appearance: none;
+                  appearance: none;
+                  background: transparent;
+                }
+                .price-range-input::-webkit-slider-runnable-track {
+                  height: 8px;
+                  background: transparent;
+                }
+                .price-range-input::-webkit-slider-thumb {
+                  -webkit-appearance: none;
+                  width: 20px;
+                  height: 20px;
+                  background: #137fec;
+                  border: 3px solid white;
+                  border-radius: 50%;
+                  cursor: pointer;
+                  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+                  margin-top: -6px;
+                }
+                .price-range-input::-webkit-slider-thumb:hover {
+                  transform: scale(1.1);
+                }
+                .price-range-input::-moz-range-track {
+                  height: 8px;
+                  background: transparent;
+                }
+                .price-range-input::-moz-range-thumb {
+                  width: 20px;
+                  height: 20px;
+                  background: #137fec;
+                  border: 3px solid white;
+                  border-radius: 50%;
+                  cursor: pointer;
+                  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+                }
+                /* Custom Scrollbar */
+                .custom-scrollbar::-webkit-scrollbar {
+                  width: 8px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-track {
+                  background: #f0f2f4;
+                  border-radius: 4px;
+                }
+                .dark .custom-scrollbar::-webkit-scrollbar-track {
+                  background: #1e293b;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                  background: #cbd5e1;
+                  border-radius: 4px;
+                }
+                .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+                  background: #475569;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                  background: #137fec;
+                }
+                .custom-scrollbar {
+                  scrollbar-width: thin;
+                  scrollbar-color: #cbd5e1 #f0f2f4;
+                }
+                .dark .custom-scrollbar {
+                  scrollbar-color: #475569 #1e293b;
+                }
+              </style>
+              <!-- Category: Khu vực -->
+              <div class="mb-8">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="material-symbols-outlined text-[#617589] text-xl"
+                    >location_on</span
+                  >
+                  <span
+                    class="font-bold text-sm uppercase tracking-wider text-[#617589]"
+                    >Khu vực</span
+                  >
+                </div>
+                <select
+                  id="filter-location"
+                  class="w-full rounded-lg border-[#dbe0e6] dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:border-primary focus:ring-primary/20 transition-all cursor-pointer"
+                >
+                  <option value="all">Tất cả khu vực</option>
+                  <option value="Hà Nội">Hà Nội</option>
+                  <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                  <option value="Đà Nẵng">Đà Nẵng</option>
+                  <option value="Đà Lạt">Đà Lạt</option>
+                </select>
+              </div>
+              <!-- Category: Tình trạng -->
+              <div class="mb-6">
+                <div class="flex items-center gap-2 mb-3">
+                  <span class="material-symbols-outlined text-[#617589] text-xl"
+                    >event_available</span
+                  >
+                  <span
+                    class="font-bold text-sm uppercase tracking-wider text-[#617589]"
+                    >Tình trạng</span
+                  >
+                </div>
+                <label
+                  class="flex items-center gap-3 py-2 cursor-pointer group"
+                >
+                  <input
+                    checked=""
+                    class="h-5 w-5 rounded border-[#dbe0e6] dark:border-slate-700 text-primary focus:ring-primary/20 bg-transparent"
+                    type="checkbox"
+                  />
+                  <span class="text-sm font-medium group-hover:text-primary"
+                    >Đang còn trống</span
+                  >
+                </label>
+              </div>
+              <button
+                id="btn-reset-filters"
+                class="w-full py-3 bg-[#f0f2f4] dark:bg-slate-800 text-sm font-bold rounded-lg hover:bg-primary hover:text-white transition-all duration-200"
+              >
+                Đặt lại bộ lọc
+              </button>
+            </div>
+          </div>
+        </aside>
+        <!-- Main Content Area -->
+        <div class="flex-1">
+          <!-- Sorting and Info -->
+          <div
+            class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4"
+          >
+            <h1 class="text-2xl font-bold">24 phương tiện tìm thấy</h1>
+            <div class="flex items-center gap-3">
+              <span class="text-sm text-[#617589] whitespace-nowrap"
+                >Sắp xếp theo:</span
+              >
+              <select
+                id="sort-select"
+                class="rounded-lg border-[#dbe0e6] dark:border-slate-700 bg-white dark:bg-slate-800 text-sm py-1.5 pl-3 pr-8 focus:border-primary focus:ring-primary/20"
+              >
+                <option value="popular">Phổ biến nhất</option>
+                <option value="price-asc">Giá thấp đến cao</option>
+                <option value="price-desc">Giá cao đến thấp</option>
+                <option value="rating">Đánh giá tốt nhất</option>
+              </select>
+            </div>
+          </div>
+          <!-- Vehicle Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <!-- Vehicles will be loaded dynamically via JavaScript -->
+          </div>
+          <!-- Pagination -->
+          <div
+            id="pagination-container"
+            class="flex items-center justify-center gap-2 mt-12 pb-10"
+          >
+            <!-- Pagination will be generated dynamically -->
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer
+      class="bg-white dark:bg-slate-900 border-t border-[#f0f2f4] dark:border-slate-800 py-10"
+    >
+      <div class="max-w-[1440px] mx-auto px-10">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+          <div class="col-span-1 md:col-span-1">
+            <div class="flex items-center gap-2 text-primary mb-4">
+              <div class="size-6">
+                <svg
+                  fill="none"
+                  viewbox="0 0 48 48"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
+                    fill="currentColor"
+                    fill-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+              <h2 class="text-lg font-bold text-[#111418] dark:text-white">
+                XeThue VN
+              </h2>
+            </div>
+            <p class="text-sm text-[#617589] dark:text-slate-400">
+              Nền tảng cho thuê phương tiện hàng đầu Việt Nam. Nhanh chóng, tiện
+              lợi và an toàn.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Về chúng tôi</h4>
+            <ul class="space-y-2 text-sm text-[#617589] dark:text-slate-400">
+              <li><a class="hover:text-primary" href="#">Giới thiệu</a></li>
+              <li><a class="hover:text-primary" href="#">Quy định chung</a></li>
+              <li>
+                <a class="hover:text-primary" href="#">Chính sách bảo mật</a>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Hỗ trợ</h4>
+            <ul class="space-y-2 text-sm text-[#617589] dark:text-slate-400">
+              <li>
+                <a class="hover:text-primary" href="#">Câu hỏi thường gặp</a>
+              </li>
+              <li>
+                <a class="hover:text-primary" href="#">Hướng dẫn thuê xe</a>
+              </li>
+              <li><a class="hover:text-primary" href="#">Liên hệ 24/7</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Kết nối</h4>
+            <div class="flex gap-4">
+              <div
+                class="size-10 rounded-full bg-[#f0f2f4] dark:bg-slate-800 flex items-center justify-center cursor-pointer hover:bg-primary hover:text-white transition-all"
+              >
+                <span class="material-symbols-outlined text-xl"
+                  >social_leaderboard</span
+                >
+              </div>
+              <div
+                class="size-10 rounded-full bg-[#f0f2f4] dark:bg-slate-800 flex items-center justify-center cursor-pointer hover:bg-primary hover:text-white transition-all"
+              >
+                <span class="material-symbols-outlined text-xl">share</span>
+              </div>
+              <div
+                class="size-10 rounded-full bg-[#f0f2f4] dark:bg-slate-800 flex items-center justify-center cursor-pointer hover:bg-primary hover:text-white transition-all"
+              >
+                <span class="material-symbols-outlined text-xl">mail</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="text-center text-sm text-[#617589] border-t border-[#f0f2f4] dark:border-slate-800 pt-8"
+        >
+          © 2024 XeThue VN. Bản quyền thuộc về Team Design.
+        </div>
+      </div>
+    </footer>
+  </body>
+  <script src="../js/api.js"></script>
+  <script src="../js/danh-sach-xe.js"></script>
+  <script src="../js/auth-check.js"></script>
+</html>

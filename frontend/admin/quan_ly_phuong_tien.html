@@ -1,0 +1,717 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Quản lý phương tiện</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-white transition-colors duration-200"
+  >
+    <div class="flex min-h-screen">
+      <!-- Sidebar Navigation -->
+      <aside
+        class="w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col"
+      >
+        <div class="p-6">
+          <div class="flex items-center gap-3">
+            <div
+              class="bg-primary size-10 rounded-lg flex items-center justify-center text-white"
+            >
+              <span class="material-symbols-outlined">directions_car</span>
+            </div>
+            <div>
+              <h1
+                class="text-[#111418] dark:text-white text-base font-bold leading-normal"
+              >
+                Hệ thống Thuê Xe
+              </h1>
+              <p
+                class="text-[#617589] dark:text-slate-400 text-xs mt-1 font-medium"
+              >
+                Quản trị viên Hệ thống
+              </p>
+            </div>
+          </div>
+        </div>
+        <nav class="flex flex-col gap-1">
+          <a
+            class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
+            href="quan_ly_xe.html"
+          >
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Bảng điều khiển
+            </p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary"
+            href="quan_ly_phuong_tien.html"
+          >
+            <span class="material-symbols-outlined text-[22px]"
+              >directions_car</span
+            >
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Quản lý xe
+            </p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+            href="quan_ly_don_hang.html"
+          >
+            <span class="material-symbols-outlined text-[22px]"
+              >calendar_month</span
+            >
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Đơn đặt xe
+            </p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+            href="quan_ly_khach_hang.html"
+          >
+            <span class="material-symbols-outlined text-[22px]">group</span>
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Khách hàng
+            </p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+            href="quan_ly_xe.html"
+          >
+            <span class="material-symbols-outlined text-[22px]">analytics</span>
+            <p class="text-sm font-bold">Thống kê &amp; Báo cáo</p>
+          </a>
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
+            href="#"
+          >
+            <span class="material-symbols-outlined text-[22px]">settings</span>
+            <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
+              Cài đặt
+            </p>
+          </a>
+        </nav>
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+          <div
+            class="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl"
+          >
+            <img 
+              id="header-avatar" 
+              onclick="changeAvatar()" 
+              src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff" 
+              class="size-8 rounded-full object-cover cursor-pointer hover:ring-2 hover:ring-primary transition-all" 
+              alt="Avatar" 
+            />
+            <div class="flex-1 overflow-hidden">
+              <p
+                class="text-sm font-bold text-[#111418] dark:text-white truncate"
+              >
+                Nguyễn Văn An
+              </p>
+              <p class="text-xs text-[#617589] dark:text-slate-400 truncate">
+                an.nguyen@rental.vn
+              </p>
+            </div>
+            <button type="button" id="btn-logout" title="Đăng xuất" class="hover:text-red-500 transition-colors">
+              <span class="material-symbols-outlined text-slate-400 text-sm">logout</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+      <!-- Main Content Area -->
+      <main class="flex-1 ml-72">
+        <div class="p-8 max-w-[1200px] mx-auto">
+          <!-- Page Header -->
+          <header
+            class="flex flex-wrap justify-between items-center gap-4 mb-8"
+          >
+            <div>
+              <h2
+                class="text-[#111418] dark:text-white text-3xl font-extrabold tracking-tight"
+              >
+                Quản lý phương tiện
+              </h2>
+              <p class="text-[#617589] dark:text-gray-400 mt-1">
+                Danh sách đội xe hiện có trong hệ thống
+              </p>
+            </div>
+            <div class="flex items-center gap-3">
+              <button
+                id="btn-toggle-sidebar"
+                class="lg:hidden flex items-center gap-2 px-3 py-2 rounded-lg bg-white dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700"
+              >
+                <span class="material-symbols-outlined">menu</span>
+              </button>
+              <button
+                id="btn-add-vehicle"
+                class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-xl font-bold transition-all shadow-sm"
+              >
+                <span class="material-symbols-outlined">add</span>
+                <span>Thêm phương tiện mới</span>
+              </button>
+            </div>
+          </header>
+          <!-- Filters & Search Bar -->
+          <div
+            class="bg-white dark:bg-[#1a242f] p-4 rounded-2xl shadow-sm border border-[#dbe0e6] dark:border-gray-700 mb-6"
+          >
+            <div class="flex flex-col md:flex-row gap-4">
+              <div class="flex-1 relative">
+                <span
+                  class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[#617589]"
+                  >search</span
+                >
+                <input
+                  id="vehicle-search"
+                  class="w-full pl-12 pr-4 py-3 bg-background-light dark:bg-background-dark border-none rounded-xl focus:ring-2 focus:ring-primary text-sm"
+                  placeholder="Tìm kiếm xe theo tên hoặc biển số..."
+                  type="text"
+                />
+              </div>
+              <div class="flex gap-2 flex-wrap">
+                <button
+                  data-category="all"
+                  class="category-btn flex items-center gap-2 px-4 py-3 bg-background-light dark:bg-background-dark rounded-xl text-sm font-medium text-[#111418] dark:text-white border border-transparent hover:border-gray-200"
+                >
+                  <span>Tất cả</span>
+                  <span class="material-symbols-outlined text-lg"
+                    >expand_more</span
+                  >
+                </button>
+                <button
+                  data-category="motorbike"
+                  class="category-btn flex items-center gap-2 px-4 py-3 bg-background-light dark:bg-background-dark rounded-xl text-sm font-medium text-[#111418] dark:text-white border border-transparent hover:border-gray-200"
+                >
+                  <span>Xe máy</span>
+                  <span class="material-symbols-outlined text-lg"
+                    >expand_more</span
+                  >
+                </button>
+                <button
+                  data-category="status"
+                  class="category-btn flex items-center gap-2 px-4 py-3 bg-background-light dark:bg-background-dark rounded-xl text-sm font-medium text-[#111418] dark:text-white border border-transparent hover:border-gray-200"
+                >
+                  <span>Trạng thái</span>
+                  <span class="material-symbols-outlined text-lg"
+                    >filter_list</span
+                  >
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Table Container -->
+          <div
+            class="bg-white dark:bg-[#1a242f] rounded-2xl shadow-sm border border-[#dbe0e6] dark:border-gray-700 overflow-hidden"
+          >
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="bg-gray-50 dark:bg-gray-800/50 border-b border-[#dbe0e6] dark:border-gray-700"
+                  >
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Hình ảnh
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Tên xe
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Loại
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Trạng thái
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider"
+                    >
+                      Giá thuê
+                    </th>
+                    <th
+                      class="px-6 py-4 text-xs font-bold text-[#617589] dark:text-gray-400 uppercase tracking-wider text-right"
+                    >
+                      Hành động
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="vehicles-table-body"
+                  class="divide-y divide-gray-100 dark:divide-gray-800"
+                >
+                  <!-- Row 1 -->
+                  <tr
+                    class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors"
+                    data-vehicle-id="V-1001"
+                  >
+                    <td class="px-6 py-4">
+                      <div
+                        class="w-12 h-12 rounded-lg bg-cover bg-center shadow-sm"
+                        data-alt="Black modern motorbike Honda Vision"
+                        style="
+                          background-image: url(&quot;../../img/oto/xe_may/Vision.png&quot;);
+                        "
+                      ></div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <p
+                        class="text-sm font-bold text-[#111418] dark:text-white"
+                      >
+                        Honda Vision 2023
+                      </p>
+                      <p class="text-xs text-[#617589] dark:text-gray-400">
+                        BS: 29-G1 123.45
+                      </p>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm text-[#617589] dark:text-gray-400"
+                    >
+                      Xe máy
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                      >
+                        Sẵn sàng
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white"
+                    >
+                      150.000đ/ngày
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <div class="flex justify-end gap-2">
+                        <button
+                          data-id="V-1001"
+                          class="btn-edit p-2 text-[#617589] hover:text-primary transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >edit_note</span
+                          >
+                        </button>
+                        <button
+                          data-id="V-1001"
+                          class="btn-delete p-2 text-[#617589] hover:text-red-500 transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >delete</span
+                          >
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Row 2 -->
+                  <tr
+                    class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors"
+                    data-vehicle-id="V-2001"
+                  >
+                    <td class="px-6 py-4">
+                      <div
+                        class="w-12 h-12 rounded-lg bg-cover bg-center shadow-sm"
+                        data-alt="Blue electric SUV VinFast VF8"
+                        style="
+                          background-image: url(&quot;../../img/oto/Toyota_Granvia_2021.png&quot;);
+                        "
+                      ></div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <p
+                        class="text-sm font-bold text-[#111418] dark:text-white"
+                      >
+                        VinFast VF8 Plus
+                      </p>
+                      <p class="text-xs text-[#617589] dark:text-gray-400">
+                        BS: 30-H2 567.89
+                      </p>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm text-[#617589] dark:text-gray-400"
+                    >
+                      Ô tô
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary"
+                      >
+                        Đang thuê
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white"
+                    >
+                      1.200.000đ/ngày
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <div class="flex justify-end gap-2">
+                        <button
+                          data-id="V-2001"
+                          class="btn-edit p-2 text-[#617589] hover:text-primary transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >edit_note</span
+                          >
+                        </button>
+                        <button
+                          data-id="V-2001"
+                          class="btn-delete p-2 text-[#617589] hover:text-red-500 transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >delete</span
+                          >
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Row 3 -->
+                  <tr
+                    class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors"
+                    data-vehicle-id="V-3001"
+                  >
+                    <td class="px-6 py-4">
+                      <div
+                        class="w-12 h-12 rounded-lg bg-cover bg-center shadow-sm"
+                        data-alt="Silver road bicycle Giant Escape"
+                        style="
+                          background-image: url(&quot;../../img/oto/xe_dap/Road_Fascino.png&quot;);
+                        "
+                      ></div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <p
+                        class="text-sm font-bold text-[#111418] dark:text-white"
+                      >
+                        Giant Escape 2
+                      </p>
+                      <p class="text-xs text-[#617589] dark:text-gray-400">
+                        ID: BICY-0023
+                      </p>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm text-[#617589] dark:text-gray-400"
+                    >
+                      Xe đạp
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                      >
+                        Bảo trì
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white"
+                    >
+                      50.000đ/ngày
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <div class="flex justify-end gap-2">
+                        <button
+                          data-id="V-3001"
+                          class="btn-edit p-2 text-[#617589] hover:text-primary transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >edit_note</span
+                          >
+                        </button>
+                        <button
+                          data-id="V-3001"
+                          class="btn-delete p-2 text-[#617589] hover:text-red-500 transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >delete</span
+                          >
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                  <!-- Row 4 -->
+                  <tr
+                    class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors"
+                    data-vehicle-id="V-4001"
+                  >
+                    <td class="px-6 py-4">
+                      <div
+                        class="w-12 h-12 rounded-lg bg-cover bg-center shadow-sm"
+                        data-alt="Classic red motorbike Honda Super Cub"
+                        style="
+                          background-image: url(&quot;../../img/oto/xe_may/Wave.png&quot;);
+                        "
+                      ></div>
+                    </td>
+                    <td class="px-6 py-4">
+                      <p
+                        class="text-sm font-bold text-[#111418] dark:text-white"
+                      >
+                        Honda Super Cub C125
+                      </p>
+                      <p class="text-xs text-[#617589] dark:text-gray-400">
+                        BS: 29-B1 999.99
+                      </p>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm text-[#617589] dark:text-gray-400"
+                    >
+                      Xe máy
+                    </td>
+                    <td class="px-6 py-4">
+                      <span
+                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                      >
+                        Sẵn sàng
+                      </span>
+                    </td>
+                    <td
+                      class="px-6 py-4 text-sm font-semibold text-[#111418] dark:text-white"
+                    >
+                      250.000đ/ngày
+                    </td>
+                    <td class="px-6 py-4 text-right">
+                      <div class="flex justify-end gap-2">
+                        <button
+                          data-id="V-4001"
+                          class="btn-edit p-2 text-[#617589] hover:text-primary transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >edit_note</span
+                          >
+                        </button>
+                        <button
+                          data-id="V-4001"
+                          class="btn-delete p-2 text-[#617589] hover:text-red-500 transition-colors"
+                        >
+                          <span class="material-symbols-outlined text-xl"
+                            >delete</span
+                          >
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Pagination Footer -->
+            <div
+              class="px-6 py-4 flex items-center justify-between border-t border-[#dbe0e6] dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50"
+            >
+              <p class="text-sm text-[#617589] dark:text-gray-400">
+                Hiển thị 1 - 4 trong tổng số 24 xe
+              </p>
+              <div class="flex gap-2">
+                <button
+                  class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm font-medium hover:bg-gray-50 transition-colors"
+                >
+                  Trước
+                </button>
+                <button
+                  class="px-3 py-1.5 rounded-lg bg-primary text-white text-sm font-medium"
+                >
+                  1
+                </button>
+                <button
+                  class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm font-medium hover:bg-gray-50 transition-colors"
+                >
+                  2
+                </button>
+                <button
+                  class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm font-medium hover:bg-gray-50 transition-colors"
+                >
+                  3
+                </button>
+                <button
+                  class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm font-medium hover:bg-gray-50 transition-colors"
+                >
+                  Tiếp
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <div id="add-vehicle-modal" class="fixed inset-0 z-50 hidden">
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+           onclick="document.getElementById('add-vehicle-modal').classList.add('hidden')"></div>
+      
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-lg bg-white dark:bg-[#1a242f] rounded-2xl shadow-2xl p-6">
+        
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold text-[#111418] dark:text-white">Thêm phương tiện mới</h3>
+            <button type="button" onclick="document.getElementById('add-vehicle-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-500">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        
+        <form id="add-vehicle-form" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-500 mb-1">Tên xe</label>
+            <input type="text" name="name" required class="w-full px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border-none outline-none ring-1 ring-gray-200 focus:ring-2 focus:ring-primary dark:text-white">
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-500 mb-1">Hãng</label>
+              <input type="text" name="brand" required class="w-full px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border-none outline-none ring-1 ring-gray-200 focus:ring-2 focus:ring-primary dark:text-white">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-500 mb-1">Biển số</label>
+              <input type="text" name="licensePlate" required class="w-full px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border-none outline-none ring-1 ring-gray-200 focus:ring-2 focus:ring-primary dark:text-white">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+             <div>
+                <label class="block text-xs font-bold text-gray-500 mb-1">Loại xe</label>
+                <select name="vehicleType" class="w-full px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border-none outline-none ring-1 ring-gray-200 focus:ring-2 focus:ring-primary dark:text-white">
+                  <option value="CAR">Ô tô</option>
+                  <option value="MOTORBIKE">Xe máy</option>
+                  <option value="BICYCLE">Xe đạp</option>
+                </select>
+             </div>
+             <div>
+                <label class="block text-xs font-bold text-gray-500 mb-1">Giá thuê</label>
+                <input type="number" name="pricePerDay" required class="w-full px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border-none outline-none ring-1 ring-gray-200 focus:ring-2 focus:ring-primary dark:text-white">
+             </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-gray-500 mb-1">Link ảnh</label>
+            <input type="text" name="imageUrl" placeholder="https://..." class="w-full px-4 py-2 rounded-xl bg-gray-50 dark:bg-gray-800 border-none outline-none ring-1 ring-gray-200 focus:ring-2 focus:ring-primary dark:text-white">
+          </div>
+
+          <div class="flex justify-end gap-3 mt-6">
+            <button type="button" 
+                    id="btn-cancel-add"
+                    onclick="document.getElementById('add-vehicle-modal').classList.add('hidden')"
+                    class="px-5 py-2 rounded-xl font-bold text-gray-500 hover:bg-gray-100 transition-colors">
+              Hủy bỏ
+            </button>
+            <button type="submit" class="px-5 py-2 rounded-xl font-bold text-white bg-primary hover:bg-primary/90 shadow-lg">
+              Lưu phương tiện
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="../js/admin-vehicles.js"></script>
+    <script>
+      // Highlight active menu item based on current page
+      (function () {
+        const currentPath = window.location.pathname.split("/").pop();
+        const navLinks = document.querySelectorAll("aside nav a");
+
+        // Remove active class from all
+        navLinks.forEach((link) => {
+          link.classList.remove("bg-primary/10", "text-primary");
+          link.classList.add("hover:bg-[#f0f2f4]", "dark:hover:bg-gray-800");
+        });
+
+        // Add active class based on current page
+        if (currentPath === "quan_ly_xe.html") {
+          // For dashboard/stats page, highlight "Thống kê & Báo cáo"
+          const statsLink = Array.from(navLinks).find(
+            (link) =>
+              link.href.includes("quan_ly_xe.html") &&
+              link.textContent.includes("Thống kê"),
+          );
+          if (statsLink) {
+            statsLink.classList.add("bg-primary/10", "text-primary");
+            statsLink.classList.remove(
+              "hover:bg-[#f0f2f4]",
+              "dark:hover:bg-gray-800",
+            );
+          }
+        } else if (currentPath === "quan_ly_phuong_tien.html") {
+          const vehicleLink = Array.from(navLinks).find((link) =>
+            link.href.includes("quan_ly_phuong_tien.html"),
+          );
+          if (vehicleLink) {
+            vehicleLink.classList.add("bg-primary/10", "text-primary");
+            vehicleLink.classList.remove(
+              "hover:bg-[#f0f2f4]",
+              "dark:hover:bg-gray-800",
+            );
+          }
+        } else if (currentPath === "quan_ly_don_hang.html") {
+          const orderLink = Array.from(navLinks).find((link) =>
+            link.href.includes("quan_ly_don_hang.html"),
+          );
+          if (orderLink) {
+            orderLink.classList.add("bg-primary/10", "text-primary");
+            orderLink.classList.remove(
+              "hover:bg-[#f0f2f4]",
+              "dark:hover:bg-gray-800",
+            );
+          }
+        } else if (currentPath === "quan_ly_khach_hang.html") {
+          const customerLink = Array.from(navLinks).find((link) =>
+            link.href.includes("quan_ly_khach_hang.html"),
+          );
+          if (customerLink) {
+            customerLink.classList.add("bg-primary/10", "text-primary");
+            customerLink.classList.remove(
+              "hover:bg-[#f0f2f4]",
+              "dark:hover:bg-gray-800",
+            );
+          }
+        }
+      })();
+    </script>
+    <script src="../js/auth-check.js"></script>
+  </body>
+</html>

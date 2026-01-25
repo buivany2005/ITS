@@ -1,0 +1,169 @@
+<!doctype html>
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Đặt xe - XeThue VN</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white"
+  >
+    <!-- Header -->
+    <header
+      class="sticky top-0 z-50 w-full border-b border-[#f0f2f4] dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3"
+    >
+      <div class="max-w-[1440px] mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-4 text-primary">
+          <div class="size-8">
+            <svg
+              fill="none"
+              viewbox="0 0 48 48"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                clip-rule="evenodd"
+                d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
+                fill="currentColor"
+                fill-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
+          <h2 class="text-xl font-bold">XeThue VN</h2>
+        </div>
+      </div>
+    </header>
+
+    <main class="max-w-[600px] mx-auto px-4 py-8">
+      <!-- Vehicle Info -->
+      <div
+        class="bg-white dark:bg-slate-900 rounded-xl p-6 mb-6 border border-[#f0f2f4] dark:border-slate-800"
+      >
+        <div class="flex items-center gap-4 mb-4">
+          <img
+            id="vehicle-image"
+            src=""
+            alt=""
+            class="w-24 h-24 object-cover rounded-lg"
+          />
+          <div>
+            <h1 id="vehicle-name" class="text-xl font-bold mb-1">Tên xe</h1>
+            <p id="vehicle-type" class="text-sm text-gray-500"></p>
+          </div>
+        </div>
+        <div class="text-3xl font-bold text-primary">
+          <span id="vehicle-price">0</span>đ
+          <span class="text-sm text-gray-500">/ngày</span>
+        </div>
+      </div>
+
+      <!-- Booking Form -->
+      <div
+        class="bg-white dark:bg-slate-900 rounded-xl p-6 border border-[#f0f2f4] dark:border-slate-800"
+      >
+        <h2 class="text-lg font-bold mb-4">Thông tin đặt xe</h2>
+
+        <!-- Start Date -->
+        <div class="mb-4">
+          <label class="block text-sm font-bold mb-2">Ngày bắt đầu</label>
+          <input
+            id="start-date"
+            type="datetime-local"
+            class="w-full px-4 py-3 rounded-lg border border-[#dbe0e6] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary focus:ring-primary/20"
+          />
+        </div>
+
+        <!-- End Date -->
+        <div class="mb-6">
+          <label class="block text-sm font-bold mb-2">Ngày kết thúc</label>
+          <input
+            id="end-date"
+            type="datetime-local"
+            class="w-full px-4 py-3 rounded-lg border-[#dbe0e6] dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary focus:ring-primary/20"
+          />
+        </div>
+
+        <!-- Summary -->
+        <div
+          class="border-t border-[#f0f2f4] dark:border-slate-800 pt-4 space-y-3"
+        >
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-600 dark:text-gray-400">Đơn giá thuê</span>
+            <span class="font-bold"
+              ><span id="summary-price-per-day">0</span>đ/ngày</span
+            >
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-600 dark:text-gray-400">Thời gian thuê</span>
+            <span class="font-bold"><span id="summary-days">0</span> ngày</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-600 dark:text-gray-400"
+              >Phí dịch vụ (5%)</span
+            >
+            <span class="font-bold"
+              ><span id="summary-service-fee">0</span>đ</span
+            >
+          </div>
+          <div
+            class="flex justify-between text-lg font-bold text-primary border-t border-[#f0f2f4] dark:border-slate-800 pt-3"
+          >
+            <span>Tổng cộng</span>
+            <span><span id="summary-total">0</span>đ</span>
+          </div>
+        </div>
+
+        <!-- Book Button -->
+        <button
+          id="btn-book"
+          class="w-full mt-6 py-4 bg-primary text-white font-bold text-lg rounded-lg hover:bg-primary/90 transition-colors"
+        >
+          Đặt thuê ngay
+        </button>
+        <p class="text-xs text-gray-500 text-center mt-3">
+          Bạn sẽ chưa bị trừ tiền cho đến khi chủ xe xác nhận
+        </p>
+      </div>
+    </main>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/booking.js"></script>
+  </body>
+</html>

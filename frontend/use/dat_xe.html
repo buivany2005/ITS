@@ -1,0 +1,545 @@
+<!doctype html>
+
+<html class="light" lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Giỏ hàng &amp; Đặt thuê | MotoRent VN</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+            },
+            fontFamily: {
+              display: ["Plus Jakarta Sans"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white min-h-screen"
+  >
+    <!-- Top Navigation Bar -->
+    <header
+      class="sticky top-0 z-50 w-full bg-white dark:bg-[#1a2632] border-b border-solid border-[#f0f2f4] dark:border-gray-800"
+    >
+      <div
+        class="max-w-[1280px] mx-auto px-4 sm:px-10 flex items-center justify-between h-16"
+      >
+        <div class="flex items-center gap-8">
+          <div class="flex items-center gap-3">
+            <div class="size-8 text-primary">
+              <svg
+                fill="currentColor"
+                viewbox="0 0 48 48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"
+                  fill-rule="evenodd"
+                ></path>
+              </svg>
+            </div>
+            <h1 class="text-xl font-bold tracking-tight">MotoRent VN</h1>
+          </div>
+          <nav class="hidden lg:flex items-center gap-8">
+            <a
+              class="text-sm font-semibold hover:text-primary transition-colors"
+              href="#"
+              >Trang chủ</a
+            >
+            <a
+              class="text-sm font-semibold hover:text-primary transition-colors"
+              href="#"
+              >Xe máy</a
+            >
+            <a
+              class="text-sm font-semibold hover:text-primary transition-colors"
+              href="#"
+              >Ô tô</a
+            >
+            <a
+              class="text-sm font-semibold hover:text-primary transition-colors"
+              href="#"
+              >Xe đạp</a
+            >
+            <a
+              class="text-sm font-semibold hover:text-primary transition-colors"
+              href="#"
+              >Khuyến mãi</a
+            >
+          </nav>
+        </div>
+        <div class="flex items-center gap-6">
+          <div
+            class="hidden md:flex items-center bg-gray-100 dark:bg-gray-800 rounded-lg px-3 py-2 w-64"
+          >
+            <span class="material-symbols-outlined text-gray-400 text-xl"
+              >search</span
+            >
+            <input
+              class="bg-transparent border-none focus:ring-0 text-sm w-full placeholder:text-gray-500"
+              placeholder="Tìm kiếm xe..."
+              type="text"
+            />
+          </div>
+          <div class="relative">
+            <span class="material-symbols-outlined text-2xl cursor-pointer"
+              >shopping_cart</span
+            >
+            <span
+              class="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+              >2</span
+            >
+          </div>
+          <div
+            class="size-10 rounded-full bg-cover bg-center ring-2 ring-primary/20 cursor-pointer"
+            data-alt="User profile avatar portrait"
+            style="
+              background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCMMyg48UDWC1lx29xgjWdBdGhyv6K7NYipRCkfFFfGLoTHSRICha6I5Q5_zvNCrOH2Hwg4D-c9m2ooahiHX2lKf_2dS3HEvo80e4Kc0XbOduFp0BAvaoZx93TvA0Qh8dSh6DM5vcncg_WLICtvJMA3MSIxsoa6SM0iat8dknplb0xTFTQ8CRv2txq629R6ZpBabi8DwFKdx_7Ha3xzJCgD8FfUskApGHgM2dDAgFR3QyfyO8spcMNrIFAkC2SFhGcn_ftYGGHgSvr1&quot;);
+            "
+          ></div>
+        </div>
+      </div>
+    </header>
+    <main class="max-w-[1280px] mx-auto px-4 sm:px-10 py-8">
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center gap-2 mb-6">
+        <a
+          class="text-gray-500 hover:text-primary text-sm font-medium transition-colors"
+          href="#"
+          >Trang chủ</a
+        >
+        <span class="text-gray-400 text-sm">/</span>
+        <span class="text-primary text-sm font-bold">Giỏ hàng</span>
+      </nav>
+      <!-- Page Heading -->
+      <div class="mb-8">
+        <h2 class="text-3xl font-extrabold tracking-tight mb-2">
+          Giỏ hàng của bạn
+        </h2>
+        <p class="text-gray-500 dark:text-gray-400 text-base">
+          Kiểm tra lại các phương tiện bạn đã chọn trước khi tiến hành thanh
+          toán.
+        </p>
+      </div>
+      <div class="flex flex-col lg:flex-row gap-8">
+        <!-- Left: Cart Items Table -->
+        <div class="flex-1 space-y-6">
+          <div
+            class="bg-white dark:bg-[#1a2632] rounded-xl border border-[#dbe0e6] dark:border-gray-800 overflow-hidden"
+          >
+            <div class="overflow-x-auto @container">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr
+                    class="bg-gray-50 dark:bg-gray-900/50 border-b border-[#dbe0e6] dark:border-gray-800"
+                  >
+                    <th
+                      class="px-6 py-4 text-sm font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300"
+                    >
+                      Sản phẩm
+                    </th>
+                    <th
+                      class="px-6 py-4 text-sm font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300"
+                    >
+                      Thời gian thuê
+                    </th>
+                    <th
+                      class="px-6 py-4 text-sm font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300"
+                    >
+                      Đơn giá
+                    </th>
+                    <th
+                      class="px-6 py-4 text-sm font-bold uppercase tracking-wider text-gray-600 dark:text-gray-300 text-right"
+                    >
+                      Thành tiền
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-[#dbe0e6] dark:divide-gray-800">
+                  <!-- Item 1 -->
+                  <tr
+                    class="hover:bg-gray-50/50 dark:hover:bg-gray-800/20 transition-colors"
+                  >
+                    <td class="px-6 py-6">
+                      <div class="flex items-center gap-4">
+                        <div
+                          class="size-16 rounded-lg bg-cover bg-center shrink-0 border border-gray-100 dark:border-gray-700"
+                          data-alt="Modern black motorcycle parked outdoors"
+                          style="
+                            background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDmQu9uXv8Xt-G2ukPstZEjEsbp3ygbMWkpQIMuSeIbAbm9scerWz6delVTodaMko8-Emmaq_qPARrw2aWkfCqIBOAlHhTy_MTzxUC-dTkNGIh4YhGYT1Ynh7CXukEcAKjbRkh6EKa8pxqo7p0tWppxa1jCgWEjrcLZAai6xqNLUyk3fWZ82Yb_gn9JX_EKTzI0EYp6r5GaZV8NffpOil9sMDQLrZyRdbnnH6XwYK0VUbvdQW4-TZ-7Im7ABvT6bZCvntLMRi1AVAoB&quot;);
+                          "
+                        ></div>
+                        <div>
+                          <p class="font-bold text-[#111418] dark:text-white">
+                            Honda SH 150i
+                          </p>
+                          <p class="text-xs text-gray-500 mt-1 uppercase">
+                            Xe máy • Đời 2023
+                          </p>
+                          <button
+                            class="btn-delete text-xs text-red-500 font-bold mt-2 flex items-center gap-1 hover:underline"
+                            data-id="1"
+                          >
+                            <span class="material-symbols-outlined text-sm"
+                              >delete</span
+                            >
+                            Xóa
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="px-6 py-6 text-sm text-gray-600 dark:text-gray-400"
+                    >
+                      <div class="space-y-1">
+                        <p
+                          class="item-dates font-medium text-[#111418] dark:text-gray-200"
+                        >
+                          Chưa chọn ngày
+                        </p>
+                        <p class="item-days text-xs">Tổng cộng: 0 ngày</p>
+                      </div>
+                    </td>
+                    <td class="px-6 py-6 text-sm">
+                      <p
+                        class="item-price font-medium text-gray-900 dark:text-gray-100"
+                      >
+                        200.000đ
+                      </p>
+                      <p class="text-xs text-gray-500">/ ngày</p>
+                    </td>
+                    <td class="px-6 py-6 text-right">
+                      <p class="item-total font-bold text-primary text-lg">
+                        0đ
+                      </p>
+                    </td>
+                  </tr>
+                  <!-- Item 2 -->
+                  <tr
+                    class="hover:bg-gray-50/50 dark:hover:bg-gray-800/20 transition-colors"
+                  >
+                    <td class="px-6 py-6">
+                      <div class="flex items-center gap-4">
+                        <div
+                          class="size-16 rounded-lg bg-cover bg-center shrink-0 border border-gray-100 dark:border-gray-700"
+                          data-alt="Modern blue SUV car studio shot"
+                          style="
+                            background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuB1xi0ycLOVHH61yfolxlsiK5lYIMrJnMPLUUbHCi2aCDIiqnWn6OzsuFCw6GqRXs2dJ4sISGqvxn0K07suLz24cXt82ZqZAJXF61J_jKcu_qKEmm688IlEye4w5zgziCe89RpPTMt_gAt45vufBbYPcQxGeatxtk3S7NhhK1wkvqWR-KDYVxKBdN_kP-QQFvlRg1fPwPqDmKwB5b-NsptoeuVcln3Eo75wBys7Y6FRjjs7ts-o5_CeBgbi4_3Or2TcTVMTrUjSlGAL&quot;);
+                          "
+                        ></div>
+                        <div>
+                          <p class="font-bold text-[#111418] dark:text-white">
+                            Mazda CX-5
+                          </p>
+                          <p class="text-xs text-gray-500 mt-1 uppercase">
+                            Ô tô • Tự động
+                          </p>
+                          <button
+                            class="btn-delete text-xs text-red-500 font-bold mt-2 flex items-center gap-1 hover:underline"
+                            data-id="2"
+                          >
+                            <span class="material-symbols-outlined text-sm"
+                              >delete</span
+                            >
+                            Xóa
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="px-6 py-6 text-sm text-gray-600 dark:text-gray-400"
+                    >
+                      <div class="space-y-1">
+                        <p
+                          class="item-dates font-medium text-[#111418] dark:text-gray-200"
+                        >
+                          Chưa chọn ngày
+                        </p>
+                        <p class="item-days text-xs">Tổng cộng: 0 ngày</p>
+                      </div>
+                    </td>
+                    <td class="px-6 py-6 text-sm">
+                      <p
+                        class="item-price font-medium text-gray-900 dark:text-gray-100"
+                      >
+                        1.200.000đ
+                      </p>
+                      <p class="text-xs text-gray-500">/ ngày</p>
+                    </td>
+                    <td class="px-6 py-6 text-right">
+                      <p class="item-total font-bold text-primary text-lg">
+                        0đ
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Notes Section -->
+          <div
+            class="bg-white dark:bg-[#1a2632] rounded-xl border border-[#dbe0e6] dark:border-gray-800 p-6"
+          >
+            <label class="block">
+              <span
+                class="text-[#111418] dark:text-white text-lg font-bold block mb-4"
+                >Ghi chú thêm</span
+              >
+              <textarea
+                class="w-full rounded-lg border-[#dbe0e6] dark:border-gray-700 dark:bg-gray-900 focus:border-primary focus:ring-primary text-base placeholder:text-gray-400"
+                placeholder="Nhập yêu cầu đặc biệt của bạn tại đây (ví dụ: địa điểm giao xe, yêu cầu thêm mũ bảo hiểm, ghế trẻ em...)"
+                rows="4"
+              ></textarea>
+            </label>
+          </div>
+        </div>
+        <!-- Right: Summary Sidebar -->
+        <aside class="lg:w-[380px]">
+          <div
+            class="bg-white dark:bg-[#1a2632] rounded-xl border border-[#dbe0e6] dark:border-gray-800 p-6 sticky top-24 shadow-sm"
+          >
+            <h3
+              class="text-xl font-bold mb-6 border-b border-gray-100 dark:border-gray-800 pb-4"
+            >
+              Tóm tắt đặt thuê
+            </h3>
+            <div class="space-y-4 mb-6">
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400"
+                  >Tạm tính (<span id="summary-count">0</span> xe)</span
+                >
+                <span id="summary-subtotal" class="font-medium">0đ</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400"
+                  >Phí bảo hiểm cơ bản</span
+                >
+                <span id="summary-insurance" class="font-medium">0đ</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-gray-600 dark:text-gray-400"
+                  >Thuế (VAT 10%)</span
+                >
+                <span id="summary-tax" class="font-medium">0đ</span>
+              </div>
+            </div>
+            <div
+              class="border-t border-dashed border-gray-200 dark:border-gray-700 pt-6 mb-8"
+            >
+              <div class="flex justify-between items-end">
+                <div>
+                  <p
+                    class="text-gray-600 dark:text-gray-400 text-sm font-medium"
+                  >
+                    Tổng cộng
+                  </p>
+                  <p class="text-[10px] text-gray-500 mt-1 uppercase">
+                    Đã bao gồm tất cả các loại phí
+                  </p>
+                </div>
+                <span
+                  id="summary-total"
+                  class="text-3xl font-extrabold text-primary"
+                  >0đ</span
+                >
+              </div>
+            </div>
+            <div class="space-y-4">
+              <button
+                id="btn-checkout"
+                class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2"
+              >
+                Tiến hành đặt thuê
+                <span class="material-symbols-outlined">arrow_forward</span>
+              </button>
+              <button
+                id="btn-continue"
+                class="w-full bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-[#111418] dark:text-white font-bold py-4 rounded-xl transition-all"
+              >
+                Tiếp tục chọn xe
+              </button>
+            </div>
+            <div class="mt-8 flex flex-col gap-4">
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-green-500"
+                  >verified_user</span
+                >
+                <p class="text-xs text-gray-500 leading-normal">
+                  <strong>Cam kết an toàn:</strong> Mọi giao dịch được mã hóa và
+                  bảo mật tuyệt đối.
+                </p>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-primary"
+                  >support_agent</span
+                >
+                <p class="text-xs text-gray-500 leading-normal">
+                  <strong>Hỗ trợ 24/7:</strong> Liên hệ 1900 1234 nếu bạn cần
+                  trợ giúp với đơn hàng.
+                </p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+    <footer
+      class="bg-white dark:bg-[#0a1118] border-t border-gray-200 dark:border-gray-800 py-12 mt-20"
+    >
+      <div class="max-w-[1280px] mx-auto px-4 sm:px-10">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div class="col-span-1 md:col-span-1">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="size-6 text-primary">
+                <svg
+                  fill="currentColor"
+                  viewbox="0 0 48 48"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    clip-rule="evenodd"
+                    d="M24 4H42V17.3333V30.6667H24V44H6V30.6667V17.3333H24V4Z"
+                    fill-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold tracking-tight">MotoRent VN</h3>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+              Nền tảng thuê xe hàng đầu Việt Nam, mang đến giải pháp di chuyển
+              linh hoạt, an toàn và tiết kiệm.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold mb-6 text-sm uppercase tracking-wider">
+              Dịch vụ
+            </h4>
+            <ul class="space-y-4 text-sm text-gray-500 dark:text-gray-400">
+              <li>
+                <a class="hover:text-primary transition-colors" href="#"
+                  >Thuê xe máy</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-primary transition-colors" href="#"
+                  >Thuê ô tô tự lái</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-primary transition-colors" href="#"
+                  >Thuê xe đạp thể thao</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-6 text-sm uppercase tracking-wider">
+              Hỗ trợ
+            </h4>
+            <ul class="space-y-4 text-sm text-gray-500 dark:text-gray-400">
+              <li>
+                <a class="hover:text-primary transition-colors" href="#"
+                  >Hướng dẫn đặt xe</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-primary transition-colors" href="#"
+                  >Chính sách bảo hiểm</a
+                >
+              </li>
+              <li>
+                <a class="hover:text-primary transition-colors" href="#"
+                  >Câu hỏi thường gặp</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-6 text-sm uppercase tracking-wider">
+              Liên hệ
+            </h4>
+            <ul class="space-y-4 text-sm text-gray-500 dark:text-gray-400">
+              <li class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-base">call</span>
+                1900 1234
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-base">mail</span>
+                support@motorent.vn
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-base"
+                  >location_on</span
+                >
+                Quận 1, TP. Hồ Chí Minh
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-100 dark:border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4"
+        >
+          <p class="text-xs text-gray-400">
+            © 2023 MotoRent Vietnam Co., Ltd. All rights reserved.
+          </p>
+          <div class="flex gap-6">
+            <a
+              class="text-gray-400 hover:text-primary transition-colors"
+              href="#"
+              ><span class="material-symbols-outlined">public</span></a
+            >
+            <a
+              class="text-gray-400 hover:text-primary transition-colors"
+              href="#"
+              ><span class="material-symbols-outlined">share</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+  <script src="../js/api.js"></script>
+  <script src="../js/dat-xe.js"></script>
+  <script src="../js/auth-check.js"></script>
+</html>
