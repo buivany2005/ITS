@@ -7,27 +7,20 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderResponse {
-    private Long id;
+public class CartItemResponse {
     private Long vehicleId;
     private String vehicleName;
     private String vehicleBrand;
     private String vehicleModel;
     private String vehicleImageUrl;
-    private Long customerId;
-    private String customerName;
-    private String customerEmail;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Integer numberOfDays;
+    private BigDecimal pricePerDay;
     private BigDecimal totalPrice;
-    private String status;
-    private String notes;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }

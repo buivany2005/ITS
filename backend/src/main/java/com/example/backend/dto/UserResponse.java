@@ -29,13 +29,6 @@ public class VehicleResponse {
     private String imageUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    
-    // Additional fields for Excel export
-    private String category;
-    private String transmission;
-    private BigDecimal pricePerDay;
-    private Integer totalRentals;
-    private Double rating;
 
     public static VehicleResponse fromEntity(Vehicle vehicle) {
         return VehicleResponse.builder()
@@ -50,15 +43,10 @@ public class VehicleResponse {
                 .fuelType(vehicle.getFuelType())
                 .description(vehicle.getDescription())
                 .rentalPricePerDay(vehicle.getRentalPricePerDay())
-                .pricePerDay(vehicle.getRentalPricePerDay()) // Alias
                 .status(vehicle.getStatus().name())
                 .imageUrl(vehicle.getImageUrl())
                 .createdAt(vehicle.getCreatedAt())
                 .updatedAt(vehicle.getUpdatedAt())
-                .category("Xe " + vehicle.getBrand()) // Default category
-                .transmission("Automatic") // Default
-                .totalRentals(0) // Default
-                .rating(5.0) // Default
                 .build();
     }
 }
