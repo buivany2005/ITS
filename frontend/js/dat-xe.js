@@ -205,9 +205,9 @@
 
   // Attach event listeners
   function attachEventListeners() {
-    // Checkout button - show modal
+    // Checkout button - create order and redirect to payment
     if (btnCheckout) {
-      btnCheckout.addEventListener("click", showBookingModal);
+      btnCheckout.addEventListener("click", handleCheckout);
     }
 
     // Continue button - go back to vehicle list
@@ -236,167 +236,243 @@
     }
   }
 
-  // Show booking modal for date selection
-  function showBookingModal() {
+  // Handle checkout - create order
+  async function handleCheckout() {
     if (cart.length === 0) {
       alert("Giỏ hàng trống! Vui lòng chọn phương tiện để thuê.");
       return;
     }
 
-    // Get tomorrow as min date
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const minDate = tomorrow.toISOString().slice(0, 16);
-
-    const modalHTML = `
-      <div id="bookingModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm">
-        <div class="bg-white dark:bg-[#1a2632] w-full max-w-md p-8 rounded-2xl shadow-2xl animate-scale-in">
-          <div class="flex justify-between items-center mb-6">
-            <h3 class="text-2xl font-bold">Thời gian thuê xe</h3>
-            <button id="btn-close-modal" class="material-symbols-outlined text-gray-400 hover:text-red-500 cursor-pointer">close</button>
-          </div>
-          
-          <form id="rentalForm" class="space-y-6">
-            <div>
-              <label class="block text-sm font-semibold mb-2">Ngày nhận xe</label>
-              <input 
-                type="datetime-local" 
-                id="rental-date-from"
-                min="${minDate}"
-                required 
-                class="w-full p-3 rounded-lg border border-gray-300 dark:bg-gray-800 dark:border-gray-700 focus:ring-2 focus:ring-primary outline-none"
-              >
-            </div>
-            
-            <div>
-              <label class="block text-sm font-semibold mb-2">Ngày trả xe</label>
-              <input 
-                type="datetime-local" 
-                id="rental-date-to"
-                min="${minDate}"
-                required 
-                class="w-full p-3 rounded-lg border border-gray-300 dark:bg-gray-800 dark:border-gray-700 focus:ring-2 focus:ring-primary outline-none"
-              >
-            </div>
-
-            <div id="rental-preview" class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg hidden">
-              <p class="text-sm text-gray-600 dark:text-gray-400">Thời gian thuê: <span id="preview-days" class="font-bold text-primary">0</span> ngày</p>
-              <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Tổng tiền dự kiến: <span id="preview-total" class="font-bold text-primary">0đ</span></p>
-            </div>
-
-            <div class="pt-4">
-              <button type="submit" class="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-blue-600 transition-colors">
-                Xác nhận đặt xe
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    `;
-
-    document.body.insertAdjacentHTML("beforeend", modalHTML);
-
-    // Add animation style
-    const style = document.createElement("style");
-    style.textContent = `
-      @keyframes scale-in {
-        from { transform: scale(0.9); opacity: 0; }
-        to { transform: scale(1); opacity: 1; }
-      }
-      .animate-scale-in { animation: scale-in 0.2s ease-out; }
-    `;
-    document.head.appendChild(style);
-
-    // Get modal elements
-    const modal = document.getElementById("bookingModal");
-    const dateFromInput = document.getElementById("rental-date-from");
-    const dateToInput = document.getElementById("rental-date-to");
-    const previewSection = document.getElementById("rental-preview");
-    const previewDays = document.getElementById("preview-days");
-    const previewTotal = document.getElementById("preview-total");
-    const form = document.getElementById("rentalForm");
-    const btnClose = document.getElementById("btn-close-modal");
-
-    // Close modal on button click
-    btnClose.addEventListener("click", closeModal);
-
-    // Close modal on backdrop click
-    modal.addEventListener("click", (e) => {
-      if (e.target === modal) closeModal();
-    });
-
-    // Update preview when dates change
-    function updatePreview() {
-      const from = new Date(dateFromInput.value);
-      const to = new Date(dateToInput.value);
-
-      if (from && to && !isNaN(from.getTime()) && !isNaN(to.getTime())) {
-        if (to <= from) {
-          previewSection.classList.add("hidden");
-          return;
-        }
-
-        const days = Math.ceil((to - from) / (1000 * 60 * 60 * 24));
-        const subtotal = cart.reduce(
-          (sum, item) => sum + item.pricePerDay * days,
-          0,
-        );
-        const insurance = Math.round(subtotal * 0.05);
-        const tax = Math.round((subtotal + insurance) * 0.1);
-        const total = subtotal + insurance + tax;
-
-        previewDays.textContent = days;
-        previewTotal.textContent = formatPrice(total);
-        previewSection.classList.remove("hidden");
-      } else {
-        previewSection.classList.add("hidden");
-      }
-    }
-
-    dateFromInput.addEventListener("change", () => {
-      // Set min date for dateTo
-      if (dateFromInput.value) {
-        dateToInput.min = dateFromInput.value;
-      }
-      updatePreview();
-    });
-    dateToInput.addEventListener("change", updatePreview);
-
-    // Handle form submission
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      const from = new Date(dateFromInput.value);
-      const to = new Date(dateToInput.value);
-
-      if (to <= from) {
-        alert("Ngày trả xe phải sau ngày nhận xe!");
+    if (!rentalDates.from || !rentalDates.to) {
+      // Show booking modal if dates not set
+      if (cart.length === 0) {
+        alert("Giỏ hàng trống! Vui lòng chọn phương tiện để thuê.");
         return;
       }
 
-      // Save rental dates
-      rentalDates = {
-        from: from,
-        to: to,
-        days: Math.ceil((to - from) / (1000 * 60 * 60 * 24)),
-      };
+      // Get tomorrow as min date
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const minDate = tomorrow.toISOString().slice(0, 16);
 
-      // Close modal
-      closeModal();
+      const modalHTML = `
+        <div id="bookingModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div class="bg-white dark:bg-[#1a2632] w-full max-w-md p-8 rounded-2xl shadow-2xl animate-scale-in">
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="text-2xl font-bold">Thời gian thuê xe</h3>
+              <button id="btn-close-modal" class="material-symbols-outlined text-gray-400 hover:text-red-500 cursor-pointer">close</button>
+            </div>
+            
+            <form id="rentalForm" class="space-y-6">
+              <div>
+                <label class="block text-sm font-semibold mb-2">Ngày nhận xe</label>
+                <input 
+                  type="datetime-local" 
+                  id="rental-date-from"
+                  min="${minDate}"
+                  required 
+                  class="w-full p-3 rounded-lg border border-gray-300 dark:bg-gray-800 dark:border-gray-700 focus:ring-2 focus:ring-primary outline-none"
+                >
+              </div>
+              
+              <div>
+                <label class="block text-sm font-semibold mb-2">Ngày trả xe</label>
+                <input 
+                  type="datetime-local" 
+                  id="rental-date-to"
+                  min="${minDate}"
+                  required 
+                  class="w-full p-3 rounded-lg border border-gray-300 dark:bg-gray-800 dark:border-gray-700 focus:ring-2 focus:ring-primary outline-none"
+                >
+              </div>
 
-      // Update cart display
-      renderCart();
-      updateSummary();
+              <div id="rental-preview" class="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg hidden">
+                <p class="text-sm text-gray-600 dark:text-gray-400">Thời gian thuê: <span id="preview-days" class="font-bold text-primary">0</span> ngày</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">Tổng tiền dự kiến: <span id="preview-total" class="font-bold text-primary">0đ</span></p>
+              </div>
+
+              <div class="pt-4">
+                <button type="submit" class="w-full bg-primary text-white font-bold py-4 rounded-xl hover:bg-blue-600 transition-colors">
+                  Xác nhận đặt xe
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      `;
+
+      document.body.insertAdjacentHTML("beforeend", modalHTML);
+
+      // Add animation style
+      const style = document.createElement("style");
+      style.textContent = `
+        @keyframes scale-in {
+          from { transform: scale(0.9); opacity: 0; }
+          to { transform: scale(1); opacity: 1; }
+        }
+        .animate-scale-in { animation: scale-in 0.2s ease-out; }
+      `;
+      document.head.appendChild(style);
+
+      // Get modal elements
+      const modal = document.getElementById("bookingModal");
+      const dateFromInput = document.getElementById("rental-date-from");
+      const dateToInput = document.getElementById("rental-date-to");
+      const previewSection = document.getElementById("rental-preview");
+      const previewDays = document.getElementById("preview-days");
+      const previewTotal = document.getElementById("preview-total");
+      const form = document.getElementById("rentalForm");
+      const btnClose = document.getElementById("btn-close-modal");
+
+      // Close modal on button click
+      btnClose.addEventListener("click", closeModal);
+
+      // Close modal on backdrop click
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      // Update preview when dates change
+      function updatePreview() {
+        const from = new Date(dateFromInput.value);
+        const to = new Date(dateToInput.value);
+
+        if (from && to && !isNaN(from.getTime()) && !isNaN(to.getTime())) {
+          if (to <= from) {
+            previewSection.classList.add("hidden");
+            return;
+          }
+
+          const days = Math.ceil((to - from) / (1000 * 60 * 60 * 24));
+          const subtotal = cart.reduce(
+            (sum, item) => sum + item.pricePerDay * days,
+            0,
+          );
+          const insurance = Math.round(subtotal * 0.05);
+          const tax = Math.round((subtotal + insurance) * 0.1);
+          const total = subtotal + insurance + tax;
+
+          previewDays.textContent = days;
+          previewTotal.textContent = formatPrice(total);
+          previewSection.classList.remove("hidden");
+        } else {
+          previewSection.classList.add("hidden");
+        }
+      }
+
+      dateFromInput.addEventListener("change", () => {
+        // Set min date for dateTo
+        if (dateFromInput.value) {
+          dateToInput.min = dateFromInput.value;
+        }
+        updatePreview();
+      });
+      dateToInput.addEventListener("change", updatePreview);
+
+      // Handle form submission
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const from = new Date(dateFromInput.value);
+        const to = new Date(dateToInput.value);
+
+        if (to <= from) {
+          alert("Ngày trả xe phải sau ngày nhận xe!");
+          return;
+        }
+
+        // Save rental dates
+        rentalDates = {
+          from: from,
+          to: to,
+          days: Math.ceil((to - from) / (1000 * 60 * 60 * 24)),
+        };
+
+        // Close modal
+        closeModal();
+
+        // Update cart display
+        renderCart();
+        updateSummary();
+
+        // Show success message
+        showNotification(
+          "Đã cập nhật thời gian thuê xe! Bây giờ bạn có thể tiến hành đặt thuê.",
+        );
+      });
+      return;
+    }
+
+    // Disable button
+    btnCheckout.disabled = true;
+    btnCheckout.innerHTML =
+      '<span class="animate-spin material-symbols-outlined">refresh</span> Đang xử lý...';
+
+    try {
+      // Get user info
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      if (!user.userId) {
+        alert("Vui lòng đăng nhập để đặt xe!");
+        window.location.href = "../login/login.html";
+        return;
+      }
+
+      // Create order for each cart item
+      const orderPromises = cart.map(async (item) => {
+        const orderData = {
+          vehicleId: item.id,
+          dateFrom: rentalDates.from.toISOString().split("T")[0],
+          dateTo: rentalDates.to.toISOString().split("T")[0],
+          pickupLocation: "Địa chỉ mặc định", // TODO: Add pickup location selection
+          returnLocation: "Địa chỉ mặc định", // TODO: Add return location selection
+          customerName: user.fullName || "Khách hàng",
+          customerPhone: user.phone || "",
+          customerEmail: user.email || "",
+          notes: `Đặt thuê ${item.name}`,
+        };
+
+        const response = await fetch("/api/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-User-Id": user.userId,
+          },
+          body: JSON.stringify(orderData),
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || "Không thể tạo đơn hàng");
+        }
+
+        return response.json();
+      });
+
+      // Wait for all orders to be created
+      const orders = await Promise.all(orderPromises);
+
+      // Clear cart
+      cart = [];
+      saveCart();
 
       // Show success message
-      showNotification("Đã cập nhật thời gian thuê xe!");
-    });
-  }
+      showNotification(`Đã tạo ${orders.length} đơn hàng thành công!`);
 
-  // Close modal
-  function closeModal() {
-    const modal = document.getElementById("bookingModal");
-    if (modal) modal.remove();
+      // Redirect to orders page or payment
+      setTimeout(() => {
+        window.location.href = "thong_tin_ca_nhan.html"; // Or payment page
+      }, 2000);
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert("Có lỗi xảy ra khi đặt xe: " + error.message);
+    } finally {
+      // Re-enable button
+      btnCheckout.disabled = false;
+      btnCheckout.innerHTML = `
+        Tiến hành đặt thuê
+        <span class="material-symbols-outlined">arrow_forward</span>
+      `;
+    }
   }
 
   // Update summary sidebar
@@ -420,11 +496,27 @@
 
     // Update checkout button state
     if (btnCheckout) {
+      const hasDates = rentalDates.from && rentalDates.to;
       if (count === 0) {
         btnCheckout.disabled = true;
+        btnCheckout.innerHTML = `
+          Giỏ hàng trống
+          <span class="material-symbols-outlined">shopping_cart</span>
+        `;
         btnCheckout.classList.add("opacity-50", "cursor-not-allowed");
+      } else if (!hasDates) {
+        btnCheckout.disabled = false;
+        btnCheckout.innerHTML = `
+          Chọn thời gian thuê
+          <span class="material-symbols-outlined">calendar_today</span>
+        `;
+        btnCheckout.classList.remove("opacity-50", "cursor-not-allowed");
       } else {
         btnCheckout.disabled = false;
+        btnCheckout.innerHTML = `
+          Tiến hành đặt thuê
+          <span class="material-symbols-outlined">arrow_forward</span>
+        `;
         btnCheckout.classList.remove("opacity-50", "cursor-not-allowed");
       }
     }

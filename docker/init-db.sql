@@ -41,32 +41,25 @@ CREATE TABLE IF NOT EXISTS vehicles (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Table: rentals
-CREATE TABLE IF NOT EXISTS rentals (
+-- Table: orders
+CREATE TABLE IF NOT EXISTS orders (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     vehicle_id BIGINT NOT NULL,
-    start_date TIMESTAMP NOT NULL,
-    end_date TIMESTAMP NOT NULL,
+    date_from DATE NOT NULL,
+    date_to DATE NOT NULL,
+    total_days INT,
+    price_per_day DECIMAL(10,2) NOT NULL,
     total_price DECIMAL(10,2) NOT NULL,
-    status ENUM('PENDING', 'CONFIRMED', 'COMPLETED', 'CANCELLED') NOT NULL DEFAULT 'PENDING',
-    payment_status ENUM('UNPAID', 'PAID', 'REFUNDED') NOT NULL DEFAULT 'UNPAID',
+    status ENUM('PENDING', 'CONFIRMED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED') NOT NULL DEFAULT 'PENDING',
+    pickup_location VARCHAR(255),
+    return_location VARCHAR(255),
+    customer_name VARCHAR(255),
+    customer_phone VARCHAR(20),
+    customer_email VARCHAR(255),
+    notes TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (vehicle_id) REFERENCES vehicles(id) ON DELETE CASCADE
-);
-
--- Table: reviews
-CREATE TABLE IF NOT EXISTS reviews (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    rental_id BIGINT NOT NULL,
-    user_id BIGINT NOT NULL,
-    vehicle_id BIGINT NOT NULL,
-    rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
-    comment TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (rental_id) REFERENCES rentals(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (vehicle_id) REFERENCES vehicles(id) ON DELETE CASCADE
 );
