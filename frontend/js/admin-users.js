@@ -39,7 +39,7 @@
 
   function renderTable() {
     if (!tableBody) return;
-    
+
     if (filteredUsers.length === 0) {
       tableBody.innerHTML = `
         <tr>
@@ -55,7 +55,7 @@
       .map((user) => {
         const roleLabel = getRoleLabel(user.role);
         const roleBadge = getRoleBadge(user.role);
-        
+
         return `
         <tr data-user-id="${user.id}" class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
           <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
@@ -96,8 +96,12 @@
       .join("\n");
 
     // Attach event listeners
-    qsa(".btn-delete").forEach((btn) => btn.addEventListener("click", onDelete));
-    qsa(".role-select").forEach((sel) => sel.addEventListener("change", onRoleChange));
+    qsa(".btn-delete").forEach((btn) =>
+      btn.addEventListener("click", onDelete),
+    );
+    qsa(".role-select").forEach((sel) =>
+      sel.addEventListener("change", onRoleChange),
+    );
   }
 
   function getRoleLabel(role) {
@@ -140,8 +144,12 @@
   async function onRoleChange(e) {
     const userId = e.currentTarget.dataset.userId;
     const newRole = e.currentTarget.value;
-    
-    if (!confirm(`Xác nhận thay đổi vai trò người dùng #${userId} thành ${getRoleLabel(newRole)}?`)) {
+
+    if (
+      !confirm(
+        `Xác nhận thay đổi vai trò người dùng #${userId} thành ${getRoleLabel(newRole)}?`,
+      )
+    ) {
       // Revert selection
       fetchUsers();
       return;
@@ -153,9 +161,19 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ role: newRole }),
       });
-      
-      if (!res.ok) throw new Error("Failed to update role");
-      
+
+      if (!res.ok) {
+        let errText = "Failed to update role";
+        try {
+          const errJson = await res.json();
+          errText = errJson.error || errText;
+        } catch (parseErr) {
+          const txt = await res.text();
+          errText = txt || res.status + " " + res.statusText;
+        }
+        throw new Error(errText);
+      }
+
       alert("Cập nhật vai trò thành công!");
       fetchUsers(); // Reload to reflect changes
     } catch (err) {
@@ -166,25 +184,28 @@
 
   async function onDelete(e) {
     const id = e.currentTarget.dataset.id;
-    
-    if (!confirm("Xác nhận xoá người dùng này? Hành động này không thể hoàn tác!")) return;
-    
+
+    if (
+      !confirm("Xác nhận xoá người dùng này? Hành động này không thể hoàn tác!")
+    )
+      return;
+
     try {
       const res = await fetch(`/api/admin/users/${encodeURIComponent(id)}`, {
         method: "DELETE",
       });
-      
+
       if (!res.ok) throw new Error("Delete failed");
-      
+
       // Remove from DOM
       const tr = document.querySelector(`tr[data-user-id="${id}"]`);
       if (tr) tr.remove();
-      
+
       // Update local state
       users = users.filter((u) => u.id != id);
       filteredUsers = filteredUsers.filter((u) => u.id != id);
       updatePagination();
-      
+
       alert("Xoá người dùng thành công!");
     } catch (err) {
       alert("Xoá thất bại: " + err.message);
@@ -193,7 +214,7 @@
 
   function onSearchInput(e) {
     const query = e.target.value.trim().toLowerCase();
-    
+
     if (!query) {
       filteredUsers = users;
     } else {
@@ -201,10 +222,12 @@
         const name = (user.fullName || "").toLowerCase();
         const email = (user.email || "").toLowerCase();
         const phone = (user.phone || "").toLowerCase();
-        return name.includes(query) || email.includes(query) || phone.includes(query);
+        return (
+          name.includes(query) || email.includes(query) || phone.includes(query)
+        );
       });
     }
-    
+
     renderTable();
     updatePagination();
   }
@@ -218,7 +241,7 @@
   function exportUsersCSV() {
     const headers = ["ID", "Họ tên", "Email", "Số điện thoại", "Vai trò"];
     const rows = [headers];
-    
+
     filteredUsers.forEach((user) => {
       rows.push([
         user.id,
@@ -228,9 +251,13 @@
         getRoleLabel(user.role),
       ]);
     });
-    
-    const csv = rows.map((row) => row.map((cell) => `"${cell}"`).join(",")).join("\n");
-    const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+
+    const csv = rows
+      .map((row) => row.map((cell) => `"${cell}"`).join(","))
+      .join("\n");
+    const blob = new Blob(["\ufeff" + csv], {
+      type: "text/csv;charset=utf-8;",
+    });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -245,7 +272,7 @@
   if (searchInput) {
     searchInput.addEventListener("input", onSearchInput);
   }
-  
+
   if (btnExport) {
     btnExport.addEventListener("click", exportUsersCSV);
   }

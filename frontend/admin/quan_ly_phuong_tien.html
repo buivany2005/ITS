@@ -83,7 +83,7 @@
             </div>
           </div>
         </div>
-        <nav class="flex flex-col gap-1">
+        <nav class="flex flex-col gap-1 flex-1 px-3">
           <a
             class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
             href="quan_ly_xe.html"
@@ -132,7 +132,7 @@
           </a>
           <a
             class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-            href="#"
+            href="cai_dat.html"
           >
             <span class="material-symbols-outlined text-[22px]">settings</span>
             <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
@@ -142,23 +142,21 @@
         </nav>
         <div class="p-4 border-t border-slate-200 dark:border-slate-800">
           <div
-            class="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl"
+            class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700"
           >
             <div
-              class="size-8 rounded-full bg-cover bg-center"
-              data-alt="Ảnh đại diện quản trị viên"
-              style="
-                background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDA0HeOJZSnYNEzB5kzlsDa_u-ySK8TVKa_-RZBYr1JTR4l4B8Zwsory4WFCandQsM1AbIenjn3stXaHZBjwBwz4jPcUQWU9YL77MAi4aGDHV1aBajGxm6nnOuLoemcJoQRH-DLEcAwRsi9qQ7PcZP6_Y99WmyGmiQrd-5cbduovcXrx9PR_eOOotETBWvXL1aBZ9Ery-4rICP0Gpgg1ITG8GhnUcKMuDs4F7P5gJMmV7KXUgbMbmEj4_E4RthK1vtFQI2Om83W6Ytd&quot;);
-              "
-            ></div>
+              class="size-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-sm"
+            >
+              QTV
+            </div>
             <div class="flex-1 overflow-hidden">
               <p
                 class="text-sm font-bold text-[#111418] dark:text-white truncate"
               >
-                Nguyễn Văn An
+                Quản trị viên
               </p>
               <p class="text-xs text-[#617589] dark:text-slate-400 truncate">
-                an.nguyen@rental.vn
+                admin@example.com
               </p>
             </div>
             <span class="material-symbols-outlined text-slate-400 text-sm"
@@ -168,8 +166,8 @@
         </div>
       </aside>
       <!-- Main Content Area -->
-      <main class="flex-1 ml-72">
-        <div class="p-8 max-w-[1200px] mx-auto">
+      <main class="flex-1">
+        <div class="px-8 lg:px-10 py-0">
           <!-- Page Header -->
           <header
             class="flex flex-wrap justify-between items-center gap-4 mb-8"
@@ -218,33 +216,30 @@
                 />
               </div>
               <div class="flex gap-2 flex-wrap">
-                <button
-                  data-category="all"
-                  class="category-btn flex items-center gap-2 px-4 py-3 bg-background-light dark:bg-background-dark rounded-xl text-sm font-medium text-[#111418] dark:text-white border border-transparent hover:border-gray-200"
+                <label for="vehicle-type-filter" class="sr-only"
+                  >Loại phương tiện</label
                 >
-                  <span>Tất cả</span>
-                  <span class="material-symbols-outlined text-lg"
-                    >expand_more</span
-                  >
-                </button>
-                <button
-                  data-category="motorbike"
-                  class="category-btn flex items-center gap-2 px-4 py-3 bg-background-light dark:bg-background-dark rounded-xl text-sm font-medium text-[#111418] dark:text-white border border-transparent hover:border-gray-200"
+                <select
+                  id="vehicle-type-filter"
+                  class="px-4 py-3 rounded-xl bg-background-light dark:bg-background-dark text-sm text-[#111418] dark:text-white border border-transparent hover:border-gray-200"
                 >
-                  <span>Xe máy</span>
-                  <span class="material-symbols-outlined text-lg"
-                    >expand_more</span
-                  >
-                </button>
-                <button
-                  data-category="status"
-                  class="category-btn flex items-center gap-2 px-4 py-3 bg-background-light dark:bg-background-dark rounded-xl text-sm font-medium text-[#111418] dark:text-white border border-transparent hover:border-gray-200"
+                  <option value="all">Tất cả loại xe</option>
+                  <option value="OTO">Ô tô</option>
+                  <option value="XEMAY">Xe máy</option>
+                  <option value="XEDAP">Xe đạp</option>
+                </select>
+
+                <!-- Status filter select -->
+                <select
+                  id="vehicle-status-filter"
+                  class="ml-2 px-4 py-3 rounded-xl bg-background-light dark:bg-background-dark text-sm text-[#111418] dark:text-white border border-transparent hover:border-gray-200"
                 >
-                  <span>Trạng thái</span>
-                  <span class="material-symbols-outlined text-lg"
-                    >filter_list</span
-                  >
-                </button>
+                  <option value="">Tất cả trạng thái</option>
+                  <option value="AVAILABLE">Sẵn sàng</option>
+                  <option value="RENTED">Đang thuê</option>
+                  <option value="MAINTENANCE">Bảo trì</option>
+                  <option value="UNAVAILABLE">Không khả dụng</option>
+                </select>
               </div>
             </div>
           </div>
@@ -545,39 +540,22 @@
                 </tbody>
               </table>
             </div>
-            <!-- Pagination Footer -->
+            <!-- Pagination Footer (dynamic) -->
             <div
               class="px-6 py-4 flex items-center justify-between border-t border-[#dbe0e6] dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50"
             >
-              <p class="text-sm text-[#617589] dark:text-gray-400">
-                Hiển thị 1 - 4 trong tổng số 24 xe
+              <p
+                id="vehicles-pagination-info"
+                class="text-sm text-[#617589] dark:text-gray-400"
+              >
+                <!-- filled by JS -->
               </p>
-              <div class="flex gap-2">
-                <button
-                  class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm font-medium hover:bg-gray-50 transition-colors"
-                >
-                  Trước
-                </button>
-                <button
-                  class="px-3 py-1.5 rounded-lg bg-primary text-white text-sm font-medium"
-                >
-                  1
-                </button>
-                <button
-                  class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm font-medium hover:bg-gray-50 transition-colors"
-                >
-                  2
-                </button>
-                <button
-                  class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm font-medium hover:bg-gray-50 transition-colors"
-                >
-                  3
-                </button>
-                <button
-                  class="px-3 py-1.5 rounded-lg border border-[#dbe0e6] dark:border-gray-700 bg-white dark:bg-background-dark text-sm font-medium hover:bg-gray-50 transition-colors"
-                >
-                  Tiếp
-                </button>
+              <div
+                id="vehicles-pagination"
+                class="flex gap-2"
+                aria-label="Pagination controls"
+              >
+                <!-- pagination buttons generated by JS -->
               </div>
             </div>
           </div>

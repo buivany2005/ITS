@@ -8,34 +8,34 @@ import java.math.BigDecimal;
  */
 public class VehicleRequest {
     
-    @NotBlank(message = "Tên xe không được để trống")
+    @NotBlank(message = "Tên xe là bắt buộc")
     @Size(min = 3, max = 100, message = "Tên xe phải từ 3 đến 100 ký tự")
     public String name;
     
-    @NotBlank(message = "Loại xe không được để trống")
+    @NotBlank(message = "Loại xe là bắt buộc")
     public String type;
     
-    @NotBlank(message = "Hãng xe không được để trống")
+    @NotBlank(message = "Hãng xe là bắt buộc")
     @Size(min = 2, max = 50, message = "Hãng xe phải từ 2 đến 50 ký tự")
     public String brand;
     
-    @NotBlank(message = "Model không được để trống")
+    @NotBlank(message = "Model là bắt buộc")
     @Size(min = 1, max = 50, message = "Model phải từ 1 đến 50 ký tự")
     public String model;
     
-    @NotNull(message = "Năm sản xuất không được để trống")
+    @NotNull(message = "Năm sản xuất là bắt buộc")
     @Min(value = 2000, message = "Năm sản xuất phải từ 2000 trở lên")
     @Max(value = 2030, message = "Năm sản xuất không được vượt quá 2030")
     public Integer year;
     
-    @NotBlank(message = "Màu sắc không được để trống")
+    @NotBlank(message = "Màu sắc là bắt buộc")
     public String color;
     
-    @NotBlank(message = "Biển số xe không được để trống")
+    @NotBlank(message = "Biển số xe là bắt buộc")
     @Pattern(regexp = "\\d{2}[A-Z]-\\d+\\.\\d+", message = "Biển số xe không hợp lệ (ví dụ: 29-G1 123.45)")
     public String licensePlate;
     
-    @NotNull(message = "Giá thuê/ngày không được để trống")
+    @NotNull(message = "Giá thuê/ngày là bắt buộc")
     @DecimalMin(value = "1000", message = "Giá thuê phải ≥ 1000 VNĐ")
     @DecimalMax(value = "1000000", message = "Giá thuê không được vượt quá 1.000.000 VNĐ")
     public BigDecimal pricePerDay;

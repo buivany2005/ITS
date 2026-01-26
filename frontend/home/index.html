@@ -24,8 +24,8 @@
         theme: {
           extend: {
             colors: {
-              primary: "#137fec",
-              "background-light": "#f6f7f8",
+              primary: "#0ea5ff",
+              "background-light": "#ffffff",
               "background-dark": "#101922",
             },
             fontFamily: {
@@ -40,6 +40,11 @@
           },
         },
       };
+    </script>
+    <script>
+      try {
+        document.documentElement.classList.remove("dark");
+      } catch (e) {}
     </script>
     <style>
       .material-symbols-outlined {

@@ -1,769 +1,561 @@
 <!doctype html>
-
-<html class="light" lang="vi">
+<html lang="vi">
   <head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Thống kê &amp; Báo cáo</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thống kê & Báo cáo</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
     />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-      rel="stylesheet"
-    />
-    <script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: "#137fec",
-              "background-light": "#f6f7f8",
-              "background-dark": "#101922",
-            },
-            fontFamily: {
-              display: ["Plus Jakarta Sans", "sans-serif"],
-            },
-            borderRadius: {
-              DEFAULT: "0.25rem",
-              lg: "0.5rem",
-              xl: "0.75rem",
-              full: "9999px",
-            },
-          },
-        },
-      };
-    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+      :root {
+        --primary: #137fec;
+        --text: #111418;
+        --muted: #617589;
+      }
       body {
-        font-family: "Plus Jakarta Sans", sans-serif;
+        font-family:
+          "Inter",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        background: #f6f8fb;
+        color: var(--text);
       }
-      .material-symbols-outlined {
-        font-variation-settings:
-          "FILL" 0,
-          "wght" 400,
-          "GRAD" 0,
-          "opsz" 24;
-      }
-      .chart-gradient-blue {
-        background: linear-gradient(
-          180deg,
-          rgba(19, 127, 236, 0.1) 0%,
-          rgba(19, 127, 236, 0) 100%
-        );
+      .card {
+        background: #ffffff;
+        border: 1px solid #dbe0e6;
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(17, 20, 24, 0.04);
       }
     </style>
   </head>
-  <body
-    class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white min-h-screen"
-  >
-    <div class="flex flex-col min-h-screen">
-      <!-- TopNavBar -->
-      <header
-        class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#dbe0e6] dark:border-gray-800 bg-white dark:bg-background-dark px-10 py-3 sticky top-0 z-50"
-      ></header>
-      <div class="flex flex-1">
-        <aside
-          class="w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col"
-        >
-          <div class="p-6">
-            <div class="flex items-center gap-3">
-              <div
-                class="bg-primary size-10 rounded-lg flex items-center justify-center text-white"
-              >
-                <span class="material-symbols-outlined">directions_car</span>
-              </div>
-              <div>
-                <h1
-                  class="text-[#111418] dark:text-white text-base font-bold leading-normal"
-                >
-                  Hệ thống Thuê Xe
-                </h1>
-                <p
-                  class="text-[#617589] dark:text-slate-400 text-xs mt-1 font-medium"
-                >
-                  Quản trị viên Hệ thống
-                </p>
-              </div>
-            </div>
+  <body class="min-h-screen">
+    <div class="flex min-h-screen">
+      <!-- Sidebar -->
+      <aside
+        class="w-72 bg-white border-r border-[#dbe0e6] px-6 py-8 flex flex-col gap-8"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="size-10 rounded-lg bg-[var(--primary)] text-white flex items-center justify-center font-extrabold"
+          >
+            <span class="material-symbols-outlined">directions_car</span>
           </div>
-          <nav class="flex flex-col gap-1">
-            <a
-              class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
-              href="quan_ly_xe.html"
-            >
-              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
-                Bảng điều khiển
-              </p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-              href="quan_ly_phuong_tien.html"
-            >
-              <span class="material-symbols-outlined text-[22px]"
-                >directions_car</span
-              >
-              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
-                Quản lý xe
-              </p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-              href="quan_ly_don_hang.html"
-            >
-              <span class="material-symbols-outlined text-[22px]"
-                >calendar_month</span
-              >
-              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
-                Đơn đặt xe
-              </p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-              href="quan_ly_khach_hang.html"
-            >
-              <span class="material-symbols-outlined text-[22px]">group</span>
-              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
-                Khách hàng
-              </p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary"
-              href="quan_ly_xe.html"
-            >
-              <span class="material-symbols-outlined text-[22px]"
-                >analytics</span
-              >
-              <p class="text-sm font-bold">Thống kê &amp; Báo cáo</p>
-            </a>
-            <a
-              class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-              href="#"
-            >
-              <span class="material-symbols-outlined text-[22px]"
-                >settings</span
-              >
-              <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
-                Cài đặt
-              </p>
-            </a>
-          </nav>
-          <div class="p-4 border-t border-slate-200 dark:border-slate-800">
-            <div
-              class="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl"
-            >
-              <div
-                class="size-8 rounded-full bg-cover bg-center"
-                data-alt="Ảnh đại diện quản trị viên"
-                style="
-                  background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDA0HeOJZSnYNEzB5kzlsDa_u-ySK8TVKa_-RZBYr1JTR4l4B8Zwsory4WFCandQsM1AbIenjn3stXaHZBjwBwz4jPcUQWU9YL77MAi4aGDHV1aBajGxm6nnOuLoemcJoQRH-DLEcAwRsi9qQ7PcZP6_Y99WmyGmiQrd-5cbduovcXrx9PR_eOOotETBWvXL1aBZ9Ery-4rICP0Gpgg1ITG8GhnUcKMuDs4F7P5gJMmV7KXUgbMbmEj4_E4RthK1vtFQI2Om83W6Ytd&quot;);
-                "
-              ></div>
-              <div class="flex-1 overflow-hidden">
-                <p
-                  class="text-sm font-bold text-[#111418] dark:text-white truncate"
-                >
-                  Nguyễn Văn An
-                </p>
-                <p class="text-xs text-[#617589] dark:text-slate-400 truncate">
-                  an.nguyen@rental.vn
-                </p>
-              </div>
-              <span class="material-symbols-outlined text-slate-400 text-sm"
-                >logout</span
-              >
-            </div>
+          <div>
+            <p class="text-base font-extrabold text-[var(--text)]">
+              Hệ thống Thuê Xe
+            </p>
+            <p class="text-xs text-[var(--muted)]">Quản trị viên hệ thống</p>
           </div>
-        </aside>
-        <!-- Main Content Area -->
-        <main
-          class="flex-1 ml-72 flex flex-col p-6 lg:p-10 max-w-[1200px] mx-auto w-full"
-        >
-          <!-- PageHeading -->
-          <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
-            <div class="flex flex-col gap-2">
-              <p
-                class="text-[#111418] dark:text-white text-4xl font-black leading-tight tracking-[-0.033em]"
-              >
-                Thống kê &amp; Báo cáo
-              </p>
-              <p class="text-[#617589] text-base font-normal">
-                Theo dõi hiệu suất kinh doanh và doanh thu toàn hệ thống tại
-                Việt Nam
-              </p>
+        </div>
+        <nav class="flex flex-col gap-2 text-sm font-semibold flex-1">
+          <a
+            href="quan_ly_phuong_tien.html"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 text-[var(--text)]"
+          >
+            <span class="material-symbols-outlined">directions_car</span>
+            <span>Quản lý xe</span>
+          </a>
+          <a
+            href="quan_ly_don_hang.html"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 text-[var(--text)]"
+          >
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span>Đơn đặt xe</span>
+          </a>
+          <a
+            href="quan_ly_khach_hang.html"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 text-[var(--text)]"
+          >
+            <span class="material-symbols-outlined">group</span>
+            <span>Khách hàng</span>
+          </a>
+          <a
+            href="quan_ly_xe.html"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg bg-[var(--primary)]/10 text-[var(--primary)]"
+          >
+            <span class="material-symbols-outlined">analytics</span>
+            <span>Thống kê & Báo cáo</span>
+          </a>
+          <a
+            href="cai_dat.html"
+            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 text-[var(--text)]"
+          >
+            <span class="material-symbols-outlined">settings</span>
+            <span>Cài đặt</span>
+          </a>
+        </nav>
+
+        <div class="mt-auto card p-3 flex items-center gap-3">
+          <div
+            class="size-10 rounded-full bg-[var(--primary)]/15 flex items-center justify-center text-[var(--primary)] font-bold"
+          >
+            QTV
+          </div>
+          <div class="flex-1">
+            <p class="font-bold text-sm">Quản trị viên</p>
+            <p class="text-xs text-[var(--muted)]">admin@example.com</p>
+          </div>
+          <button id="btn-logout" class="text-[var(--muted)]">
+            <span class="material-symbols-outlined">logout</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main content -->
+      <main class="flex-1 px-8 py-10">
+        <header class="flex flex-col gap-2 mb-8">
+          <p class="text-sm text-[var(--muted)] font-semibold">Dashboard</p>
+          <div class="flex items-center justify-between">
+            <div>
+              <h1 class="text-3xl font-extrabold">Thống kê & Báo cáo</h1>
+              <p class="text-[var(--muted)]">Tổng quan hoạt động hệ thống</p>
             </div>
-            <div class="flex gap-3">
-              <div class="relative">
-                <button
-                  class="flex items-center gap-2 px-4 h-10 bg-white dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 rounded-lg text-sm font-medium text-[#111418] dark:text-white"
-                >
-                  <span class="material-symbols-outlined text-lg"
-                    >calendar_today</span
-                  >
-                  30 ngày qua
-                </button>
-              </div>
+            <div class="flex items-center gap-2">
+              <input
+                id="btn-range"
+                type="date"
+                class="border border-[#dbe0e6] rounded-lg px-3 py-2 text-sm"
+              />
               <button
                 id="btn-export-report"
-                class="flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:shadow-lg transition-all"
+                class="flex items-center gap-2 bg-[var(--primary)] text-white px-4 py-2 rounded-lg font-semibold"
               >
-                <span class="material-symbols-outlined text-lg">download</span>
-                <span class="truncate">Xuất báo cáo Excel</span>
+                <span class="material-symbols-outlined">file_download</span>
+                Xuất báo cáo
               </button>
             </div>
           </div>
-          <!-- Stats Grid -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div
-              class="flex flex-col gap-3 rounded-xl p-6 bg-white dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 shadow-sm"
-            >
-              <div class="flex justify-between items-start">
-                <div class="p-2 bg-primary/10 rounded-lg text-primary">
-                  <span class="material-symbols-outlined">payments</span>
-                </div>
-                <span
-                  class="text-[#078838] bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded text-xs font-bold"
-                  >+12.5%</span
-                >
-              </div>
-              <p class="text-[#617589] text-sm font-medium">Tổng doanh thu</p>
-              <p
-                class="text-[#111418] dark:text-white tracking-tight text-2xl font-extrabold"
-              >
-                1.250.000.000 ₫
+        </header>
+
+        <!-- Stat cards -->
+        <section
+          class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-8"
+        >
+          <div class="card p-4 flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-[var(--muted)]">Doanh thu</p>
+              <p id="stat-total-revenue" class="text-2xl font-extrabold mt-1">
+                0 ₫
               </p>
+              <p class="text-[var(--muted)] text-xs">Tổng doanh thu hệ thống</p>
             </div>
-            <div
-              class="flex flex-col gap-3 rounded-xl p-6 bg-white dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 shadow-sm"
+            <span class="material-symbols-outlined text-[var(--primary)]"
+              >payments</span
             >
-              <div class="flex justify-between items-start">
-                <div class="p-2 bg-primary/10 rounded-lg text-primary">
-                  <span class="material-symbols-outlined">shopping_cart</span>
-                </div>
-                <span
-                  class="text-[#078838] bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded text-xs font-bold"
-                  >+5.2%</span
-                >
-              </div>
-              <p class="text-[#617589] text-sm font-medium">Số đơn mới</p>
-              <p
-                class="text-[#111418] dark:text-white tracking-tight text-2xl font-extrabold"
-              >
-                1,450
+          </div>
+          <div class="card p-4 flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-[var(--muted)]">
+                Đơn hoàn tất
               </p>
+              <p
+                id="stat-completed-orders"
+                class="text-2xl font-extrabold mt-1"
+              >
+                0
+              </p>
+              <p class="text-[var(--muted)] text-xs">Đã hoàn thành</p>
             </div>
-            <div
-              class="flex flex-col gap-3 rounded-xl p-6 bg-white dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 shadow-sm"
+            <span class="material-symbols-outlined text-green-500"
+              >task_alt</span
             >
-              <div class="flex justify-between items-start">
-                <div class="p-2 bg-primary/10 rounded-lg text-primary">
-                  <span class="material-symbols-outlined">person_add</span>
-                </div>
-                <span
-                  class="text-[#078838] bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded text-xs font-bold"
-                  >+8.1%</span
-                >
-              </div>
-              <p class="text-[#617589] text-sm font-medium">Số khách hàng</p>
+          </div>
+          <div class="card p-4 flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-[var(--muted)]">Đơn hủy</p>
               <p
-                class="text-[#111418] dark:text-white tracking-tight text-2xl font-extrabold"
+                id="stat-cancelled-orders"
+                class="text-2xl font-extrabold mt-1"
               >
-                8,200
+                0
               </p>
+              <p class="text-[var(--muted)] text-xs">Tỷ lệ hủy</p>
+            </div>
+            <span class="material-symbols-outlined text-red-500">cancel</span>
+          </div>
+          <div class="card p-4 flex items-center justify-between">
+            <div>
+              <p class="text-xs font-semibold text-[var(--muted)]">Số xe</p>
+              <p id="stat-total-vehicles" class="text-2xl font-extrabold mt-1">
+                0
+              </p>
+              <p class="text-[var(--muted)] text-xs">Tổng xe đang quản lý</p>
+            </div>
+            <span class="material-symbols-outlined text-amber-500">garage</span>
+          </div>
+        </section>
+
+        <section class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
+          <!-- Monthly revenue -->
+          <div class="card p-6 xl:col-span-2">
+            <div class="flex items-center justify-between mb-4">
+              <div>
+                <h2 class="text-lg font-bold">Doanh thu 7 tháng gần nhất</h2>
+                <p class="text-[var(--muted)] text-sm">
+                  Dữ liệu từ đơn đã hoàn thành/đang thuê
+                </p>
+              </div>
+            </div>
+            <div class="relative h-72 flex items-end gap-4" id="revenue-bars">
+              <!-- bars generated by JS -->
             </div>
           </div>
-          <!-- Charts Section -->
-          <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 mb-8">
-            <!-- Line Chart Placeholder -->
-            <div
-              class="xl:col-span-2 bg-white dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 rounded-xl p-6 shadow-sm"
-            >
-              <div class="flex items-center justify-between mb-6">
-                <h2 class="text-[#111418] dark:text-white text-lg font-bold">
-                  Doanh thu theo tháng
-                </h2>
-                <div class="flex gap-2">
-                  <span
-                    class="flex items-center gap-1.5 text-xs text-[#617589]"
-                  >
-                    <span class="size-2.5 rounded-full bg-primary"></span> Doanh
-                    thu
-                  </span>
-                </div>
-              </div>
+
+          <!-- Vehicle donut -->
+          <div class="card p-6">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg font-bold">Cơ cấu đội xe</h2>
+              <span class="text-[var(--muted)] text-sm">Theo loại xe</span>
+            </div>
+            <div class="flex items-center gap-6">
               <div
-                class="relative h-64 w-full bg-background-light/50 dark:bg-gray-900/50 rounded-lg flex items-end justify-between px-8 pb-10 pt-4 overflow-hidden"
+                id="vehicle-donut"
+                class="relative size-44 rounded-full flex items-center justify-center"
+                style="
+                  background: conic-gradient(
+                    #137fec 0% 33%,
+                    #ff9f43 33% 66%,
+                    #28c76f 66% 100%
+                  );
+                "
               >
-                <!-- SVG Chart Simulation -->
                 <div
-                  class="absolute inset-x-8 bottom-10 h-[1px] bg-gray-200 dark:bg-gray-700 w-[calc(100%-64px)]"
-                ></div>
-                <div
-                  class="chart-gradient-blue absolute inset-x-0 bottom-10 top-0"
-                ></div>
-                <!-- Mock Data Points -->
-                <div class="relative flex flex-col items-center gap-2 group">
-                  <div
-                    class="w-2.5 h-20 bg-primary rounded-t-sm opacity-80 group-hover:opacity-100 transition-all"
-                  ></div>
-                  <span class="text-[10px] text-[#617589]">Th 1</span>
-                </div>
-                <div class="relative flex flex-col items-center gap-2 group">
-                  <div
-                    class="w-2.5 h-32 bg-primary rounded-t-sm opacity-80 group-hover:opacity-100 transition-all"
-                  ></div>
-                  <span class="text-[10px] text-[#617589]">Th 2</span>
-                </div>
-                <div class="relative flex flex-col items-center gap-2 group">
-                  <div
-                    class="w-2.5 h-24 bg-primary rounded-t-sm opacity-80 group-hover:opacity-100 transition-all"
-                  ></div>
-                  <span class="text-[10px] text-[#617589]">Th 3</span>
-                </div>
-                <div class="relative flex flex-col items-center gap-2 group">
-                  <div
-                    class="w-2.5 h-40 bg-primary rounded-t-sm opacity-80 group-hover:opacity-100 transition-all"
-                  ></div>
-                  <span class="text-[10px] text-[#617589]">Th 4</span>
-                </div>
-                <div class="relative flex flex-col items-center gap-2 group">
-                  <div
-                    class="w-2.5 h-52 bg-primary rounded-t-sm opacity-80 group-hover:opacity-100 transition-all"
-                  ></div>
-                  <span class="text-[10px] text-[#617589]">Th 5</span>
-                </div>
-                <div class="relative flex flex-col items-center gap-2 group">
-                  <div
-                    class="w-2.5 h-48 bg-primary rounded-t-sm opacity-80 group-hover:opacity-100 transition-all"
-                  ></div>
-                  <span class="text-[10px] text-[#617589]">Th 6</span>
-                </div>
-                <div class="relative flex flex-col items-center gap-2 group">
-                  <div
-                    class="w-2.5 h-56 bg-primary rounded-t-sm opacity-80 group-hover:opacity-100 transition-all"
-                  ></div>
-                  <span class="text-[10px] text-[#617589]">Th 7</span>
-                </div>
-              </div>
-            </div>
-            <!-- Pie Chart Placeholder -->
-            <div
-              class="bg-white dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 rounded-xl p-6 shadow-sm"
-            >
-              <h2 class="text-[#111418] dark:text-white text-lg font-bold mb-6">
-                Tỷ lệ loại xe được thuê
-              </h2>
-              <div class="flex flex-col items-center gap-8 py-4">
-                <div
-                  class="relative size-44 rounded-full flex items-center justify-center"
-                  style="
-                    background: conic-gradient(
-                      #137fec 0% 45%,
-                      #ff9f43 45% 75%,
-                      #28c76f 75% 100%
-                    );
-                  "
+                  class="size-24 rounded-full bg-white flex flex-col items-center justify-center text-center border border-[#dbe0e6]"
                 >
-                  <div
-                    class="size-32 rounded-full bg-white dark:bg-gray-800 flex flex-col items-center justify-center shadow-inner"
-                  >
-                    <span class="text-xl font-bold">3.2k</span>
-                    <span class="text-[10px] text-[#617589] uppercase"
-                      >Tổng lượt</span
-                    >
-                  </div>
+                  <span id="donut-total" class="text-xl font-bold">0</span>
+                  <span class="text-[var(--muted)] text-xs">Tổng xe</span>
                 </div>
-                <div class="w-full flex flex-col gap-3">
-                  <div class="flex items-center justify-between text-sm">
-                    <div class="flex items-center gap-2">
-                      <div class="size-3 rounded-full bg-primary"></div>
-                      <span class="text-[#617589]">Xe máy</span>
-                    </div>
-                    <span class="font-bold">45%</span>
+              </div>
+              <div class="flex-1 space-y-3 text-sm">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span
+                      class="size-3 rounded-full bg-[var(--primary)]"
+                    ></span>
+                    <span>Xe máy</span>
                   </div>
-                  <div class="flex items-center justify-between text-sm">
-                    <div class="flex items-center gap-2">
-                      <div class="size-3 rounded-full bg-[#ff9f43]"></div>
-                      <span class="text-[#617589]">Ô tô</span>
-                    </div>
-                    <span class="font-bold">30%</span>
+                  <span id="legend-bike">0%</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="size-3 rounded-full bg-[#ff9f43]"></span>
+                    <span>Ô tô</span>
                   </div>
-                  <div class="flex items-center justify-between text-sm">
-                    <div class="flex items-center gap-2">
-                      <div class="size-3 rounded-full bg-[#28c76f]"></div>
-                      <span class="text-[#617589]">Xe đạp</span>
-                    </div>
-                    <span class="font-bold">25%</span>
+                  <span id="legend-car">0%</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="size-3 rounded-full bg-[#28c76f]"></span>
+                    <span>Xe đạp</span>
                   </div>
+                  <span id="legend-bicycle">0%</span>
                 </div>
               </div>
             </div>
           </div>
-          <!-- Recent Activities Table -->
+        </section>
+
+        <!-- Recent orders -->
+        <section class="card">
           <div
-            class="bg-white dark:bg-gray-800 border border-[#dbe0e6] dark:border-gray-700 rounded-xl shadow-sm overflow-hidden"
+            class="flex items-center justify-between p-6 border-b border-[#dbe0e6]"
           >
-            <div
-              class="p-6 border-b border-[#dbe0e6] dark:border-gray-700 flex justify-between items-center"
+            <div>
+              <h2 class="text-lg font-bold">Các đơn gần đây</h2>
+              <p class="text-sm text-[var(--muted)]">Danh sách mới nhất</p>
+            </div>
+            <button
+              id="btn-view-all"
+              class="text-[var(--primary)] text-sm font-semibold"
             >
-              <h2 class="text-[#111418] dark:text-white text-lg font-bold">
-                Các đơn gần đây
-              </h2>
-              <button
-                id="btn-view-all"
-                class="text-primary text-sm font-bold hover:underline"
-              >
-                Xem tất cả
-              </button>
-            </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left">
-                <thead class="bg-background-light dark:bg-gray-900/50">
-                  <tr>
-                    <th
-                      class="px-6 py-4 text-xs font-bold text-[#617589] uppercase tracking-wider"
-                    >
-                      Khách hàng
-                    </th>
-                    <th
-                      class="px-6 py-4 text-xs font-bold text-[#617589] uppercase tracking-wider"
-                    >
-                      Loại xe
-                    </th>
-                    <th
-                      class="px-6 py-4 text-xs font-bold text-[#617589] uppercase tracking-wider"
-                    >
-                      Ngày thuê
-                    </th>
-                    <th
-                      class="px-6 py-4 text-xs font-bold text-[#617589] uppercase tracking-wider"
-                    >
-                      Thành tiền
-                    </th>
-                    <th
-                      class="px-6 py-4 text-xs font-bold text-[#617589] uppercase tracking-wider"
-                    >
-                      Trạng thái
-                    </th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-[#dbe0e6] dark:divide-gray-700">
-                  <tr
-                    class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
-                  >
-                    <td class="px-6 py-4">
-                      <div class="flex items-center gap-3">
-                        <div
-                          class="size-8 rounded-full bg-primary/20 flex items-center justify-center text-primary text-xs font-bold"
-                        >
-                          NV
-                        </div>
-                        <div class="flex flex-col">
-                          <span
-                            class="text-sm font-bold text-[#111418] dark:text-white"
-                            >Nguyễn Văn A</span
-                          >
-                          <span class="text-xs text-[#617589]"
-                            >nva@example.com</span
-                          >
-                        </div>
-                      </div>
-                    </td>
-                    <td
-                      class="px-6 py-4 text-sm text-[#111418] dark:text-white"
-                    >
-                      Honda Vision 2023
-                    </td>
-                    <td class="px-6 py-4 text-sm text-[#617589]">12/10/2023</td>
-                    <td
-                      class="px-6 py-4 text-sm font-bold text-[#111418] dark:text-white"
-                    >
-                      450.000 ₫
-                    </td>
-                    <td class="px-6 py-4">
-                      <span
-                        class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                        >Hoàn thành</span
-                      >
-                    </td>
-                  </tr>
-                  <tr
-                    class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
-                  >
-                    <td class="px-6 py-4">
-                      <div class="flex items-center gap-3">
-                        <div
-                          class="size-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 text-xs font-bold"
-                        >
-                          TH
-                        </div>
-                        <div class="flex flex-col">
-                          <span
-                            class="text-sm font-bold text-[#111418] dark:text-white"
-                            >Trần Thị B</span
-                          >
-                          <span class="text-xs text-[#617589]"
-                            >ttb@example.com</span
-                          >
-                        </div>
-                      </div>
-                    </td>
-                    <td
-                      class="px-6 py-4 text-sm text-[#111418] dark:text-white"
-                    >
-                      Toyota Vios
-                    </td>
-                    <td class="px-6 py-4 text-sm text-[#617589]">11/10/2023</td>
-                    <td
-                      class="px-6 py-4 text-sm font-bold text-[#111418] dark:text-white"
-                    >
-                      1.200.000 ₫
-                    </td>
-                    <td class="px-6 py-4">
-                      <span
-                        class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400"
-                        >Đang thuê</span
-                      >
-                    </td>
-                  </tr>
-                  <tr
-                    class="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
-                  >
-                    <td class="px-6 py-4">
-                      <div class="flex items-center gap-3">
-                        <div
-                          class="size-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 text-xs font-bold"
-                        >
-                          LH
-                        </div>
-                        <div class="flex flex-col">
-                          <span
-                            class="text-sm font-bold text-[#111418] dark:text-white"
-                            >Lê Văn H</span
-                          >
-                          <span class="text-xs text-[#617589]"
-                            >lvh@example.com</span
-                          >
-                        </div>
-                      </div>
-                    </td>
-                    <td
-                      class="px-6 py-4 text-sm text-[#111418] dark:text-white"
-                    >
-                      Xe đạp thể thao
-                    </td>
-                    <td class="px-6 py-4 text-sm text-[#617589]">10/10/2023</td>
-                    <td
-                      class="px-6 py-4 text-sm font-bold text-[#111418] dark:text-white"
-                    >
-                      150.000 ₫
-                    </td>
-                    <td class="px-6 py-4">
-                      <span
-                        class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
-                        >Đã hủy</span
-                      >
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+              Xem tất cả
+            </button>
           </div>
-        </main>
-      </div>
-      <footer
-        class="p-6 text-center text-[#617589] text-xs border-t border-[#dbe0e6] dark:border-gray-800 bg-white dark:bg-background-dark"
-      >
-        © 2023 Admin Rental System - Cập nhật lần cuối: Hôm nay lúc 14:30
-      </footer>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left">
+              <thead class="bg-slate-50 text-xs text-[var(--muted)] uppercase">
+                <tr>
+                  <th class="px-6 py-3">Khách hàng</th>
+                  <th class="px-6 py-3">Loại xe</th>
+                  <th class="px-6 py-3">Ngày thuê</th>
+                  <th class="px-6 py-3">Thành tiền</th>
+                  <th class="px-6 py-3">Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody
+                id="recent-orders"
+                class="divide-y divide-[#dbe0e6] text-sm"
+              >
+                <tr>
+                  <td class="px-6 py-3 text-[var(--muted)]" colspan="5">
+                    Đang tải...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
     </div>
-  </body>
-  <script>
-    (function () {
-      const $ = (s, r = document) => r.querySelector(s);
-      const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-      const btnLogout = $("#btn-logout");
-      const btnRange = $("#btn-range");
-      const btnExportReport = $("#btn-export-report");
-      const btnViewAll = $("#btn-view-all");
+    <template id="bar-template">
+      <div class="flex-1 flex flex-col items-center gap-2" data-bar>
+        <div
+          class="w-full bg-slate-100 rounded-lg h-48 flex items-end justify-center"
+        >
+          <div
+            class="bar-fill w-3 rounded-lg bg-[var(--primary)]"
+            style="height: 16px"
+          ></div>
+        </div>
+        <span class="text-xs text-[var(--muted)]" data-month></span>
+      </div>
+    </template>
 
-      if (btnLogout) {
-        btnLogout.addEventListener("click", () => {
-          window.location.href = "../login/login.html";
-        });
-      }
+    <script>
+      (function () {
+        const $ = (s, r = document) => r.querySelector(s);
+        const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-      if (btnViewAll) {
-        btnViewAll.addEventListener("click", () => {
-          window.location.href = "quan_ly_don_hang.html";
-        });
-      }
-
-      if (btnRange) {
-        btnRange.addEventListener("click", async () => {
-          // Simple range picker using prompt for now
-          const current = btnRange.textContent.trim();
-          const choice = prompt(
-            "Chọn khoảng thời gian (ví dụ: '7 ngày qua', '30 ngày qua', 'Quý này')",
-            current,
-          );
-          if (choice && choice.trim()) {
-            // Update label only (demo). Hook API here if available.
-            btnRange.childNodes.forEach((n) => {
-              if (n.nodeType === Node.TEXT_NODE)
-                n.nodeValue = " " + choice.trim();
-            });
-          }
-        });
-      }
-
-      function downloadCSV(filename, rows) {
-        const escape = (v) => {
-          if (v == null) return "";
-          const s = String(v).replace(/"/g, '""');
-          if (/[",\n]/.test(s)) return '"' + s + '"';
-          return s;
-        };
-        const csv = rows.map((r) => r.map(escape).join(",")).join("\n");
-        const blob = new Blob(["\ufeff" + csv], {
-          type: "text/csv;charset=utf-8;",
-        });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
-
-      function collectDashboardData() {
-        // Collect summary cards (title:value)
-        const summaries = $$(".grid.grid-cols-1.md\:grid-cols-3 .p-6");
-        const summaryRows = [["Chỉ số", "Giá trị"]];
-        summaries.forEach((card) => {
-          const title =
-            card
-              .querySelector("p.text-sm.font-medium, p.text-[#617589]")
-              ?.textContent?.trim() || "";
-          const value =
-            card.querySelector("p.text-2xl, .text-2xl")?.textContent?.trim() ||
-            "";
-          if (title && value) summaryRows.push([title, value]);
-        });
-
-        // Collect recent orders table
-        const tableRows = [
-          ["Khách hàng", "Loại xe", "Ngày thuê", "Thành tiền", "Trạng thái"],
+        const revenueBars = $("#revenue-bars");
+        const barTemplate = $("#bar-template").content.firstElementChild;
+        const monthNames = [
+          "T1",
+          "T2",
+          "T3",
+          "T4",
+          "T5",
+          "T6",
+          "T7",
+          "T8",
+          "T9",
+          "T10",
+          "T11",
+          "T12",
         ];
-        $$("tbody tr").forEach((tr) => {
-          const tds = $$("td", tr);
-          if (tds.length >= 5) {
-            const kh = tds[0].innerText.replace(/\s+/g, " ").trim();
-            const lx = tds[1].innerText.replace(/\s+/g, " ").trim();
-            const nt = tds[2].innerText.replace(/\s+/g, " ").trim();
-            const tt = tds[3].innerText.replace(/\s+/g, " ").trim();
-            const st = tds[4].innerText.replace(/\s+/g, " ").trim();
-            tableRows.push([kh, lx, nt, tt, st]);
-          }
-        });
-        return { summaryRows, tableRows };
-      }
+        const monthKeys = [];
 
-      // Export report using backend API
-      if (btnExportReport) {
-        btnExportReport.addEventListener("click", async () => {
+        // Build bar placeholders for last 7 months
+        revenueBars.innerHTML = "";
+        const now = new Date();
+        for (let i = 6; i >= 0; i--) {
+          const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+          const key = d.getMonth();
+          monthKeys.push(key);
+          const bar = barTemplate.cloneNode(true);
+          bar.querySelector("[data-month]").textContent = monthNames[key];
+          revenueBars.appendChild(bar);
+        }
+
+        function formatCurrency(v) {
+          return v.toLocaleString("vi-VN", {
+            style: "currency",
+            currency: "VND",
+            maximumFractionDigits: 0,
+          });
+        }
+
+        function updateStat(id, value, suffix = "") {
+          const el = $(id);
+          if (el) el.textContent = suffix ? `${value}${suffix}` : value;
+        }
+
+        async function loadDashboardData() {
           try {
-            const res = await fetch("/api/admin/orders/export");
-            if (!res.ok) throw new Error("Export failed");
-            const blob = await res.blob();
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download =
-              "don_hang_" + new Date().toISOString().split("T")[0] + ".xlsx";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            const res = await fetch("/api/admin/dashboard");
+            if (!res.ok) throw new Error("Failed to load dashboard");
+            const data = await res.json();
+
+            console.log("Dashboard data:", data);
+
+            // API structure: { vehicles: {...}, orders: {...}, totalUsers: ... }
+            const vehicleStats = data.vehicles || {};
+            const orderStats = data.orders || {};
+
+            // Get total revenue from completed orders
+            const totalRevenue = await getTotalRevenue();
+
+            updateStat("#stat-total-revenue", formatCurrency(totalRevenue));
+            updateStat(
+              "#stat-completed-orders",
+              orderStats.completedOrders || 0,
+            );
+            updateStat(
+              "#stat-cancelled-orders",
+              orderStats.cancelledOrders || 0,
+            );
+            updateStat("#stat-total-vehicles", vehicleStats.totalVehicles || 0);
+
+            updateVehicleDonut(vehicleStats);
+
+            // Load recent orders
+            await loadRecentOrders();
           } catch (err) {
-            alert("Không thể xuất báo cáo: " + (err.message || err));
+            console.error("Dashboard load error:", err);
           }
+        }
+
+        async function getTotalRevenue() {
+          try {
+            const res = await fetch("/api/admin/orders?page=0&size=1000");
+            if (!res.ok) throw new Error("Failed to load orders");
+            const data = await res.json();
+            const orders = data.content || [];
+
+            // Sum totalPrice of completed orders
+            return orders
+              .filter((order) => order.status === "COMPLETED")
+              .reduce((sum, order) => sum + (order.totalPrice || 0), 0);
+          } catch (err) {
+            console.error("Get revenue error:", err);
+            return 0;
+          }
+        }
+
+        async function loadRecentOrders() {
+          try {
+            const res = await fetch("/api/admin/orders?page=0&size=10");
+            if (!res.ok) throw new Error("Failed to load recent orders");
+            const data = await res.json();
+            const orders = data.content || [];
+            renderRecentOrders(orders);
+          } catch (err) {
+            console.error("Load recent orders error:", err);
+            renderRecentOrders([]);
+          }
+        }
+
+        async function loadMonthlyRevenueData() {
+          try {
+            const res = await fetch("/api/admin/orders?page=0&size=200");
+            if (!res.ok) throw new Error("Failed to load orders");
+            const data = await res.json();
+            const orders = data.content || [];
+
+            const monthlyRevenue = monthKeys.reduce(
+              (acc, key) => ({ ...acc, [key]: 0 }),
+              {},
+            );
+
+            orders.forEach((order) => {
+              if (
+                order.status === "COMPLETED" ||
+                order.status === "IN_PROGRESS"
+              ) {
+                const d = new Date(
+                  order.dateFrom || order.createdAt || Date.now(),
+                );
+                const m = d.getMonth();
+                if (m in monthlyRevenue) {
+                  monthlyRevenue[m] += order.totalPrice || 0;
+                }
+              }
+            });
+
+            const maxRevenue = Math.max(...Object.values(monthlyRevenue), 1);
+            const maxHeight = 200;
+            $$("[data-bar]").forEach((barEl, idx) => {
+              const monthIndex = monthKeys[idx];
+              const revenue = monthlyRevenue[monthIndex] || 0;
+              const heightPx = Math.max(12, (revenue / maxRevenue) * maxHeight);
+              const fill = barEl.querySelector(".bar-fill");
+              if (fill) fill.style.height = `${heightPx}px`;
+              barEl.title = `${monthNames[monthIndex]}: ${formatCurrency(revenue)}`;
+            });
+          } catch (err) {
+            console.error(err);
+          }
+        }
+
+        function updateVehicleDonut(stats) {
+          const total = stats.totalVehicles || 0;
+          const bike = stats.motorcycleCount || 0;
+          const car = stats.carCount || 0;
+          const bicycle = stats.bicycleCount || 0;
+          const sum = bike + car + bicycle || 1;
+
+          const bikePct = Math.round((bike / sum) * 100);
+          const carPct = Math.round((car / sum) * 100);
+          const bicyclePct = 100 - bikePct - carPct;
+
+          const donut = $("#vehicle-donut");
+          if (donut) {
+            const endCar = carPct;
+            const endBike = carPct + bikePct;
+            donut.style.background = `conic-gradient(#137fec 0% ${endCar}%, #ff9f43 ${endCar}% ${endBike}%, #28c76f ${endBike}% 100%)`;
+          }
+
+          updateStat("#donut-total", total);
+          updateStat("#legend-bike", `${bikePct}%`);
+          updateStat("#legend-car", `${carPct}%`);
+          updateStat("#legend-bicycle", `${bicyclePct}%`);
+        }
+
+        function renderRecentOrders(items) {
+          const tbody = $("#recent-orders");
+          if (!tbody) return;
+          if (!items.length) {
+            tbody.innerHTML =
+              '<tr><td colspan="5" class="px-6 py-3 text-center text-[var(--muted)]">Chưa có dữ liệu</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = items
+            .map((item) => {
+              const statusClass =
+                item.status === "COMPLETED"
+                  ? "bg-green-100 text-green-700"
+                  : item.status === "IN_PROGRESS"
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-slate-100 text-slate-700";
+
+              const dateStr = item.dateFrom
+                ? new Date(item.dateFrom).toLocaleDateString("vi-VN")
+                : "-";
+
+              return `
+                <tr class="hover:bg-slate-50">
+                  <td class="px-6 py-3">${item.customerName || "Khách"}</td>
+                  <td class="px-6 py-3">${item.vehicleName || "-"}</td>
+                  <td class="px-6 py-3 text-[var(--muted)]">${dateStr}</td>
+                  <td class="px-6 py-3 font-semibold">${formatCurrency(item.totalPrice || 0)}</td>
+                  <td class="px-6 py-3">
+                    <span class="px-2 py-1 rounded-full text-xs font-semibold ${statusClass}">${item.status || "-"}</span>
+                  </td>
+                </tr>`;
+            })
+            .join("");
+        }
+
+        async function init() {
+          await loadDashboardData();
+          await loadMonthlyRevenueData();
+        }
+
+        document.addEventListener("DOMContentLoaded", init);
+
+        $("#btn-logout")?.addEventListener("click", () => {
+          window.location.href = "/login/login.html";
         });
-      }
-    })();
-  </script>
-  <script>
-    // Highlight active menu item based on current page
-    (function () {
-      const currentPath = window.location.pathname.split("/").pop();
-      const navLinks = document.querySelectorAll("aside nav a");
 
-      // Remove active class from all
-      navLinks.forEach((link) => {
-        link.classList.remove("bg-primary/10", "text-primary");
-        link.classList.add("hover:bg-[#f0f2f4]", "dark:hover:bg-gray-800");
-      });
+        $("#btn-export-report")?.addEventListener("click", () => {
+          window.location.href = "/api/admin/orders/export";
+        });
 
-      // Add active class based on current page
-      if (currentPath === "quan_ly_xe.html") {
-        // For dashboard/stats page, highlight "Thống kê & Báo cáo"
-        const statsLink = Array.from(navLinks).find(
-          (link) =>
-            link.href.includes("quan_ly_xe.html") &&
-            link.textContent.includes("Thống kê"),
-        );
-        if (statsLink) {
-          statsLink.classList.add("bg-primary/10", "text-primary");
-          statsLink.classList.remove(
-            "hover:bg-[#f0f2f4]",
-            "dark:hover:bg-gray-800",
-          );
-        }
-      } else if (currentPath === "quan_ly_phuong_tien.html") {
-        const vehicleLink = Array.from(navLinks).find((link) =>
-          link.href.includes("quan_ly_phuong_tien.html"),
-        );
-        if (vehicleLink) {
-          vehicleLink.classList.add("bg-primary/10", "text-primary");
-          vehicleLink.classList.remove(
-            "hover:bg-[#f0f2f4]",
-            "dark:hover:bg-gray-800",
-          );
-        }
-      } else if (currentPath === "quan_ly_don_hang.html") {
-        const orderLink = Array.from(navLinks).find((link) =>
-          link.href.includes("quan_ly_don_hang.html"),
-        );
-        if (orderLink) {
-          orderLink.classList.add("bg-primary/10", "text-primary");
-          orderLink.classList.remove(
-            "hover:bg-[#f0f2f4]",
-            "dark:hover:bg-gray-800",
-          );
-        }
-      } else if (currentPath === "quan_ly_khach_hang.html") {
-        const customerLink = Array.from(navLinks).find((link) =>
-          link.href.includes("quan_ly_khach_hang.html"),
-        );
-        if (customerLink) {
-          customerLink.classList.add("bg-primary/10", "text-primary");
-          customerLink.classList.remove(
-            "hover:bg-[#f0f2f4]",
-            "dark:hover:bg-gray-800",
-          );
-        }
-      }
-    })();
-  </script>
-  <script src="../js/auth-check.js"></script>
+        $("#btn-view-all")?.addEventListener("click", () => {
+          window.location.href = "/admin/quan_ly_don_hang.html";
+        });
+      })();
+    </script>
+  </body>
 </html>

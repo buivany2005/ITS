@@ -28,10 +28,12 @@ public class OrderController {
             @RequestHeader(value = "X-User-Id", required = false) Long userId,
             @RequestBody OrderRequest request) {
         try {
+            System.out.println("Received userId from header: " + userId);
             // For development, use a default user if not provided
             if (userId == null) {
                 userId = 1L; // Default user for testing
             }
+            System.out.println("Using userId: " + userId);
             
             OrderResponse order = orderService.createOrder(userId, request);
             return ResponseEntity.status(HttpStatus.CREATED).body(order);
@@ -82,19 +84,21 @@ public class OrderController {
     }
     
     /**
-     * Cancel order
+     * Get all orders (Admin only)
      */
-    @PostMapping("/{id}/cancel")
-    public ResponseEntity<?> cancelOrder(
-            @PathVariable Long id,
-            @RequestHeader(value = "X-User-Id", required = false) Long userId) {
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllOrders(
+            @RequestParam(required = false) String status) {
         try {
-            if (userId == null) {
-                userId = 1L;
+            List<OrderResponse> orders;
+            if (status != null && !status.isEmpty()) {
+                OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
+                orders = orderService.getAllOrdersByStatus(orderStatus);
+            } else {
+                orders = orderService.getAllOrders();
             }
             
-            OrderResponse order = orderService.cancelOrder(id, userId);
-            return ResponseEntity.ok(order);
+            return ResponseEntity.ok(orders);
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", e.getMessage()));

@@ -13,6 +13,10 @@
   const viewButtons = Array.from(document.querySelectorAll(".btn-view"));
 
   let orders = [];
+  let currentPage = 0;
+  const pageSize = 12;
+  let totalPages = 0;
+  let totalElements = 0;
 
   // Utility functions
   function formatDate(dateString) {
@@ -34,7 +38,7 @@
     }
   }
 
-  function fetchOrders(status = "all") {
+  function fetchOrders(status = "all", page = 0) {
     const params = new URLSearchParams();
     if (status && status !== "all") {
       // Map frontend status to backend enum
@@ -47,13 +51,139 @@
       const apiStatus = statusMap[status] || status.toUpperCase();
       params.set("status", apiStatus);
     }
+    // include date range if set
+    const fromVal = dateFrom && dateFrom.value ? dateFrom.value : null;
+    const toVal = dateTo && dateTo.value ? dateTo.value : null;
+    if (fromVal && toVal) {
+      params.set("dateFrom", fromVal);
+      params.set("dateTo", toVal);
+    }
+    params.set("page", page);
+    params.set("size", pageSize);
     fetch("/api/admin/orders?" + params.toString())
       .then((r) => r.json())
       .then((data) => {
-        orders = data || [];
+        orders = data.content || [];
+        totalElements = data.totalElements || 0;
+        totalPages = data.totalPages || 0;
+        currentPage = page;
         renderTable();
+        renderPagination();
+        // Update counts after loading orders (ensures active tab count is correct quickly)
+        updateStatusTabsCounts()
+          .catch((e) => console.warn("update counts failed", e))
+          .finally(() => {
+            updateStatCards().catch((e) =>
+              console.warn("update stats failed", e),
+            );
+          });
       })
       .catch((err) => console.error("fetchOrders error", err));
+  }
+
+  // Fetch counts for each status and update the tab labels
+  const tabLabelMap = {
+    all: "Tất cả",
+    pending: "Chờ duyệt",
+    active: "Đang thuê",
+    completed: "Hoàn thành",
+    cancelled: "Đã hủy",
+  };
+
+  const apiStatusMap = {
+    pending: "PENDING",
+    active: "IN_PROGRESS",
+    completed: "COMPLETED",
+    cancelled: "CANCELLED",
+  };
+
+  async function fetchCountForStatus(statusKey, opts = {}) {
+    // opts: { from: 'YYYY-MM-DD', to: 'YYYY-MM-DD', ignoreDateInputs: boolean }
+    try {
+      const params = new URLSearchParams();
+      // include explicit date range from opts, else use inputs unless ignored
+      let fromVal = null;
+      let toVal = null;
+      if (opts.from && opts.to) {
+        fromVal = opts.from;
+        toVal = opts.to;
+      } else if (!opts.ignoreDateInputs) {
+        fromVal = dateFrom && dateFrom.value ? dateFrom.value : null;
+        toVal = dateTo && dateTo.value ? dateTo.value : null;
+      }
+      if (fromVal && toVal) {
+        params.set("dateFrom", fromVal);
+        params.set("dateTo", toVal);
+      }
+      params.set("page", 0);
+      params.set("size", 1);
+      if (statusKey && statusKey !== "all") {
+        const apiStatus = apiStatusMap[statusKey] || statusKey.toUpperCase();
+        params.set("status", apiStatus);
+      }
+      const res = await fetch("/api/admin/orders?" + params.toString());
+      if (!res.ok) throw new Error("Network error");
+      const data = await res.json();
+      return data.totalElements || 0;
+    } catch (err) {
+      console.warn("fetchCountForStatus error", err);
+      return 0;
+    }
+  }
+
+  async function updateStatusTabsCounts() {
+    const promises = statusTabs.map((tab) =>
+      fetchCountForStatus(tab.getAttribute("data-status")),
+    );
+    const counts = await Promise.all(promises);
+    statusTabs.forEach((tab, idx) => {
+      const key = tab.getAttribute("data-status");
+      const label = tabLabelMap[key] || tab.textContent.split("(")[0].trim();
+      const count = counts[idx] || 0;
+      tab.textContent = count > 0 ? `${label} (${count})` : label;
+    });
+  }
+
+  // Format integer counts with thousands separator
+  function formatCount(n) {
+    try {
+      return new Intl.NumberFormat("vi-VN").format(n);
+    } catch (e) {
+      return String(n);
+    }
+  }
+
+  // Update the top stat cards
+  async function updateStatCards() {
+    try {
+      const totalP = document.getElementById("stat-total");
+      const pendingP = document.getElementById("stat-pending");
+      const activeP = document.getElementById("stat-active");
+      const completedMonthP = document.getElementById("stat-completed-month");
+
+      const now = new Date();
+      const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+      const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      const fmt = (d) => d.toISOString().slice(0, 10);
+
+      const [total, pending, active, completedMonth] = await Promise.all([
+        fetchCountForStatus("all", { ignoreDateInputs: true }),
+        fetchCountForStatus("pending", { ignoreDateInputs: true }),
+        fetchCountForStatus("active", { ignoreDateInputs: true }),
+        fetchCountForStatus("completed", {
+          from: fmt(firstDay),
+          to: fmt(lastDay),
+        }),
+      ]);
+
+      if (totalP) totalP.textContent = formatCount(total);
+      if (pendingP) pendingP.textContent = formatCount(pending);
+      if (activeP) activeP.textContent = formatCount(active);
+      if (completedMonthP)
+        completedMonthP.textContent = formatCount(completedMonth);
+    } catch (err) {
+      console.warn("updateStatCards error", err);
+    }
   }
 
   function renderTable() {
@@ -104,6 +234,82 @@
     attachHandlers();
   }
 
+  function renderPagination() {
+    const paginationContainer = document.querySelector(".pagination-container");
+    if (!paginationContainer) return;
+
+    let html = `
+      <p class="text-xs font-medium text-[#617589] dark:text-slate-400">
+        Hiển thị ${currentPage * pageSize + 1} - ${Math.min((currentPage + 1) * pageSize, totalElements)} trong tổng số ${totalElements} đơn hàng
+      </p>
+      <div class="flex items-center gap-1">
+    `;
+
+    // Previous button
+    html += `<button id="btn-page-prev" class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-400 hover:text-primary transition-colors ${currentPage === 0 ? "opacity-50 cursor-not-allowed" : ""}">
+      <span class="material-symbols-outlined text-sm">chevron_left</span>
+    </button>`;
+
+    // Page buttons
+    const startPage = Math.max(0, currentPage - 2);
+    const endPage = Math.min(totalPages - 1, currentPage + 2);
+
+    if (startPage > 0) {
+      html += `<button data-page="0" class="page-btn size-8 flex items-center justify-center rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-400 hover:border-primary">1</button>`;
+      if (startPage > 1) html += `<span class="px-1 text-slate-400">...</span>`;
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      const isActive = i === currentPage;
+      html += `<button data-page="${i}" class="page-btn size-8 flex items-center justify-center rounded ${isActive ? "bg-primary text-white" : "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-400 hover:border-primary"}">${i + 1}</button>`;
+    }
+
+    if (endPage < totalPages - 1) {
+      if (endPage < totalPages - 2)
+        html += `<span class="px-1 text-slate-400">...</span>`;
+      html += `<button data-page="${totalPages - 1}" class="page-btn size-8 flex items-center justify-center rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-400 hover:border-primary">${totalPages}</button>`;
+    }
+
+    // Next button
+    html += `<button id="btn-page-next" class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-400 hover:text-primary transition-colors ${currentPage === totalPages - 1 ? "opacity-50 cursor-not-allowed" : ""}">
+      <span class="material-symbols-outlined text-sm">chevron_right</span>
+    </button>`;
+
+    html += `</div>`;
+    paginationContainer.innerHTML = html;
+
+    // Attach event listeners
+    document.getElementById("btn-page-prev")?.addEventListener("click", () => {
+      if (currentPage > 0)
+        fetchOrders(
+          document
+            .querySelector(".status-tab.text-primary")
+            ?.getAttribute("data-status") || "all",
+          currentPage - 1,
+        );
+    });
+    document.getElementById("btn-page-next")?.addEventListener("click", () => {
+      if (currentPage < totalPages - 1)
+        fetchOrders(
+          document
+            .querySelector(".status-tab.text-primary")
+            ?.getAttribute("data-status") || "all",
+          currentPage + 1,
+        );
+    });
+    document.querySelectorAll(".page-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const page = parseInt(btn.getAttribute("data-page"));
+        fetchOrders(
+          document
+            .querySelector(".status-tab.text-primary")
+            ?.getAttribute("data-status") || "all",
+          page,
+        );
+      });
+    });
+  }
+
   function attachHandlers() {
     const newStatusSelects = Array.from(
       document.querySelectorAll(".order-status-select"),
@@ -126,6 +332,14 @@
           // Update local order status
           const order = orders.find((o) => o.id == orderId);
           if (order) order.status = newStatus;
+          // refresh counts because status change affects tab counts
+          updateStatusTabsCounts()
+            .catch((e) => console.warn("update counts failed", e))
+            .finally(() => {
+              updateStatCards().catch((e) =>
+                console.warn("update stats failed", e),
+              );
+            });
         } catch (err) {
           alert("Không thể cập nhật trạng thái: " + err.message);
         }
@@ -172,9 +386,29 @@
         t.classList.remove("text-primary", "border-primary"),
       );
       tab.classList.add("text-primary", "border-primary");
-      fetchOrders(status);
+      fetchOrders(status, 0); // Reset to page 0
     });
   });
+
+  // When date inputs change, refetch current status/page 0
+  if (dateFrom) {
+    dateFrom.addEventListener("change", () => {
+      const activeStatus =
+        document
+          .querySelector(".status-tab.text-primary")
+          ?.getAttribute("data-status") || "all";
+      fetchOrders(activeStatus, 0);
+    });
+  }
+  if (dateTo) {
+    dateTo.addEventListener("change", () => {
+      const activeStatus =
+        document
+          .querySelector(".status-tab.text-primary")
+          ?.getAttribute("data-status") || "all";
+      fetchOrders(activeStatus, 0);
+    });
+  }
 
   if (exportBtn) {
     exportBtn.addEventListener("click", async () => {
@@ -185,7 +419,25 @@
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "orders.xlsx";
+        // Prefer filename from Content-Disposition header when provided
+        const cd = res.headers.get("content-disposition") || "";
+        let filename = "orders.xlsx";
+        const m =
+          cd.match(/filename\*=(?:UTF-8'' )?([^;\n]+)/i) ||
+          cd.match(/filename="?([^";]+)"?/i);
+        if (m && m[1]) {
+          try {
+            filename = decodeURIComponent(m[1].replace(/"/g, ""));
+          } catch (e) {
+            filename = m[1].replace(/"/g, "");
+          }
+        } else {
+          const ct = (res.headers.get("content-type") || "").toLowerCase();
+          if (ct.includes("csv")) filename = "orders.csv";
+          else if (ct.includes("openxmlformats-officedocument"))
+            filename = "orders.xlsx";
+        }
+        a.download = filename;
         document.body.appendChild(a);
         a.click();
         a.remove();

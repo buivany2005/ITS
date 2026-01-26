@@ -1,7 +1,9 @@
 services:
   # MySQL Database
   db:
-    image: mysql:8.0
+    build:
+      context: .
+      dockerfile: mysql/Dockerfile
     container_name: vehiclerental-db
     environment:
       MYSQL_ROOT_PASSWORD: rootpass

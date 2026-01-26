@@ -6,31 +6,94 @@
   // Elements
   const inputSearch = qs("#vehicle-search");
   const categoryBtns = qsa(".category-btn");
+  const vehicleTypeSelect = qs("#vehicle-type-filter");
   const btnAdd = qs("#btn-add-vehicle");
   const btnToggleSidebar = qs("#btn-toggle-sidebar");
   const tableBody = qs("#vehicles-table-body");
 
   // State
   let vehicles = [];
+  let currentPage = 1;
+  const pageSize = 12;
   let filters = { q: "", category: "all" };
 
   function fetchVehicles() {
     const params = new URLSearchParams();
     if (filters.q) params.set("q", filters.q);
-    if (filters.category && filters.category !== "all")
-      params.set("category", filters.category);
+    // If category is an enum string (e.g. OTO/XEMAY/XEDAP) set vehicleType
+    if (filters.category && filters.category !== "all") {
+      params.set("vehicleType", filters.category);
+    }
+    if (filters.status) params.set("status", filters.status);
     fetch("/api/admin/vehicles?" + params.toString())
       .then((r) => r.json())
       .then((data) => {
-        vehicles = data || [];
+        // apply local filtering as a fallback (or to combine filters client-side)
+        let items = data || [];
+        items = applyLocalFilters(items);
+        vehicles = items;
         renderTable();
       })
       .catch((err) => console.error("fetchVehicles error", err));
   }
 
+  // Convert File to data URL (base64) for inline storage
+  function fileToDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () =>
+        reject(reader.error || new Error("Không đọc được file"));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function applyLocalFilters(items) {
+    const q = (filters.q || "").toLowerCase();
+    const category = filters.category || "all";
+    const statusFilter = filters.status || null;
+    return (items || []).filter((v) => {
+      // category filter: if not 'all', compare with vehicle.category (enum or string)
+      if (category !== "all") {
+        if (!v.category) return false;
+        if (
+          v.category.toString().toUpperCase() !==
+          category.toString().toUpperCase()
+        )
+          return false;
+      }
+
+      // status filter: if set, ensure vehicle.status matches
+      if (statusFilter) {
+        if (!v.status) return false;
+        if (
+          v.status.toString().toUpperCase() !==
+          statusFilter.toString().toUpperCase()
+        )
+          return false;
+      }
+
+      if (!q) return true;
+
+      const haystack = [v.name, v.model, v.licensePlate, v.brand, v.description]
+        .filter(Boolean)
+        .map((s) => s.toString().toLowerCase())
+        .join(" ");
+
+      return haystack.includes(q);
+    });
+  }
+
   function renderTable() {
     if (!tableBody) return;
-    tableBody.innerHTML = vehicles
+    const total = vehicles.length;
+    const totalPages = Math.max(1, Math.ceil(total / pageSize));
+    if (currentPage > totalPages) currentPage = totalPages;
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+    const pageVehicles = vehicles.slice(start, end);
+
+    tableBody.innerHTML = pageVehicles
       .map((v) => {
         const statusBadge = getStatusBadge(v.status);
         return `
@@ -58,8 +121,8 @@
           <td class="px-6 py-4 whitespace-nowrap">${escapeHtml(v.category)}</td>
           <td class="px-6 py-4 whitespace-nowrap">
             <select class="status-select text-xs rounded px-2 py-1 ${statusBadge}" data-vehicle-id="${
-          v.id
-        }">
+              v.id
+            }">
               <option value="AVAILABLE" ${v.status === "AVAILABLE" ? "selected" : ""}>Sẵn sàng</option>
               <option value="RENTED" ${v.status === "RENTED" ? "selected" : ""}>Đang thuê</option>
               <option value="MAINTENANCE" ${v.status === "MAINTENANCE" ? "selected" : ""}>Bảo trì</option>
@@ -96,14 +159,92 @@
     qsa(".status-select").forEach((sel) =>
       sel.addEventListener("change", onStatusChange),
     );
+
+    renderPagination(total, totalPages);
+  }
+
+  function renderPagination(totalItems, totalPages) {
+    const info = qs("#vehicles-pagination-info");
+    const container = qs("#vehicles-pagination");
+    if (!container || !info) return;
+
+    const start = (currentPage - 1) * pageSize + 1;
+    const end = Math.min(currentPage * pageSize, totalItems);
+    info.textContent = `Hiển thị ${start} - ${end} trong tổng số ${totalItems} xe`;
+
+    // build buttons
+    container.innerHTML = "";
+
+    const makeBtn = (text, cls = "", disabled = false, page = null) => {
+      const btn = document.createElement("button");
+      btn.className = `px-3 py-1.5 rounded-lg text-sm font-medium ${cls}`;
+      btn.textContent = text;
+      if (disabled) btn.disabled = true;
+      if (page) btn.dataset.page = page;
+      return btn;
+    };
+
+    // Prev
+    const prev = makeBtn(
+      "Trước",
+      "border border-[#dbe0e6] bg-white hover:bg-gray-50",
+      currentPage === 1,
+      currentPage - 1,
+    );
+    container.appendChild(prev);
+
+    // page numbers (show up to 7 pages with truncation)
+    const maxButtons = 7;
+    let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+    let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+    if (endPage - startPage + 1 < maxButtons) {
+      startPage = Math.max(1, endPage - maxButtons + 1);
+    }
+
+    for (let p = startPage; p <= endPage; p++) {
+      const cls =
+        p === currentPage
+          ? "bg-primary text-white"
+          : "border border-[#dbe0e6] bg-white hover:bg-gray-50";
+      const btn = makeBtn(p, cls, false, p);
+      container.appendChild(btn);
+    }
+
+    // Next
+    const next = makeBtn(
+      "Tiếp",
+      "border border-[#dbe0e6] bg-white hover:bg-gray-50",
+      currentPage === totalPages,
+      currentPage + 1,
+    );
+    container.appendChild(next);
+
+    // attach handlers
+    Array.from(container.querySelectorAll("button")).forEach((b) => {
+      b.addEventListener("click", (e) => {
+        const page = parseInt(e.currentTarget.dataset.page, 10);
+        if (!isNaN(page) && page >= 1 && page <= totalPages) {
+          currentPage = page;
+          renderTable();
+          // scroll to top of table
+          const tableTop = document.querySelector("#vehicles-table-body");
+          if (tableTop)
+            tableTop.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
   }
 
   function getStatusBadge(status) {
     const badges = {
-      AVAILABLE: "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
-      RENTED: "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-      MAINTENANCE: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
-      UNAVAILABLE: "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300",
+      AVAILABLE:
+        "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
+      RENTED:
+        "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+      MAINTENANCE:
+        "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
+      UNAVAILABLE:
+        "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300",
     };
     return badges[status] || badges.AVAILABLE;
   }
@@ -243,6 +384,12 @@
                 </select>
               </div>
               <div>
+                <label class="block text-sm font-medium mb-2">Hình ảnh</label>
+                <input type="file" name="imageFile" accept="image/*"
+                  class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary">
+                <p class="text-xs text-gray-500 mt-1">Hoặc nhập URL bên dưới</p>
+              </div>
+              <div>
                 <label class="block text-sm font-medium mb-2">URL hình ảnh</label>
                 <input type="text" name="imageUrl"
                   class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
@@ -282,21 +429,61 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
+      const imageFile = formData.get("imageFile");
+      const imageUrl = (formData.get("imageUrl") || "").trim();
+
+      // Validate required numeric fields
+      const yearVal = parseInt(formData.get("year"), 10);
+      const priceVal = parseFloat(formData.get("pricePerDay"));
+      if (!yearVal || Number.isNaN(yearVal)) {
+        alert("Năm sản xuất không hợp lệ");
+        return;
+      }
+      if (!priceVal || Number.isNaN(priceVal)) {
+        alert("Giá thuê/ngày không hợp lệ");
+        return;
+      }
+
       const data = {
         name: formData.get("name"),
         type: formData.get("type"),
+        vehicleType: formData.get("type"), // backend accepts vehicleType as well
+        status: "AVAILABLE",
         brand: formData.get("brand"),
         model: formData.get("model"),
-        year: parseInt(formData.get("year")),
+        year: yearVal,
         color: formData.get("color"),
         licensePlate: formData.get("licensePlate"),
-        pricePerDay: parseFloat(formData.get("pricePerDay")),
+        pricePerDay: priceVal,
         description: formData.get("description"),
-        imageUrl: formData.get("imageUrl"),
-        seats: formData.get("seats") ? parseInt(formData.get("seats")) : null,
+        seats: formData.get("seats")
+          ? parseInt(formData.get("seats"), 10)
+          : null,
         fuelType: formData.get("fuelType"),
         transmission: formData.get("transmission"),
       };
+
+      // Handle image: prefer URL if provided; otherwise encode small file to base64
+      if (imageUrl) {
+        data.imageUrl = imageUrl;
+      } else if (imageFile && imageFile.size > 0) {
+        const maxSizeBytes = 800 * 1024; // ~800KB to avoid server limits
+        if (imageFile.size > maxSizeBytes) {
+          const mb = (imageFile.size / 1024 / 1024).toFixed(2);
+          alert(
+            "File ảnh quá lớn: " +
+              mb +
+              "MB (giới hạn ~0.8MB). Vui lòng nhập URL hoặc chọn file nhỏ hơn.",
+          );
+          return;
+        }
+        try {
+          data.imageUrl = await fileToDataUrl(imageFile);
+        } catch (err) {
+          alert("Không đọc được file ảnh: " + err.message);
+          return;
+        }
+      }
 
       try {
         const url = vehicle
@@ -311,8 +498,15 @@
         });
 
         if (!res.ok) {
-          const err = await res.json();
-          throw new Error(err.error || "Failed to save vehicle");
+          let errText = "Failed to save vehicle";
+          try {
+            const errJson = await res.json();
+            errText = errJson.error || errText;
+          } catch (parseErr) {
+            const txt = await res.text();
+            errText = txt || res.status + " " + res.statusText;
+          }
+          throw new Error(errText);
         }
 
         alert(vehicle ? "Cập nhật xe thành công!" : "Thêm xe mới thành công!");
@@ -340,16 +534,56 @@
 
   function onCategoryClick(e) {
     const cat = e.currentTarget.dataset.category;
-    filters.category = cat || "all";
+    // Map UI category identifiers to backend enum values
+    const mapping = {
+      motorbike: "XEMAY",
+      car: "OTO",
+      bicycle: "XEDAP",
+      all: "all",
+    };
+
+    // If user clicked the 'status' button (opens status filter), don't change category
+    if (cat === "status") {
+      return;
+    }
+
+    // Normal behavior: set filter and fetch. 'all' means no vehicleType filter.
+    if (cat === "all") {
+      filters.category = "all";
+    } else {
+      filters.category = mapping[cat] || cat || "all";
+    }
     categoryBtns.forEach((b) => b.classList.remove("bg-primary", "text-white"));
     e.currentTarget.classList.add("bg-primary", "text-white");
+    currentPage = 1;
     fetchVehicles();
+  }
+
+  // (Removed large chooser handlers — chooser UI was deleted)
+
+  // Vehicle type select handler (replaces category buttons)
+  if (vehicleTypeSelect) {
+    vehicleTypeSelect.addEventListener("change", (e) => {
+      const val = e.target.value || "all";
+      filters.category = val;
+      fetchVehicles();
+    });
+  }
+
+  // Status filter handler
+  const statusSelect = qs("#vehicle-status-filter");
+  if (statusSelect) {
+    statusSelect.addEventListener("change", (e) => {
+      filters.status = e.target.value || null;
+      fetchVehicles();
+    });
   }
 
   function onSearchInput(e) {
     filters.q = e.target.value.trim();
     // debounce
     clearTimeout(onSearchInput._t);
+    currentPage = 1;
     onSearchInput._t = setTimeout(fetchVehicles, 350);
   }
 

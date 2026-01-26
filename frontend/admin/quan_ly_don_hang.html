@@ -24,8 +24,8 @@
         theme: {
           extend: {
             colors: {
-              primary: "#137fec",
-              "background-light": "#f6f7f8",
+              primary: "#0ea5ff",
+              "background-light": "#ffffff",
               "background-dark": "#101922",
             },
             fontFamily: {
@@ -40,6 +40,9 @@
           },
         },
       };
+    </script>
+    <script>
+      try { document.documentElement.classList.remove('dark'); } catch (e) {}
     </script>
     <style>
       body {
@@ -81,7 +84,7 @@
             </div>
           </div>
         </div>
-        <nav class="flex flex-col gap-1">
+        <nav class="flex flex-col gap-1 flex-1 px-3">
           <a
             class="flex items-center gap-3 px-3 py-2 text-[#617589] dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg transition-colors"
             href="quan_ly_xe.html"
@@ -130,7 +133,7 @@
           </a>
           <a
             class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f2f4] dark:hover:bg-gray-800 transition-colors"
-            href="#"
+            href="cai_dat.html"
           >
             <span class="material-symbols-outlined text-[22px]">settings</span>
             <p class="text-[#111418] dark:text-gray-300 text-sm font-medium">
@@ -140,23 +143,21 @@
         </nav>
         <div class="p-4 border-t border-slate-200 dark:border-slate-800">
           <div
-            class="flex items-center gap-3 p-2 bg-slate-50 dark:bg-slate-800/50 rounded-xl"
+            class="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-200 dark:border-slate-700"
           >
             <div
-              class="size-8 rounded-full bg-cover bg-center"
-              data-alt="Ảnh đại diện quản trị viên"
-              style="
-                background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuDA0HeOJZSnYNEzB5kzlsDa_u-ySK8TVKa_-RZBYr1JTR4l4B8Zwsory4WFCandQsM1AbIenjn3stXaHZBjwBwz4jPcUQWU9YL77MAi4aGDHV1aBajGxm6nnOuLoemcJoQRH-DLEcAwRsi9qQ7PcZP6_Y99WmyGmiQrd-5cbduovcXrx9PR_eOOotETBWvXL1aBZ9Ery-4rICP0Gpgg1ITG8GhnUcKMuDs4F7P5gJMmV7KXUgbMbmEj4_E4RthK1vtFQI2Om83W6Ytd&quot;);
-              "
-            ></div>
+              class="size-10 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-sm"
+            >
+              QTV
+            </div>
             <div class="flex-1 overflow-hidden">
               <p
                 class="text-sm font-bold text-[#111418] dark:text-white truncate"
               >
-                Nguyễn Văn An
+                Quản trị viên
               </p>
               <p class="text-xs text-[#617589] dark:text-slate-400 truncate">
-                an.nguyen@rental.vn
+                admin@example.com
               </p>
             </div>
             <span class="material-symbols-outlined text-slate-400 text-sm"
@@ -167,7 +168,7 @@
       </aside>
       <!-- Main Content -->
       <main class="flex-1 overflow-y-auto relative z-0">
-        <div class="max-w-[1200px] mx-auto p-8">
+        <div class="px-8 lg:px-10 py-0">
           <!-- Page Heading -->
           <div
             class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
@@ -204,7 +205,7 @@
                 Tổng đơn hàng
               </p>
               <div class="flex items-end justify-between mt-2">
-                <p class="text-[#111418] dark:text-white text-3xl font-bold">
+                <p id="stat-total" class="text-[#111418] dark:text-white text-3xl font-bold">
                   1,250
                 </p>
                 <span
@@ -220,7 +221,7 @@
                 Chờ duyệt
               </p>
               <div class="flex items-end justify-between mt-2">
-                <p class="text-[#111418] dark:text-white text-3xl font-bold">
+                <p id="stat-pending" class="text-[#111418] dark:text-white text-3xl font-bold">
                   45
                 </p>
                 <span
@@ -236,7 +237,7 @@
                 Đang thuê
               </p>
               <div class="flex items-end justify-between mt-2">
-                <p class="text-[#111418] dark:text-white text-3xl font-bold">
+                <p id="stat-active" class="text-[#111418] dark:text-white text-3xl font-bold">
                   128
                 </p>
                 <span
@@ -252,7 +253,7 @@
                 Hoàn thành tháng
               </p>
               <div class="flex items-end justify-between mt-2">
-                <p class="text-[#111418] dark:text-white text-3xl font-bold">
+                <p id="stat-completed-month" class="text-[#111418] dark:text-white text-3xl font-bold">
                   842
                 </p>
                 <span
@@ -661,55 +662,8 @@
             </div>
             <!-- Pagination -->
             <div
-              class="p-4 bg-slate-50/50 dark:bg-slate-800/50 flex flex-wrap items-center justify-between gap-4"
+              class="p-4 bg-slate-50/50 dark:bg-slate-800/50 flex flex-wrap items-center justify-between gap-4 pagination-container"
             >
-              <p class="text-xs font-medium text-[#617589] dark:text-slate-400">
-                Hiển thị 1 - 10 trong tổng số 1,250 đơn hàng
-              </p>
-              <div class="flex items-center gap-1">
-                <button
-                  id="btn-page-prev"
-                  class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-400 hover:text-primary transition-colors"
-                >
-                  <span class="material-symbols-outlined text-sm"
-                    >chevron_left</span
-                  >
-                </button>
-                <button
-                  data-page="1"
-                  class="page-btn size-8 flex items-center justify-center rounded bg-primary text-white text-xs font-bold"
-                >
-                  1
-                </button>
-                <button
-                  data-page="2"
-                  class="page-btn size-8 flex items-center justify-center rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-400 hover:border-primary"
-                >
-                  2
-                </button>
-                <button
-                  data-page="3"
-                  class="page-btn size-8 flex items-center justify-center rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-400 hover:border-primary"
-                >
-                  3
-                </button>
-                <span class="px-1 text-slate-400">...</span>
-                <button
-                  data-page="125"
-                  class="page-btn size-8 flex items-center justify-center rounded bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-400 hover:border-primary"
-                >
-                  125
-                </button>
-                <button
-                  id="btn-page-next"
-                  class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-400 hover:text-primary transition-colors"
-                >
-                  <span class="material-symbols-outlined text-sm"
-                    >chevron_right</span
-                  >
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </main>

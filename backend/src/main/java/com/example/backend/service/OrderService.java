@@ -10,6 +10,8 @@ import com.example.backend.repository.OrderRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -98,7 +100,28 @@ public class OrderService {
     }
     
     /**
-     * Get all orders (admin)
+     * Get all orders (admin) - paginated
+     */
+    @Transactional(readOnly = true)
+    public Page<OrderResponse> getAllOrders(Pageable pageable) {
+        return orderRepository.findAll(pageable)
+            .map(OrderResponse::fromEntity);
+    }
+
+    /**
+     * Get all orders (admin) - paginated with optional date range filter
+     */
+    @Transactional(readOnly = true)
+    public Page<OrderResponse> getAllOrders(Pageable pageable, java.time.LocalDate dateFrom, java.time.LocalDate dateTo) {
+        if (dateFrom != null && dateTo != null) {
+            return orderRepository
+                .findByDateFromGreaterThanEqualAndDateToLessThanEqualOrderByCreatedAtDesc(dateFrom, dateTo, pageable)
+                .map(OrderResponse::fromEntity);
+        }
+        return getAllOrders(pageable);
+    }    
+    /**
+     * Get all orders (admin) - non-paginated for backward compatibility
      */
     @Transactional(readOnly = true)
     public List<OrderResponse> getAllOrders() {
@@ -106,19 +129,38 @@ public class OrderService {
             .stream()
             .map(OrderResponse::fromEntity)
             .collect(Collectors.toList());
+    }    
+    /**
+     * Get all orders by status - paginated
+     */
+    @Transactional(readOnly = true)
+    public Page<OrderResponse> getAllOrdersByStatus(OrderStatus status, Pageable pageable) {
+        return orderRepository.findByStatusOrderByCreatedAtDesc(status, pageable)
+            .map(OrderResponse::fromEntity);
     }
     
     /**
-     * Get orders by status (admin)
+     * Get all orders by status (admin) - paginated with optional date range filter
      */
     @Transactional(readOnly = true)
-    public List<OrderResponse> getOrdersByStatus(OrderStatus status) {
+    public Page<OrderResponse> getAllOrdersByStatus(OrderStatus status, Pageable pageable, java.time.LocalDate dateFrom, java.time.LocalDate dateTo) {
+        if (dateFrom != null && dateTo != null) {
+            return orderRepository
+                .findByStatusAndDateFromGreaterThanEqualAndDateToLessThanEqualOrderByCreatedAtDesc(status, dateFrom, dateTo, pageable)
+                .map(OrderResponse::fromEntity);
+        }
+        return getAllOrdersByStatus(status, pageable);
+    }
+    /**
+     * Get all orders by status - non-paginated for backward compatibility
+     */
+    @Transactional(readOnly = true)
+    public List<OrderResponse> getAllOrdersByStatus(OrderStatus status) {
         return orderRepository.findByStatusOrderByCreatedAtDesc(status)
             .stream()
             .map(OrderResponse::fromEntity)
             .collect(Collectors.toList());
-    }
-    
+    }    
     /**
      * Update order status
      */
@@ -178,27 +220,66 @@ public class OrderService {
     }
     
     /**
-     * Export orders to Excel
+     * Export orders to real XLSX Excel file using Apache POI
      */
     public byte[] exportOrdersToExcel() throws Exception {
         List<Order> orders = orderRepository.findAll();
-        
-        // For simplicity, return a basic Excel file. In real implementation, use Apache POI or similar.
-        // Here, we'll create a simple CSV as Excel-compatible
-        StringBuilder csv = new StringBuilder();
-        csv.append("ID,Khách hàng,Phương tiện,Ngày thuê,Ngày trả,Trạng thái,Tổng tiền\n");
-        
-        for (Order order : orders) {
-            csv.append(order.getId()).append(",");
-            csv.append(order.getUser().getFullName()).append(",");
-            csv.append(order.getVehicle().getName()).append(",");
-            csv.append(order.getDateFrom()).append(",");
-            csv.append(order.getDateTo()).append(",");
-            csv.append(order.getStatus()).append(",");
-            csv.append(order.getTotalPrice()).append("\n");
+
+        org.apache.poi.xssf.usermodel.XSSFWorkbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook();
+        org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("Orders");
+
+        // Header
+        org.apache.poi.ss.usermodel.Row header = sheet.createRow(0);
+        String[] headers = new String[] {"ID", "Khách hàng", "Phương tiện", "Ngày thuê", "Ngày trả", "Trạng thái", "Tổng tiền"};
+        for (int i = 0; i < headers.length; i++) {
+            org.apache.poi.ss.usermodel.Cell c = header.createCell(i);
+            c.setCellValue(headers[i]);
         }
-        
-        return csv.toString().getBytes("UTF-8");
+
+        // Create a cell style for currency
+        org.apache.poi.ss.usermodel.CellStyle currencyStyle = workbook.createCellStyle();
+        org.apache.poi.ss.usermodel.DataFormat df = workbook.createDataFormat();
+        currencyStyle.setDataFormat(df.getFormat("#,##0.00"));
+
+        int rowIdx = 1;
+        java.time.format.DateTimeFormatter dtf = java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        for (Order order : orders) {
+            org.apache.poi.ss.usermodel.Row row = sheet.createRow(rowIdx++);
+            row.createCell(0).setCellValue(order.getId().toString());
+            row.createCell(1).setCellValue(order.getUser() != null ? safeString(order.getUser().getFullName()) : "");
+            row.createCell(2).setCellValue(order.getVehicle() != null ? safeString(order.getVehicle().getName()) : "");
+            row.createCell(3).setCellValue(order.getDateFrom() != null ? order.getDateFrom().format(dtf) : "");
+            row.createCell(4).setCellValue(order.getDateTo() != null ? order.getDateTo().format(dtf) : "");
+            row.createCell(5).setCellValue(order.getStatus() != null ? order.getStatus().name() : "");
+            org.apache.poi.ss.usermodel.Cell priceCell = row.createCell(6);
+            if (order.getTotalPrice() != null) {
+                try {
+                    priceCell.setCellValue(order.getTotalPrice().doubleValue());
+                    priceCell.setCellStyle(currencyStyle);
+                } catch (Exception ex) {
+                    priceCell.setCellValue(order.getTotalPrice().toString());
+                }
+            } else {
+                priceCell.setCellValue(0);
+            }
+        }
+
+        // Autosize columns (reasonable for small exports)
+        for (int i = 0; i < headers.length; i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        java.io.ByteArrayOutputStream baos = new java.io.ByteArrayOutputStream();
+        try {
+            workbook.write(baos);
+        } finally {
+            workbook.close();
+        }
+        return baos.toByteArray();
+    }
+
+    private String safeString(String s) {
+        return s == null ? "" : s;
     }
     
     // Inner class for stats

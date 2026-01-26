@@ -2,6 +2,8 @@ package com.example.backend.repository;
 
 import com.example.backend.entity.Order;
 import com.example.backend.entity.Order.OrderStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,6 +17,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     
     // Find orders by user
     List<Order> findByUserIdOrderByCreatedAtDesc(Long userId);
+    
+    // Find orders by user and status
+    List<Order> findByUserIdAndStatusOrderByCreatedAtDesc(Long userId, OrderStatus status);
     
     // Find orders by status
     List<Order> findByStatusOrderByCreatedAtDesc(OrderStatus status);
@@ -43,6 +48,15 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     // Count orders by status
     long countByStatus(OrderStatus status);
     
+    // Find orders by status with pagination
+    Page<Order> findByStatusOrderByCreatedAtDesc(OrderStatus status, Pageable pageable);
+
+    // Find orders by date range (rental date within given window) with pagination
+    Page<Order> findByDateFromGreaterThanEqualAndDateToLessThanEqualOrderByCreatedAtDesc(java.time.LocalDate dateFrom, java.time.LocalDate dateTo, Pageable pageable);
+
+    // Find orders by status and date range with pagination
+    Page<Order> findByStatusAndDateFromGreaterThanEqualAndDateToLessThanEqualOrderByCreatedAtDesc(OrderStatus status, java.time.LocalDate dateFrom, java.time.LocalDate dateTo, Pageable pageable);
+    
     // Find user's orders by status
-    List<Order> findByUserIdAndStatusOrderByCreatedAtDesc(Long userId, OrderStatus status);
+    Page<Order> findByUserIdAndStatusOrderByCreatedAtDesc(Long userId, OrderStatus status, Pageable pageable);
 }

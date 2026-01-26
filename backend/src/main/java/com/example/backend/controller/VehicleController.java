@@ -27,8 +27,9 @@ public class VehicleController {
     private OrderRepository orderRepository;
     
     @GetMapping
-    public ResponseEntity<List<Map<String, Object>>> getAllVehicles(
-            @RequestParam(required = false) String vehicleType) {
+        public ResponseEntity<List<Map<String, Object>>> getAllVehicles(
+            @RequestParam(required = false) String vehicleType,
+            @RequestParam(required = false) String status) {
         
         List<Vehicle> vehicles;
         if (vehicleType != null && !vehicleType.isEmpty()) {
@@ -61,8 +62,6 @@ public class VehicleController {
                 vehicleMap.put("description", vehicle.getDescription());
                 vehicleMap.put("location", vehicle.getLocation());
                 vehicleMap.put("imageUrl", vehicle.getImageUrl());
-                vehicleMap.put("status", vehicle.getStatus());
-                
                 // Check if vehicle is currently booked (has active orders)
                 boolean isAvailable = orderRepository.isVehicleAvailable(
                     vehicle.getId(), 
@@ -70,10 +69,24 @@ public class VehicleController {
                     LocalDate.now().plusDays(1)
                 );
                 vehicleMap.put("available", isAvailable);
+                // Compute effective status: use enum name() to return a String; if not available mark as RENTED
+                String effectiveStatus = vehicle.getStatus() != null ? vehicle.getStatus().name() : null;
+                if (!isAvailable) {
+                    effectiveStatus = "RENTED";
+                }
+                vehicleMap.put("status", effectiveStatus);
                 
                 return vehicleMap;
             })
             .collect(Collectors.toList());
+
+        // If caller provided a status filter (AVAILABLE/RENTED/MAINTENANCE), filter by the computed status
+        if (status != null && !status.isEmpty()) {
+            String wanted = status.toUpperCase();
+            vehiclesWithAvailability = vehiclesWithAvailability.stream()
+                .filter(m -> wanted.equals(String.valueOf(m.get("status"))))
+                .collect(Collectors.toList());
+        }
         
         return ResponseEntity.ok(vehiclesWithAvailability);
     }
@@ -98,8 +111,6 @@ public class VehicleController {
                     vehicleMap.put("description", vehicle.getDescription());
                     vehicleMap.put("location", vehicle.getLocation());
                     vehicleMap.put("imageUrl", vehicle.getImageUrl());
-                    vehicleMap.put("status", vehicle.getStatus());
-                    
                     // Check availability
                     boolean isAvailable = orderRepository.isVehicleAvailable(
                         vehicle.getId(), 
@@ -107,6 +118,12 @@ public class VehicleController {
                         LocalDate.now().plusDays(1)
                     );
                     vehicleMap.put("available", isAvailable);
+                    // Compute effective status (enum -> String)
+                    String effectiveStatus = vehicle.getStatus() != null ? vehicle.getStatus().name() : null;
+                    if (!isAvailable) {
+                        effectiveStatus = "RENTED";
+                    }
+                    vehicleMap.put("status", effectiveStatus);
                     
                     return ResponseEntity.ok(vehicleMap);
                 })
@@ -134,6 +151,11 @@ public class VehicleController {
                     LocalDate.now().plusDays(1)
                 );
                 vehicleMap.put("available", isAvailable);
+                String effectiveStatus = vehicle.getStatus() != null ? vehicle.getStatus().name() : null;
+                if (!isAvailable) {
+                    effectiveStatus = "RENTED";
+                }
+                vehicleMap.put("status", effectiveStatus);
                 
                 return vehicleMap;
             })

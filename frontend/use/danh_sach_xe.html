@@ -3,19 +3,16 @@
 <html class="light" lang="vi">
   <head>
     <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Danh sách phương tiện - XeThue VN</title>
+    <title>Danh sách xe - XeThue VN</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap&subset=vietnamese"
       rel="stylesheet"
     />
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
       rel="stylesheet"
     />
     <script id="tailwind-config">
@@ -24,8 +21,8 @@
         theme: {
           extend: {
             colors: {
-              primary: "#137fec",
-              "background-light": "#f6f7f8",
+              primary: "#0ea5ff",
+              "background-light": "#ffffff",
               "background-dark": "#101922",
             },
             fontFamily: {
@@ -41,6 +38,11 @@
         },
       };
     </script>
+    <script>
+      try {
+        document.documentElement.classList.remove("dark");
+      } catch (e) {}
+    </script>
     <style>
       .material-symbols-outlined {
         font-variation-settings:
@@ -50,7 +52,16 @@
           "opsz" 24;
       }
       body {
-        font-family: "Plus Jakarta Sans", sans-serif;
+        font-family:
+          "Plus Jakarta Sans", "Noto Sans", "Segoe UI", Roboto, Arial,
+          sans-serif;
+      }
+      /* Ensure form controls inherit the page font */
+      input,
+      button,
+      select,
+      textarea {
+        font-family: inherit;
       }
     </style>
   </head>
@@ -127,7 +138,7 @@
             <input
               id="search-input"
               class="w-full border-none bg-transparent focus:ring-0 text-sm"
-              placeholder="Tìm kiếm phương tiện"
+              placeholder="Tìm kiếm xe"
               type="text"
             />
           </div>
@@ -160,7 +171,7 @@
           >chevron_right</span
         >
         <span class="text-[#111418] dark:text-white text-sm font-bold"
-          >Danh sách phương tiện</span
+          >Danh sách xe</span
         >
       </nav>
       <div class="flex flex-col lg:flex-row gap-8">
@@ -422,7 +433,7 @@
           <div
             class="flex flex-col sm:flex-row items-center justify-between mb-8 gap-4"
           >
-            <h1 class="text-2xl font-bold">24 phương tiện tìm thấy</h1>
+            <h1 class="text-2xl font-bold">24 xe tìm thấy</h1>
             <div class="flex items-center gap-3">
               <span class="text-sm text-[#617589] whitespace-nowrap"
                 >Sắp xếp theo:</span

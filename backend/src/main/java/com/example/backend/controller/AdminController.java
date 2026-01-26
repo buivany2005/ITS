@@ -11,12 +11,16 @@ import com.example.backend.entity.Vehicle.VehicleType;
 import com.example.backend.service.OrderService;
 import com.example.backend.service.UserService;
 import com.example.backend.service.VehicleService;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
@@ -211,16 +215,36 @@ public class AdminController {
      * Get all orders
      */
     @GetMapping("/orders")
-    public ResponseEntity<?> getAllOrders(@RequestParam(required = false) String status) {
+    public ResponseEntity<?> getAllOrders(
+            @RequestParam(required = false) String status,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "12") int size,
+            @RequestParam(required = false) String dateFrom,
+            @RequestParam(required = false) String dateTo) {
         try {
-            List<OrderResponse> orders;
+            Pageable pageable = PageRequest.of(page, size);
+            Page<OrderResponse> ordersPage;
+            java.time.LocalDate from = null;
+            java.time.LocalDate to = null;
+            if (dateFrom != null && !dateFrom.isEmpty() && dateTo != null && !dateTo.isEmpty()) {
+                from = java.time.LocalDate.parse(dateFrom);
+                to = java.time.LocalDate.parse(dateTo);
+            }
+
             if (status != null && !status.isEmpty()) {
                 OrderStatus orderStatus = OrderStatus.valueOf(status.toUpperCase());
-                orders = orderService.getOrdersByStatus(orderStatus);
+                ordersPage = orderService.getAllOrdersByStatus(orderStatus, pageable, from, to);
             } else {
-                orders = orderService.getAllOrders();
+                ordersPage = orderService.getAllOrders(pageable, from, to);
             }
-            return ResponseEntity.ok(orders);
+            Map<String, Object> response = Map.of(
+                "content", ordersPage.getContent(),
+                "totalElements", ordersPage.getTotalElements(),
+                "totalPages", ordersPage.getTotalPages(),
+                "currentPage", page,
+                "size", size
+            );
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", e.getMessage()));
@@ -273,11 +297,11 @@ public class AdminController {
     @GetMapping("/orders/export")
     public ResponseEntity<byte[]> exportOrders() {
         try {
-            byte[] excelData = orderService.exportOrdersToExcel();
+            byte[] xlsx = orderService.exportOrdersToExcel();
             return ResponseEntity.ok()
                 .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
                 .header("Content-Disposition", "attachment; filename=orders.xlsx")
-                .body(excelData);
+                .body(xlsx);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -350,6 +374,58 @@ public class AdminController {
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                 .body(Map.of("error", e.getMessage()));
+        }
+    }
+    
+    /**
+     * Upload file
+     */
+    @PostMapping("/upload")
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+        try {
+            // Validate file
+            if (file.isEmpty()) {
+                return ResponseEntity.badRequest()
+                    .body(Map.of("error", "File không được rỗng"));
+            }
+            
+            // Validate file type
+            String contentType = file.getContentType();
+            if (contentType == null || !contentType.startsWith("image/")) {
+                return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Chỉ chấp nhận file hình ảnh"));
+            }
+            
+            // Validate file size (max 5MB)
+            if (file.getSize() > 5 * 1024 * 1024) {
+                return ResponseEntity.badRequest()
+                    .body(Map.of("error", "File không được vượt quá 5MB"));
+            }
+            
+            // Generate unique filename
+            String originalFilename = file.getOriginalFilename();
+            String extension = originalFilename != null ? 
+                originalFilename.substring(originalFilename.lastIndexOf(".")) : ".jpg";
+            String filename = System.currentTimeMillis() + "_" + 
+                java.util.UUID.randomUUID().toString().substring(0, 8) + extension;
+            
+            // Save file to static/images directory
+            java.nio.file.Path uploadPath = java.nio.file.Paths.get("src/main/resources/static/images");
+            if (!java.nio.file.Files.exists(uploadPath)) {
+                java.nio.file.Files.createDirectories(uploadPath);
+            }
+            
+            java.nio.file.Path filePath = uploadPath.resolve(filename);
+            java.nio.file.Files.copy(file.getInputStream(), filePath, 
+                java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            
+            // Return URL
+            String url = "/images/" + filename;
+            return ResponseEntity.ok(Map.of("url", url));
+            
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                .body(Map.of("error", "Upload thất bại: " + e.getMessage()));
         }
     }
 }

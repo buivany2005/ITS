@@ -20,8 +20,8 @@
         theme: {
           extend: {
             colors: {
-              primary: "#137fec",
-              "background-light": "#f6f7f8",
+              primary: "#0ea5ff",
+              "background-light": "#ffffff",
               "background-dark": "#101922",
             },
             fontFamily: {
@@ -36,6 +36,11 @@
           },
         },
       };
+    </script>
+    <script>
+      try {
+        document.documentElement.classList.remove("dark");
+      } catch (e) {}
     </script>
     <style>
       body {
@@ -447,25 +452,73 @@
     // Handle password form submit
     document
       .getElementById("password-form")
-      .addEventListener("submit", function (e) {
+      .addEventListener("submit", async function (e) {
         e.preventDefault();
 
+        const currentPassword =
+          document.getElementById("currentPassword").value;
         const newPassword = document.getElementById("newPassword").value;
         const confirmPassword =
           document.getElementById("confirmPassword").value;
 
+        // Validation
+        if (!currentPassword) {
+          alert("❌ Vui lòng nhập mật khẩu hiện tại!");
+          return;
+        }
+
+        if (!newPassword) {
+          alert("❌ Vui lòng nhập mật khẩu mới!");
+          return;
+        }
+
+        if (!confirmPassword) {
+          alert("❌ Vui lòng xác nhận mật khẩu!");
+          return;
+        }
+
         if (newPassword !== confirmPassword) {
-          alert("Mật khẩu xác nhận không khớp!");
+          alert("❌ Mật khẩu xác nhận không khớp!");
           return;
         }
 
         if (newPassword.length < 6) {
-          alert("Mật khẩu phải có ít nhất 6 ký tự!");
+          alert("❌ Mật khẩu phải có ít nhất 6 ký tự!");
           return;
         }
 
-        alert("Đổi mật khẩu thành công!");
-        this.reset();
+        try {
+          const user = JSON.parse(localStorage.getItem("user") || "{}");
+          const userId = user.id || user.userId; // backend returns userId
+          if (!userId) {
+            alert("❌ Không tìm thấy thông tin tài khoản!");
+            return;
+          }
+
+          const response = await fetch("/api/auth/change-password", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: userId,
+              currentPassword: currentPassword,
+              newPassword: newPassword,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            alert("✅ Đổi mật khẩu thành công!");
+            document.getElementById("password-form").reset();
+          } else {
+            alert("❌ " + (data.error || "Đổi mật khẩu thất bại!"));
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("❌ Lỗi khi đổi mật khẩu. Vui lòng thử lại!");
+        }
       });
 
     // Handle logout

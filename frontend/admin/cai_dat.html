@@ -1,24 +1,779 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <title>Trang Cài Đặt</title>
-  <link href="../css/tailwind.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
-  <div class="container mx-auto p-6">
-    <h1 class="text-2xl font-bold mb-4">⚙️ Cài đặt hệ thống</h1>
-    
-    <!-- Ví dụ: đổi mật khẩu -->
-    <form>
-      <label class="block mb-2">Mật khẩu mới:</label>
-      <input type="password" class="border p-2 w-full mb-4">
-      <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">
-        Lưu thay đổi
-      </button>
-    </form>
-  </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cài đặt - Hệ thống Thuê Xe</title>
+    <link rel="shortcut icon" href="/img/oto/favicon.ico" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <style>
+      :root {
+        --primary: #1e40af;
+        --primary-light: #dbeafe;
+        --primary-dark: #1e3a8a;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --border: #e5e7eb;
+        --bg: #f9fafb;
+      }
 
-  <script src="../js/settings.js"></script>
-</body>
+      * {
+        font-family: "Inter", sans-serif;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 48;
+      }
+      .card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+      }
+      .btn-primary {
+        background: var(--primary);
+        color: white;
+        padding: 10px 16px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+      .btn-primary:hover {
+        background: var(--primary-dark);
+      }
+      .btn-secondary {
+        background: white;
+        color: var(--primary);
+        padding: 10px 16px;
+        border-radius: 8px;
+        border: 2px solid var(--primary);
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+      .btn-secondary:hover {
+        background: var(--primary-light);
+      }
+      .input-field {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.2s;
+      }
+      .input-field:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+      }
+    </style>
+  </head>
+  <body style="background-color: var(--bg); margin: 0">
+    <div style="display: flex; height: 100vh">
+      <!-- Sidebar -->
+      <aside
+        style="
+          width: 256px;
+          display: flex;
+          flex-direction: column;
+          padding: 16px;
+          background: white;
+          border-right: 1px solid var(--border);
+        "
+      >
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+          "
+        >
+          <div
+            style="
+              width: 40px;
+              height: 40px;
+              border-radius: 8px;
+              background: var(--primary);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: white;
+            "
+          >
+            <span class="material-symbols-outlined">directions_car</span>
+          </div>
+          <div>
+            <p
+              style="
+                font-size: 14px;
+                font-weight: 700;
+                color: var(--text);
+                margin: 0;
+              "
+            >
+              Hệ thống Thuê Xe
+            </p>
+            <p style="font-size: 12px; color: var(--muted); margin: 0">
+              Quản trị viên hệ thống
+            </p>
+          </div>
+        </div>
+        <nav
+          style="
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            flex: 1;
+          "
+        >
+          <a
+            href="quan_ly_phuong_tien.html"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              padding: 8px 12px;
+              border-radius: 8px;
+              color: var(--text);
+              text-decoration: none;
+            "
+            onmouseover="this.style.backgroundColor = '#f3f4f6'"
+            onmouseout="this.style.backgroundColor = 'transparent'"
+          >
+            <span class="material-symbols-outlined">directions_car</span>
+            <span>Quản lý xe</span>
+          </a>
+          <a
+            href="quan_ly_don_hang.html"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              padding: 8px 12px;
+              border-radius: 8px;
+              color: var(--text);
+              text-decoration: none;
+            "
+            onmouseover="this.style.backgroundColor = '#f3f4f6'"
+            onmouseout="this.style.backgroundColor = 'transparent'"
+          >
+            <span class="material-symbols-outlined">calendar_month</span>
+            <span>Đơn đặt xe</span>
+          </a>
+          <a
+            href="quan_ly_khach_hang.html"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              padding: 8px 12px;
+              border-radius: 8px;
+              color: var(--text);
+              text-decoration: none;
+            "
+            onmouseover="this.style.backgroundColor = '#f3f4f6'"
+            onmouseout="this.style.backgroundColor = 'transparent'"
+          >
+            <span class="material-symbols-outlined">group</span>
+            <span>Khách hàng</span>
+          </a>
+          <a
+            href="quan_ly_xe.html"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              padding: 8px 12px;
+              border-radius: 8px;
+              color: var(--text);
+              text-decoration: none;
+            "
+            onmouseover="this.style.backgroundColor = '#f3f4f6'"
+            onmouseout="this.style.backgroundColor = 'transparent'"
+          >
+            <span class="material-symbols-outlined">analytics</span>
+            <span>Thống kê & Báo cáo</span>
+          </a>
+          <a
+            href="cai_dat.html"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              padding: 8px 12px;
+              border-radius: 8px;
+              background: rgba(30, 64, 175, 0.1);
+              color: var(--primary);
+              text-decoration: none;
+            "
+          >
+            <span class="material-symbols-outlined">settings</span>
+            <span>Cài đặt</span>
+          </a>
+        </nav>
+
+        <div
+          class="card"
+          style="
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: auto;
+          "
+        >
+          <div
+            style="
+              width: 40px;
+              height: 40px;
+              border-radius: 8px;
+              background: rgba(30, 64, 175, 0.15);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              color: var(--primary);
+              font-weight: 700;
+              font-size: 14px;
+            "
+          >
+            QTV
+          </div>
+          <div style="flex: 1">
+            <p
+              style="
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--text);
+                margin: 0;
+              "
+            >
+              Quản trị viên
+            </p>
+            <p style="font-size: 12px; color: var(--muted); margin: 0">
+              admin@example.com
+            </p>
+          </div>
+          <button
+            id="btn-logout"
+            style="
+              padding: 4px;
+              background: transparent;
+              border: none;
+              cursor: pointer;
+              color: var(--text);
+            "
+            title="Đăng xuất"
+          >
+            <span class="material-symbols-outlined">logout</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main
+        style="flex: 1; display: flex; flex-direction: column; overflow: hidden"
+      >
+        <!-- Header -->
+        <header
+          style="
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 16px 24px;
+          "
+        >
+          <p
+            style="
+              font-size: 24px;
+              font-weight: 700;
+              color: var(--text);
+              margin: 0;
+            "
+          >
+            Cài đặt
+          </p>
+          <p style="font-size: 14px; color: var(--muted); margin: 0">
+            Quản lý cấu hình hệ thống
+          </p>
+        </header>
+
+        <!-- Content -->
+        <div style="flex: 1; overflow: auto">
+          <div
+            style="
+              padding: 24px;
+              display: flex;
+              flex-direction: column;
+              gap: 24px;
+            "
+          >
+            <!-- Thông tin hệ thống -->
+            <div class="card" style="padding: 24px">
+              <h2
+                style="
+                  font-size: 18px;
+                  font-weight: 700;
+                  color: var(--text);
+                  margin: 0 0 16px 0;
+                "
+              >
+                Thông tin hệ thống
+              </h2>
+              <div
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px"
+              >
+                <div>
+                  <label
+                    style="
+                      display: block;
+                      font-size: 14px;
+                      font-weight: 600;
+                      color: var(--text);
+                      margin-bottom: 8px;
+                    "
+                    >Tên hệ thống</label
+                  >
+                  <input
+                    type="text"
+                    class="input-field"
+                    value="Hệ thống Thuê Xe"
+                    readonly
+                  />
+                </div>
+                <div>
+                  <label
+                    style="
+                      display: block;
+                      font-size: 14px;
+                      font-weight: 600;
+                      color: var(--text);
+                      margin-bottom: 8px;
+                    "
+                    >Phiên bản</label
+                  >
+                  <input
+                    type="text"
+                    class="input-field"
+                    value="v1.0.0"
+                    readonly
+                  />
+                </div>
+                <div>
+                  <label
+                    style="
+                      display: block;
+                      font-size: 14px;
+                      font-weight: 600;
+                      color: var(--text);
+                      margin-bottom: 8px;
+                    "
+                    >Email liên hệ</label
+                  >
+                  <input
+                    id="email-contact"
+                    type="email"
+                    class="input-field"
+                    placeholder="contact@vehiclerental.com"
+                  />
+                </div>
+                <div>
+                  <label
+                    style="
+                      display: block;
+                      font-size: 14px;
+                      font-weight: 600;
+                      color: var(--text);
+                      margin-bottom: 8px;
+                    "
+                    >Số điện thoại</label
+                  >
+                  <input
+                    id="phone-contact"
+                    type="tel"
+                    class="input-field"
+                    placeholder="1900 1234"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Cài đặt thanh toán -->
+            <div class="card" style="padding: 24px">
+              <h2
+                style="
+                  font-size: 18px;
+                  font-weight: 700;
+                  color: var(--text);
+                  margin: 0 0 16px 0;
+                "
+              >
+                Cài đặt thanh toán
+              </h2>
+              <div style="display: flex; flex-direction: column; gap: 16px">
+                <div>
+                  <label
+                    style="
+                      display: block;
+                      font-size: 14px;
+                      font-weight: 600;
+                      color: var(--text);
+                      margin-bottom: 8px;
+                    "
+                    >Phương thức thanh toán mặc định</label
+                  >
+                  <select id="payment-method" class="input-field">
+                    <option>Thanh toán khi nhận xe</option>
+                    <option>Thanh toán trực tuyến</option>
+                    <option>Cả hai</option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    style="
+                      display: block;
+                      font-size: 14px;
+                      font-weight: 600;
+                      color: var(--text);
+                      margin-bottom: 8px;
+                    "
+                    >Tỷ lệ tiền cọc (%)</label
+                  >
+                  <input
+                    id="deposit-ratio"
+                    type="number"
+                    class="input-field"
+                    placeholder="30"
+                    min="0"
+                    max="100"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Cài đặt thông báo -->
+            <div class="card" style="padding: 24px">
+              <h2
+                style="
+                  font-size: 18px;
+                  font-weight: 700;
+                  color: var(--text);
+                  margin: 0 0 16px 0;
+                "
+              >
+                Cài đặt thông báo
+              </h2>
+              <div style="display: flex; flex-direction: column; gap: 12px">
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    cursor: pointer;
+                  "
+                >
+                  <input
+                    id="notify-orders"
+                    type="checkbox"
+                    style="width: 16px; height: 16px"
+                    checked
+                  />
+                  <span style="font-size: 14px; color: var(--text)"
+                    >Thông báo đơn hàng mới</span
+                  >
+                </label>
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    cursor: pointer;
+                  "
+                >
+                  <input
+                    id="notify-ratings"
+                    type="checkbox"
+                    style="width: 16px; height: 16px"
+                    checked
+                  />
+                  <span style="font-size: 14px; color: var(--text)"
+                    >Thông báo khách hàng đánh giá</span
+                  >
+                </label>
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 12px;
+                    cursor: pointer;
+                  "
+                >
+                  <input
+                    id="notify-maintenance"
+                    type="checkbox"
+                    style="width: 16px; height: 16px"
+                    checked
+                  />
+                  <span style="font-size: 14px; color: var(--text)"
+                    >Thông báo xe cần bảo trì</span
+                  >
+                </label>
+              </div>
+            </div>
+
+            <!-- Cài đặt bảo mật -->
+            <div class="card" style="padding: 24px">
+              <h2
+                style="
+                  font-size: 18px;
+                  font-weight: 700;
+                  color: var(--text);
+                  margin: 0 0 16px 0;
+                "
+              >
+                Cài đặt bảo mật
+              </h2>
+              <div style="display: flex; flex-direction: column; gap: 16px">
+                <div>
+                  <label
+                    style="
+                      display: block;
+                      font-size: 14px;
+                      font-weight: 600;
+                      color: var(--text);
+                      margin-bottom: 8px;
+                    "
+                    >Mật khẩu hiện tại</label
+                  >
+                  <input
+                    id="current-password"
+                    type="password"
+                    class="input-field"
+                    placeholder="••••••••"
+                  />
+                </div>
+                <div>
+                  <label
+                    style="
+                      display: block;
+                      font-size: 14px;
+                      font-weight: 600;
+                      color: var(--text);
+                      margin-bottom: 8px;
+                    "
+                    >Mật khẩu mới</label
+                  >
+                  <input
+                    id="new-password"
+                    type="password"
+                    class="input-field"
+                    placeholder="••••••••"
+                  />
+                </div>
+                <div>
+                  <label
+                    style="
+                      display: block;
+                      font-size: 14px;
+                      font-weight: 600;
+                      color: var(--text);
+                      margin-bottom: 8px;
+                    "
+                    >Xác nhận mật khẩu</label
+                  >
+                  <input
+                    id="confirm-password"
+                    type="password"
+                    class="input-field"
+                    placeholder="••••••••"
+                  />
+                </div>
+                <button
+                  class="btn-primary"
+                  id="btn-change-password"
+                  type="button"
+                >
+                  Đổi mật khẩu
+                </button>
+              </div>
+            </div>
+
+            <!-- Nút lưu -->
+            <div
+              style="
+                display: flex;
+                gap: 12px;
+                justify-content: flex-end;
+                margin-bottom: 24px;
+              "
+            >
+              <button class="btn-secondary" id="btn-cancel">Hủy</button>
+              <button class="btn-primary" id="btn-save">Lưu cài đặt</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      // Load settings on page load
+      function loadSettings() {
+        const settings = JSON.parse(
+          localStorage.getItem("adminSettings") || "{}",
+        );
+
+        if (settings.emailContact)
+          document.getElementById("email-contact").value =
+            settings.emailContact;
+        if (settings.phoneContact)
+          document.getElementById("phone-contact").value =
+            settings.phoneContact;
+        if (settings.paymentMethod)
+          document.getElementById("payment-method").value =
+            settings.paymentMethod;
+        if (settings.depositRatio)
+          document.getElementById("deposit-ratio").value =
+            settings.depositRatio;
+
+        if (document.getElementById("notify-orders"))
+          document.getElementById("notify-orders").checked =
+            settings.notifyOrders !== false;
+        if (document.getElementById("notify-ratings"))
+          document.getElementById("notify-ratings").checked =
+            settings.notifyRatings !== false;
+        if (document.getElementById("notify-maintenance"))
+          document.getElementById("notify-maintenance").checked =
+            settings.notifyMaintenance !== false;
+      }
+
+      // Save settings
+      function saveSettings() {
+        const settings = {
+          emailContact: document.getElementById("email-contact").value,
+          phoneContact: document.getElementById("phone-contact").value,
+          paymentMethod: document.getElementById("payment-method").value,
+          depositRatio: document.getElementById("deposit-ratio").value,
+          notifyOrders: document.getElementById("notify-orders").checked,
+          notifyRatings: document.getElementById("notify-ratings").checked,
+          notifyMaintenance:
+            document.getElementById("notify-maintenance").checked,
+          savedAt: new Date().toISOString(),
+        };
+
+        localStorage.setItem("adminSettings", JSON.stringify(settings));
+
+        // Show success message
+        const saveBtn = document.getElementById("btn-save");
+        const originalText = saveBtn.textContent;
+        saveBtn.textContent = "✓ Đã lưu";
+        saveBtn.style.background = "#10b981";
+
+        setTimeout(() => {
+          saveBtn.textContent = originalText;
+          saveBtn.style.background = "var(--primary)";
+        }, 2000);
+      }
+
+      // Event listeners
+      document
+        .getElementById("btn-save")
+        .addEventListener("click", saveSettings);
+      document
+        .getElementById("btn-cancel")
+        .addEventListener("click", loadSettings);
+
+      // Change password
+      async function changePassword() {
+        const currentPassword =
+          document.getElementById("current-password").value;
+        const newPassword = document.getElementById("new-password").value;
+        const confirmPassword =
+          document.getElementById("confirm-password").value;
+
+        // Validation
+        if (!currentPassword) {
+          alert("Vui lòng nhập mật khẩu hiện tại");
+          return;
+        }
+        if (!newPassword) {
+          alert("Vui lòng nhập mật khẩu mới");
+          return;
+        }
+        if (!confirmPassword) {
+          alert("Vui lòng xác nhận mật khẩu");
+          return;
+        }
+        if (newPassword !== confirmPassword) {
+          alert("Mật khẩu mới không khớp");
+          return;
+        }
+        if (newPassword.length < 6) {
+          alert("Mật khẩu phải có ít nhất 6 ký tự");
+          return;
+        }
+
+        try {
+          const user = JSON.parse(localStorage.getItem("user") || "{}");
+          const response = await fetch("/api/auth/change-password", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${user.token || ""}`,
+            },
+            body: JSON.stringify({
+              currentPassword,
+              newPassword,
+              userId: user.userId,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            alert("✓ Đổi mật khẩu thành công!");
+            // Clear password fields
+            document.getElementById("current-password").value = "";
+            document.getElementById("new-password").value = "";
+            document.getElementById("confirm-password").value = "";
+          } else {
+            alert(
+              "❌ " + (data.message || data.error || "Đổi mật khẩu thất bại"),
+            );
+          }
+        } catch (err) {
+          console.error("Change password error:", err);
+          alert("❌ Lỗi: " + err.message);
+        }
+      }
+
+      // Event listener for change password button
+      document
+        .getElementById("btn-change-password")
+        .addEventListener("click", changePassword);
+
+      // Logout
+      document.getElementById("btn-logout").addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.href = "/login/login.html";
+      });
+
+      // Load settings on page load
+      window.addEventListener("DOMContentLoaded", loadSettings);
+      loadSettings();
+    </script>
+  </body>
 </html>
