@@ -244,13 +244,14 @@
 
     filteredUsers.forEach((user) => {
       rows.push([
-        user.id,
-        user.fullName || "N/A",
-        user.email,
-        user.phone || "N/A",
+        user.id || "",
+        escapeHtml(user.fullName || "N/A"),
+        escapeHtml(user.email || ""),
+        escapeHtml(user.phone || "N/A"),
         getRoleLabel(user.role),
       ]);
     });
+<<<<<<< HEAD
 
     const csv = rows
       .map((row) => row.map((cell) => `"${cell}"`).join(","))
@@ -258,6 +259,19 @@
     const blob = new Blob(["\ufeff" + csv], {
       type: "text/csv;charset=utf-8;",
     });
+=======
+    
+    // Proper CSV format with quoted fields
+    const csv = rows.map((row) => 
+      row.map((cell) => {
+        // Escape quotes and wrap in quotes
+        const escaped = String(cell).replace(/"/g, '""');
+        return `"${escaped}"`;
+      }).join(",")
+    ).join("\n");
+    
+    const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+>>>>>>> c7b20e3812e5add1651baa4d639b573578a1b157
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;

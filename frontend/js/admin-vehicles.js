@@ -282,6 +282,10 @@
   }
 
   async function showVehicleModal(vehicleId = null) {
+    // Remove any existing modal first
+    const existingModal = document.querySelector("#vehicle-modal");
+    if (existingModal) existingModal.remove();
+
     let vehicle = null;
 
     // If editing, fetch vehicle data
@@ -514,6 +518,7 @@
         fetchVehicles(); // Reload
       } catch (err) {
         alert("Lỗi: " + err.message);
+        modal.remove();
       }
     });
   }

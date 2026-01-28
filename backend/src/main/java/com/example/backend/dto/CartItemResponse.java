@@ -1,39 +1,26 @@
 package com.example.backend.dto;
 
 import lombok.AllArgsConstructor;
-<<<<<<< HEAD
-import lombok.Getter;
-=======
 import lombok.Builder;
 import lombok.Data;
->>>>>>> c7b20e3812e5add1651baa4d639b573578a1b157
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class OrderResponse {
-    private Long id;
+public class CartItemResponse {
     private Long vehicleId;
     private String vehicleName;
     private String vehicleBrand;
     private String vehicleModel;
     private String vehicleImageUrl;
-    private Long customerId;
-    private String customerName;
-    private String customerEmail;
     private LocalDate startDate;
     private LocalDate endDate;
+    private Integer numberOfDays;
+    private BigDecimal pricePerDay;
     private BigDecimal totalPrice;
-    private String status;
-    private String notes;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
 }

@@ -1,12 +1,5 @@
 package com.example.backend.dto;
 
-<<<<<<< HEAD
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
-=======
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -18,8 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
->>>>>>> c7b20e3812e5add1651baa4d639b573578a1b157
-public class LoginRequest {
+public class AuthRequest {
     
     @NotBlank(message = "Email không được để trống")
     @Email(message = "Email không hợp lệ")
